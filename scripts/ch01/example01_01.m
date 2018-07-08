@@ -4,7 +4,8 @@
 % 動作確認： MATLAB R2017a
 %% 画像データのダウンロード
 %%
-% msip.utilities.download_img
+isVerbose = false;
+msip.download_img(isVerbose)
 %% (a) グレースケール画像
 %%
 fprintf('(a) グレースケール画像\n')

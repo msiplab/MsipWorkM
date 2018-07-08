@@ -1,3 +1,11 @@
+function download_img(isVerbose)
+% DOWNLOAD_IMG
+%
+
+if nargin < 1
+    isVerbose = true;
+end
+
 if exist('./data/','dir') == 7
     fnames = {'lena' 'baboon' 'goldhill' 'barbara'};
     for idx = 1:length(fnames)
@@ -7,11 +15,17 @@ if exist('./data/','dir') == 7
                 sprintf('http://homepages.cae.wisc.edu/~ece533/images/%s',...
                 fname));
             imwrite(img,sprintf('./data/%s',fname));
-            fprintf('Downloaded and saved %s in ./data\n',fname);
+            if isVerbose
+                fprintf('Downloaded and saved %s in ./data\n',fname);
+            end
         else
-            fprintf('%s already exists in ./data\n',fname);
+            if isVerbose
+                fprintf('%s already exists in ./data\n',fname);
+            end
         end
     end
 else
-    fprintf('./data folder does not exist\n');
+    me = MException('MSIP:noSuchFolder', ...
+        '%s folder does not exist','./data');
+    throw(me)
 end

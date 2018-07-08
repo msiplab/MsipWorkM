@@ -4,7 +4,8 @@
 % 動作確認： MATLAB R2017a
 %% 画像データのダウンロード
 %%
-% utilities.download_img
+isVerbose = false;
+msip.download_img(isVerbose)
 %% 画像データの読込
 %%
 X = im2double(rgb2gray(imread('./data/lena.png')));
@@ -57,21 +58,21 @@ nLevels = 5;
 nItrs   = 25;
 isFista = true;
 %
-[Cpre,S]= utilities.nshaarwtdec2(adjproc(V),nLevels);
+[Cpre,S]= msip.nshaarwtdec2(adjproc(V),nLevels);
 tpre = 1;
 %
-Y = utilities.nshaarwtrec2(Cpre,S);
+Y = msip.nshaarwtrec2(Cpre,S);
 R = linproc(Y)-V;
 for iItr = 1:nItrs
-    D = (1/L)*utilities.nshaarwtdec2(adjproc(R),nLevels);
-    C = softthresh(C-D,lambda/L);
+    D = (1/L)*msip.nshaarwtdec2(adjproc(R),nLevels);
+    C = softthresh(Cpre-D,lambda/L);
     if isFista % FISTA
         W = C;
         t = (1+sqrt(1+4*tpre^2))/2;
         C = W+(tpre-1)/t*(W-Cpre);
         tpre = t;
     end
-    Y = utilities.nshaarwtrec2(C,S);
+    Y = msip.nshaarwtrec2(C,S);
     R = linproc(Y)-V;
     Cpre = C;
 end

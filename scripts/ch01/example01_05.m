@@ -4,7 +4,8 @@
 % 動作確認： MATLAB R2017a
 %% 画像データのダウンロード
 %%
-% utilities.download_img
+isVerbose = false;
+msip.download_img(isVerbose)
 %% 画像データの読込
 %%
 V = imread('./data/barbara.png');
