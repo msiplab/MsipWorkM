@@ -1,3 +1,9 @@
+# MATLAB files
 *.asv
 *.mlx
-matlab.mat
+*.mat
+
+# Image files
+
+*.png
+*.jpg
