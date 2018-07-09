@@ -1,31 +1,37 @@
 function download_img(isVerbose)
-% DOWNLOAD_IMG
+% DOWNLOAD_IMG 
+%
+% Copyright (c) Shogo MURAMATSU, 2018
+% All rights reserved.
 %
 
+% デフォルトの値を設定
 if nargin < 1
     isVerbose = true;
 end
 
-if exist('./data/','dir') == 7
+% 画像サンプルのダウンロード
+dstdir = './data/';
+if exist(dstdir,'dir') == 7
     fnames = {'lena' 'baboon' 'goldhill' 'barbara'};
     for idx = 1:length(fnames)
         fname = [ fnames{idx} '.png' ];
-        if exist(sprintf('./data/%s',fname),'file') ~= 2
+        if exist(fullfile(dstdir,fname),'file') ~= 2
             img = imread(...
                 sprintf('http://homepages.cae.wisc.edu/~ece533/images/%s',...
                 fname));
-            imwrite(img,sprintf('./data/%s',fname));
+            imwrite(img,fullfile(dstdir,fname))
             if isVerbose
-                fprintf('Downloaded and saved %s in ./data\n',fname);
+                fprintf('Downloaded and saved %s in %s\n',fname,dstdir);
             end
         else
             if isVerbose
-                fprintf('%s already exists in ./data\n',fname);
+                fprintf('%s already exists in %s\n',fname,dstdir);
             end
         end
     end
 else
-    me = MException('MSIP:noSuchFolder', ...
-        '%s folder does not exist','./data');
+    me = MException('MsipException:NoSuchFolder', ...
+        '%s folder does not exist',dstdir);
     throw(me)
 end
