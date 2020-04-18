@@ -1,31 +1,31 @@
-%% —á1.7i”F¯ˆ—j
-% ‘º¼³Œá@u‘½ŸŒ³M†E‰æ‘œˆ—‚ÌŠî‘b‚Æ“WŠJv
+%% ä¾‹1.7ï¼ˆèªè­˜å‡¦ç†ï¼‰
+% æ‘æ¾æ­£å¾ã€€ã€Œå¤šæ¬¡å…ƒä¿¡å·ãƒ»ç”»åƒå‡¦ç†ã®åŸºç¤ã¨å±•é–‹ã€
 % 
-% “®ìŠm”FF MATLAB R2017a
+% å‹•ä½œç¢ºèªï¼š MATLAB R2017a
 % 
-% ˆÈ‰º‚Ìƒc[ƒ‹ƒ{ƒbƒNƒX‚ª•K—v
-% 
+% ä»¥ä¸‹ã®ãƒ„ãƒ¼ãƒ«ãƒœãƒƒã‚¯ã‚¹ãŒå¿…è¦
+%% 
 % * Neural Network Toolbox
-% 
-% —\‚ßƒTƒ|[ƒgƒpƒbƒP[ƒW
-% 
+%% 
+% äºˆã‚ã‚µãƒãƒ¼ãƒˆãƒ‘ãƒƒã‚±ãƒ¼ã‚¸
+%% 
 % * Neural Network Toolbox Importer for Caffe Models
+%% 
+% ã‚’å°å…¥ã™ã‚‹ã“ã¨
 % 
-% ‚ğ“±“ü‚·‚é‚±‚Æ
-% 
-% QlƒTƒCƒg
-% 
+% å‚è€ƒã‚µã‚¤ãƒˆ
+%% 
 % * <https://jp.mathworks.com/help/nnet/ref/importcaffenetwork.html importCaffeNetwork>
 % * <https://jp.mathworks.com/help/nnet/examples/create-simple-deep-learning-network-for-classification.html 
-% •ª—Ş—p‚ÌƒVƒ“ƒvƒ‹‚È[‘wŠwKƒlƒbƒgƒ[ƒN‚Ìì¬>
-%% ‰æ‘œƒf[ƒ^‚Ì“Ç‚Æ’Šo
-% ImageDatastore ƒIƒuƒWƒFƒNƒg‚Æ‚µ‚Ä”šƒTƒ“ƒvƒ‹ƒf[ƒ^‚ğ“Ç‚İ‚İ
-%%
+% åˆ†é¡ç”¨ã®ã‚·ãƒ³ãƒ—ãƒ«ãªæ·±å±¤å­¦ç¿’ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã®ä½œæˆ>
+%% ç”»åƒãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¨æŠ½å‡º
+% ImageDatastore ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦æ•°å­—ã‚µãƒ³ãƒ—ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã¿
+
 digitDatasetPath = fullfile(matlabroot,'toolbox','nnet','nndemos', ...
         'nndatasets','DigitDataset');
 digitData = imageDatastore(digitDatasetPath, ...
         'IncludeSubfolders',true,'LabelSource','foldernames');
-%% ƒf[ƒ^ƒZƒbƒg‚©‚çˆê•”‚Ì•¶š‰æ‘œ‚ğƒ‰ƒ“ƒ_ƒ€’Šo
+%% ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆã‹ã‚‰ä¸€éƒ¨ã®æ–‡å­—ç”»åƒã‚’ãƒ©ãƒ³ãƒ€ãƒ æŠ½å‡º
 
 figure
 [nRows, nCols] = size(readimage(digitData,1));
@@ -38,16 +38,16 @@ for idx = 1:20
     imshow(testImg(:,:,1,idx));
 end
 %print('fig01-04a','-dpng')
-%% –‘OŠwKÏ‚İ‚ÌCNNƒ‚ƒfƒ‹‚ğ Caffe ‚©‚çƒCƒ“ƒ|[ƒg
+%% äº‹å‰å­¦ç¿’æ¸ˆã¿ã®CNNãƒ¢ãƒ‡ãƒ«ã‚’ Caffe ã‹ã‚‰ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 
-% ƒCƒ“ƒ|[ƒgƒtƒ@ƒCƒ‹‚Ìw’è 
+% ã‚¤ãƒ³ãƒãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®æŒ‡å®š 
 protofile = 'digitsnet.prototxt'; 
 datafile = 'digits_iter_10000.caffemodel';
-% ƒlƒbƒgƒ[ƒN‚ÌƒCƒ“ƒ|[ƒg
+% ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 net = importCaffeNetwork(protofile,datafile);
 disp(net.Layers)
-%% ô‚İ‘w(conv1)‚Ìd‚İŒW”‚ğ[0,1]‚É³‹K‰»‚µ‚Ä•\¦
-%%
+%% ç•³è¾¼ã¿å±¤(conv1)ã®é‡ã¿ä¿‚æ•°ã‚’[0,1]ã«æ­£è¦åŒ–ã—ã¦è¡¨ç¤º
+
 figure
 weights = squeeze(net.Layers(2).Weights);
 for idx = 1:20
@@ -59,8 +59,8 @@ for idx = 1:20
     imshow(filter);
 end
 %print('fig01-04b','-dpng')
-%% ”š‰æ‘œ‚Ì•ª—Şƒfƒ‚
-%%
+%% æ•°å­—ç”»åƒã®åˆ†é¡ãƒ‡ãƒ¢
+
 figure
 labelList = categories(digitData.Labels);
 answers = classify(net,testImg);
@@ -75,7 +75,7 @@ for idx = 1:20
     ax.YTick = [];
 end
 %print('fig01-04c','-dpng')
-%% •ª—Ş¸“x‚ÌŒvZ
-%%
+%% åˆ†é¡ç²¾åº¦ã®è¨ˆç®—
+
 refdata = digitData.Labels(perm);
 accuracy = sum(refdata == answers)/numel(answers)

@@ -1,43 +1,43 @@
-%% —á1.6i•œŒ³ˆ—j
-% ‘º¼³Œá@u‘½ŸŒ³M†E‰æ‘œˆ—‚ÌŠî‘b‚Æ“WŠJv
+%% ä¾‹1.6ï¼ˆå¾©å…ƒå‡¦ç†ï¼‰
+% æ‘æ¾æ­£å¾ã€€ã€Œå¤šæ¬¡å…ƒä¿¡å·ãƒ»ç”»åƒå‡¦ç†ã®åŸºç¤ã¨å±•é–‹ã€
 % 
-% “®ìŠm”FF MATLAB R2017a
-%% ‰æ‘œƒf[ƒ^‚Ìƒ_ƒEƒ“ƒ[ƒh
-%%
+% å‹•ä½œç¢ºèªï¼š MATLAB R2017a
+%% ç”»åƒãƒ‡ãƒ¼ã‚¿ã®ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰
+
 isVerbose = false;
 msip.download_img(isVerbose)
-%% ‰æ‘œƒf[ƒ^‚Ì“Ç
-%%
+%% ç”»åƒãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼
+
 X = im2double(rgb2gray(imread('./data/lena.png')));
-%% —ò‰»‘O‚Ì‰æ‘œ•\¦
-%%
+%% åŠ£åŒ–å‰ã®ç”»åƒè¡¨ç¤º
+
 figure(1)
 imshow(X)
-title('Œ´‰æ‘œ')
-%% —ò‰»‰ß’ö
-%%
-hsigma  = 4;                    % ƒKƒEƒXƒJ[ƒlƒ‹•ªU
-hsize   = 2*ceil(2*hsigma)+1;   % ƒKƒEƒXƒJ[ƒlƒ‹ƒTƒCƒY
-nvar    = (10/255)^2;            % ‰Á–@«”’FƒKƒEƒXƒmƒCƒY•ªU
-gaussfilt = fspecial('gaussian',hsize,hsigma);             % ƒKƒEƒXƒJ[ƒlƒ‹
-linproc = @(x) imfilter(x,gaussfilt,'conv','circular'); % üŒ`ŠÏ‘ª‰ß’ö
-U = linproc(X);                 % üŒ`ŠÏ‘ª
-V = imnoise(U,'gaussian',0,nvar);  % ‰Á–@«”’FƒKƒEƒXƒmƒCƒY
-%% —ò‰»Œã‚Ì‰æ‘œ•\¦
-%%
+title('åŸç”»åƒ')
+%% åŠ£åŒ–éç¨‹
+
+hsigma  = 4;                    % ã‚¬ã‚¦ã‚¹ã‚«ãƒ¼ãƒãƒ«åˆ†æ•£
+hsize   = 2*ceil(2*hsigma)+1;   % ã‚¬ã‚¦ã‚¹ã‚«ãƒ¼ãƒãƒ«ã‚µã‚¤ã‚º
+nvar    = (10/255)^2;            % åŠ æ³•æ€§ç™½è‰²ã‚¬ã‚¦ã‚¹ãƒã‚¤ã‚ºåˆ†æ•£
+gaussfilt = fspecial('gaussian',hsize,hsigma);             % ã‚¬ã‚¦ã‚¹ã‚«ãƒ¼ãƒãƒ«
+linproc = @(x) imfilter(x,gaussfilt,'conv','circular'); % ç·šå½¢è¦³æ¸¬éç¨‹
+U = linproc(X);                 % ç·šå½¢è¦³æ¸¬
+V = imnoise(U,'gaussian',0,nvar);  % åŠ æ³•æ€§ç™½è‰²ã‚¬ã‚¦ã‚¹ãƒã‚¤ã‚º
+%% åŠ£åŒ–å¾Œã®ç”»åƒè¡¨ç¤º
+
 figure(2)
 imshow(V)
-title('—ò‰»‰æ‘œ')
-%% —ò‰»Œã‚Ì•i¿
-%%
-fprintf('—ò‰»Œã‚Ì•i¿(PSNR)F %6.2f [dB]\n',psnr(V,X))
-%% •œŒ³‘Oˆ—
-%%
-adjproc = @(x) imfilter(x,gaussfilt,'corr','circular'); %@”ºŠÏ‘ª‰ß’ö
+title('åŠ£åŒ–ç”»åƒ')
+%% åŠ£åŒ–å¾Œã®å“è³ª
+
+fprintf('åŠ£åŒ–å¾Œã®å“è³ª(PSNR)ï¼š %6.2f [dB]\n',psnr(V,X))
+%% å¾©å…ƒå‰å‡¦ç†
+
+adjproc = @(x) imfilter(x,gaussfilt,'corr','circular'); %ã€€éšä¼´è¦³æ¸¬éç¨‹
 vpst = rand(size(V),'like',V);
 lpre = 1.0;
 err_ = Inf;
-while ( err_ >  1e-5 ) % ‚×‚«æ–@
+while ( err_ >  1e-5 ) % ã¹ãä¹—æ³•
     % vpst = (P.'*P)*vupre
     vpre = vpst/norm(vpst(:));
     u    = linproc(vpre); % P
@@ -48,11 +48,11 @@ while ( err_ >  1e-5 ) % ‚×‚«æ–@
     err_ = norm(lpst-lpre);
     lpre = lpst;
 end
-frameBound = 1; % ƒtƒŒ[ƒ€‹«ŠE
+frameBound = 1; % ãƒ•ãƒ¬ãƒ¼ãƒ å¢ƒç•Œ
 L = frameBound*lpst ;  
 %fprintf('L = %g\n',L);
-%% *•œŒ³ˆ—(FISTA)*
-%%
+%% *å¾©å…ƒå‡¦ç†(FISTA)*
+
 lambda  = 5e-4;
 nLevels = 5;
 nItrs   = 25;
@@ -76,17 +76,17 @@ for iItr = 1:nItrs
     R = linproc(Y)-V;
     Cpre = C;
 end
-%% •œŒ³Œã‚Ì‰æ‘œ•\¦
-%%
+%% å¾©å…ƒå¾Œã®ç”»åƒè¡¨ç¤º
+
 figure(3)
 imshow(Y)
-title('•œŒ³‰æ‘œ')
-%% •œŒ³Œã‚Ì•i¿
-%%
-fprintf('•œŒ³Œã‚Ì•i¿(PSNR)F %6.2f [dB]\n',psnr(Y,X))
-%% ŠÖ”’è‹`
-% ƒ\ƒtƒgè‡’lˆ—
-%%
+title('å¾©å…ƒç”»åƒ')
+%% å¾©å…ƒå¾Œã®å“è³ª
+
+fprintf('å¾©å…ƒå¾Œã®å“è³ª(PSNR)ï¼š %6.2f [dB]\n',psnr(Y,X))
+%% é–¢æ•°å®šç¾©
+% ã‚½ãƒ•ãƒˆé–¾å€¤å‡¦ç†
+
 function y = softthresh(x,thresh)
     v = abs(x)-thresh;
     y = sign(x).*(v+abs(v))/2;
