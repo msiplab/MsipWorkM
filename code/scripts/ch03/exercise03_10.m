@@ -52,11 +52,10 @@ for nv = 0:2
         g = gm.*gv;
         f = g/sum(g(:));
         fprintf("f(%d,%d) = \n",jRow-1,jCol-1)
-        msip.arr2tex(f,"%6.2f")
+        msip.arr2tex(f,"%6.4f")
         y = x(jRow:jRow+2,jCol:jCol+2);
         u(jRow,jCol) = sum(sum(f.*y));
     end
 end
 
-msip.arr2tex(u,"%6.2f")
-
+msip.arr2tex(u,"%6.4f")
