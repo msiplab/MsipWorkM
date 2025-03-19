@@ -1,42 +1,42 @@
-%% —á1.1i”z—ñ•\Œ»j
-% ‘º¼³Œá@u‘½ŸŒ³M†E‰æ‘œˆ—‚ÌŠî‘b‚Æ“WŠJv
+%% ä¾‹1.1ï¼ˆé…åˆ—è¡¨ç¾ï¼‰
+% æ‘æ¾æ­£å¾ã€€ã€Œå¤šæ¬¡å…ƒä¿¡å·ãƒ»ç”»åƒå‡¦ç†ã®åŸºç¤ã¨å±•é–‹ã€
 % 
-% “®ìŠm”FF MATLAB R2017a
-%% ‰æ‘œƒf[ƒ^‚Ìƒ_ƒEƒ“ƒ[ƒh
+% å‹•ä½œç¢ºèªï¼š MATLAB R2017a
+%% ç”»åƒãƒ‡ãƒ¼ã‚¿ã®ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰
 %%
 isVerbose = false;
 msip.download_img(isVerbose)
-%% (a) ƒOƒŒ[ƒXƒP[ƒ‹‰æ‘œ
+%% (a) ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ç”»åƒ
 %%
-fprintf('(a) ƒOƒŒ[ƒXƒP[ƒ‹‰æ‘œ\n')
+fprintf('(a) ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ç”»åƒ\n')
 V = imread('./data/barbara.png');
-fprintf('”z—ñŸŒ³F D = %d\n',ndims(V))
+fprintf('é…åˆ—æ¬¡å…ƒï¼š D = %d\n',ndims(V))
 imshow(V)
-%% (b) RGB‰æ‘œ
+%% (b) RGBç”»åƒ
 %%
-fprintf('(b) RGB‰æ‘œ\n')
+fprintf('(b) RGBç”»åƒ\n')
 V = imread('./data/lena.png');
-fprintf('”z—ñŸŒ³F D = %d\n',ndims(V))
+fprintf('é…åˆ—æ¬¡å…ƒï¼š D = %d\n',ndims(V))
 imshow(V)
-%% (c) “®‰æ‘œ
+%% (c) å‹•ç”»åƒ
 %%
-fprintf('(c) RGB“®‰æ‘œ\n')
+fprintf('(c) RGBå‹•ç”»åƒ\n')
 vrObj = VideoReader('shuttle.avi');
 V = zeros(vrObj.Height,vrObj.Width,3,2,'uint8');
 V(:,:,:,1) = readFrame(vrObj);
 V(:,:,:,2) = readFrame(vrObj);
-fprintf('”z—ñŸŒ³F D = %d\n',ndims(V))
+fprintf('é…åˆ—æ¬¡å…ƒï¼š D = %d\n',ndims(V))
 imshow(V(:,:,:,1))
-title('‘æ0ƒtƒŒ[ƒ€')
+title('ç¬¬0ãƒ•ãƒ¬ãƒ¼ãƒ ')
 imshow(V(:,:,:,2))
-title('‘æ1ƒtƒŒ[ƒ€')
-%% (d) ƒ{ƒŠƒ…[ƒ€ƒf[ƒf[ƒ^
+title('ç¬¬1ãƒ•ãƒ¬ãƒ¼ãƒ ')
+%% (d) ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ‡ãƒ¼ãƒ‡ãƒ¼ã‚¿
 %%
-fprintf('(d) ƒ{ƒŠƒ…[ƒ€ƒf[ƒ^\n')
+fprintf('(d) ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿\n')
 load mri
 V = squeeze(D);
-fprintf('”z—ñŸŒ³F D = %d\n',ndims(V))
+fprintf('é…åˆ—æ¬¡å…ƒï¼š D = %d\n',ndims(V))
 imshow(V(:,:,1))
-title('‘æ0ƒXƒ‰ƒCƒX(xy)')
+title('ç¬¬0ã‚¹ãƒ©ã‚¤ã‚¹(xy)')
 imshow(V(:,:,2))
-title('‘æ1ƒXƒ‰ƒCƒX(xy)')
+title('ç¬¬1ã‚¹ãƒ©ã‚¤ã‚¹(xy)')
