@@ -49,7 +49,7 @@ end
 for iRowN = 1:size(v,1)
    for iColN = 1:size(v,2)
         disp([iRowN-1, iColN-1])
-        filtkernel(:,:,iRowN,iColN) 
+        arr2tex(filtkernel(:,:,iRowN,iColN),"%6.4f")
         %
         d = zeros(size(x));
         d(iRowN+2,iColN+2) = 1;
