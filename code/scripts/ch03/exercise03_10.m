@@ -19,7 +19,6 @@ for mv = -1:1
         iCol = iCol + 1;
         gm(iRow,iCol) = fcn_gm(mv,mh,sigmam);
     end
-
 end
 
 gm
@@ -58,3 +57,7 @@ for nv = 0:2
 end
 
 msip.arr2tex(u,"%6.4f")
+
+%%
+
+imbilatfilt(x,'degreeOfSmoothing',sigmav^2,'spatialSigma',sigmam,'NeighborhoodSize',3,'Padding',0)
