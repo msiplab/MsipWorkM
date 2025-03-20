@@ -8,7 +8,7 @@ g = v;
 omega = [3 3]
 Nf = [5 5]
 
-x = padarray(g, (Nf-1)/2, 0)
+x = padarray(g, [2 2], 0) % (Nf-1)/2, 0)
 
 %%%
 epsilon = 4^2;
@@ -49,13 +49,17 @@ end
 for iRowN = 1:size(v,1)
    for iColN = 1:size(v,2)
         disp([iRowN-1, iColN-1])
+        f = filtkernel(:,:,iRowN,iColN);
         arr2tex(filtkernel(:,:,iRowN,iColN),"%6.4f")
+        y = x(iRowN:iRowN+4,iColN:iColN+4);
+        u(iRowN,iColN) = sum(sum(f.*y));
         %
         d = zeros(size(x));
         d(iRowN+2,iColN+2) = 1;
         imguidedfilter(d, x, 'NeighborhoodSize', omega, 'DegreeOfSmoothing', epsilon)        
     end
 end
-
+arr2tex(u,"%6.4f")
 %%
 
+imguidedfilter(x, 'NeighborhoodSize', omega, 'DegreeOfSmoothing', epsilon)
