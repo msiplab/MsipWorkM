@@ -1,10 +1,10 @@
-syms t Delta
+syms q Delta
 assume(Delta,'real')
 assume(Delta,'positive')
 
-g = sinc(t/Delta)
+h = sinc(q/Delta)/Delta
 
-G = fourier(g)
+H = fourier(h)
 
-G = subs(G,Delta,2)
+H = subs(G,Delta,2)
 fplot(G)
