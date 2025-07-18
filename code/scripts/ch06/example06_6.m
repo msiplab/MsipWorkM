@@ -76,14 +76,9 @@ subplot(2^J,1,1)
 fplot(@(x) phij{J}(x,0),R)
 axis([R -1 1])
 grid on
-% m = 1
-subplot(2^J,1,2)
-fplot(@(x) psij{J}(x,0),R)
-axis([R -1 1])
-grid on
-% m > 1
+% m > 0
 disp('---')
-for m=2:2^J-1
+for m=1:2^J-1
     jm = J - floor(log2(m)); % 
     nm = m - 2^floor(log2(m)); 
     subplot(2^J,1,m+1)
