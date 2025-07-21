@@ -20,12 +20,12 @@ iFig = iFig + 1;
 
 %%
 % φn の構成
-x0 = -1;
+xmin = -1;
 theta0 = 1/(2*K);
 
 phin = cell(M,1);
 for n=0:M-1
-    phin{n+1} = @(x) fcn_phin(x,n,K,x0,theta0);
+    phin{n+1} = @(x) fcn_phin(x,n,K,xmin,theta0);
 end
 
 %%
@@ -50,7 +50,7 @@ for m=0:M-1
     psim{m+1} = @(x) 0;
     for n=0:M-1
         dnm = D(n+1,m+1);
-        psim{m+1} = @(x) psim{m+1}(x) + dnm*fcn_phin(x,n,K,x0,theta0);
+        psim{m+1} = @(x) psim{m+1}(x) + dnm*fcn_phin(x,n,K,xmin,theta0);
     end
 end
 

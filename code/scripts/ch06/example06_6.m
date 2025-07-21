@@ -3,7 +3,7 @@ iFig = 1;
 %% 
 % パラメータ設定
 
-K = 4;
+K = 8;
 M = 2*K;
 Delta = 2/M;
 R = [-1 1];
@@ -36,41 +36,42 @@ end
 iFig = iFig + 1;
 
 %%
-% η の設定とプロット
-eta = @(x) fcn_phin(Delta*x,0,K,0,0);
+% φ の設定とプロット
+phi = @(x) fcn_phin(x,0,K,0,0);
+%phi = @(x) max(1-abs(K*x),0);
 
 figure(iFig)
-fplot(@(x) eta(x),R*K)
+fplot(@(x) phi(x),2*R)
 grid on
 
 iFig = iFig + 1;
 
 %% TODO
 % 行列 H の設定
-%piinv = @(x) (M/pi)*acos((x-K)/M) - 1/2;
-%piinv = @(x) K*cos( (x+1/2)*pi / M);
+pm = -1 + (1+2*(0:M-1))/M
+qn = cos(((0:M-1)+1/2)*pi/M)
 
 H = eye(M);
 
-%{
+%%{
 for n=0:M-1
     for m=0:M-1
-        H(n+1,m+1) = eta(piinv(n)-m);
+        H(n+1,m+1) = phi(qn(n+1)-pm(m+1));
     end
 end
-%}
+%%}
 
 H
 rank(H)
 
 %%
 % φn の構成
-x0 = -1;
+xmin = -1;
 theta0 = 1/(2*K);
 
 phin = cell(M,1);
 for n=0:M-1
-    phin{n+1} = @(x) fcn_phin(x,n,K,x0,theta0);
+    phin{n+1} = @(x) fcn_phin(x,n,K,xmin,theta0);
 end
 
 %%
@@ -95,8 +96,9 @@ for m=0:M-1
     psim{m+1} = @(x) 0;
     for n=0:M-1
         dnm = D(n+1,m+1);
-        psim{m+1} = @(x) psim{m+1}(x) + dnm*fcn_phin(x,n,K,x0,theta0);
+        psim{m+1} = @(x) psim{m+1}(x) + dnm*fcn_phin(x,n,K,xmin,theta0);
     end
+    psim{m+1} = @(x) psim{m+1}(x);
 end
 
 %% TODO
