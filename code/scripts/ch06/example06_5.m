@@ -41,15 +41,15 @@ end
 iFig = iFig + 1;
 
 %%
-
 % ψm の構成
 psim = cell(M,1);
 C = dctmtx(M);
+D = C.';
 
 for m=0:M-1
     psim{m+1} = @(x) 0;
     for n=0:M-1
-        dnm = C(m+1,n+1);
+        dnm = D(n+1,m+1);
         psim{m+1} = @(x) psim{m+1}(x) + dnm*fcn_phin(x,n,K,x0,theta0);
     end
 end
@@ -84,19 +84,3 @@ if K > 0
     y = y + cos(2*pi*K*x);
 end
 end
-%%
-
-%{
-function z = chi(x,y)
-arguments (Input)
-    x
-    y
-end
-
-arguments (Output)
-    z
-end
-
-z = (x>=0).*(x<y);
-end
-%}
