@@ -5,12 +5,15 @@ iFig = 1;
 
 K = 4;
 M = 2*K;
-Delta = 2/M;
-R = [-1 1]; % 表示範囲
+%Delta = 2/M;
+%R = [-1 1]; % 表示範囲
+Delta = 1/M;
+R = [0 1]; % 表示範囲
 
 %%
 % φ のプロット
-phi = @(x) fcn_phin(x,0,K,0,0);
+%phi = @(x) fcn_phin(x,0,K,0,0);
+phi = @(x) fcn_chi(x,R);
 
 figure(iFig)
 fplot(@(x) phi(x),R)
@@ -25,7 +28,8 @@ theta0 = 1/(2*K);
 
 phin = cell(M,1);
 for n=0:M-1
-    phin{n+1} = @(x) fcn_phin(x,n,K,xmin,theta0);
+    %phin{n+1} = @(x) fcn_phin(x,n,K,xmin,theta0);
+    phin{n+1} = @(x) fcn_chi(x/Delta-n,R);
 end
 
 %%
@@ -50,7 +54,8 @@ for m=0:M-1
     psim{m+1} = @(x) 0;
     for n=0:M-1
         dnm = D(n+1,m+1);
-        psim{m+1} = @(x) psim{m+1}(x) + dnm*fcn_phin(x,n,K,xmin,theta0);
+        %psim{m+1} = @(x) psim{m+1}(x) + dnm*fcn_phin(x,n,K,xmin,theta0);
+        psim{m+1} = @(x) psim{m+1}(x) + dnm*fcn_chi(x/Delta-n,R);
     end
 end
 
@@ -83,4 +88,18 @@ if K > 0
     end
     y = y + cos(2*pi*K*x);
 end
+end
+
+%%
+function z = fcn_chi(x,y)
+arguments (Input)
+    x
+    y
+end
+
+arguments (Output)
+    z
+end
+
+z = (x>=y(1)).*(x<y(2));
 end
