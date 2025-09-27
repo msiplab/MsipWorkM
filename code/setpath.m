@@ -1,7 +1,0 @@
-addpath('.')
-addpath('./scripts/ch01')
-addpath('./scripts/ch02')
-addpath('./scripts/ch03')
-addpath('./scripts/ch04')
-addpath('./scripts/ch05')
-addpath('./scripts/ch06')

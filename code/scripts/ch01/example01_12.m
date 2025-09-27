@@ -1,9 +1,9 @@
-%[text] # 例1.6（復元処理）
+%[text] # 例1.12（復元処理）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2017a
 %[text] ## 画像データのダウンロード
 isVerbose = false;
-msip.download_img(isVerbose)
+msip.download_img(isVerbose) %[output:4971f24d]
 %%
 %[text] ## 画像データの読込
 X = im2double(rgb2gray(imread('./data/lena.png')));
@@ -94,4 +94,7 @@ end
 %---
 %[metadata:view]
 %   data: {"layout":"onright"}
+%---
+%[output:4971f24d]
+%   data: {"dataType":"error","outputData":{"errorType":"runtime","text":"次を使用中のエラー: <a href=\"matlab:matlab.lang.internal.introspective.errorDocCallback('imread', 'C:\\Program Files\\MATLAB\\R2025b\\toolbox\\matlab\\matlab_im\\imread.m', 430)\" style=\"font-weight:bold\">imread<\/a> (<a href=\"matlab: opentoline('C:\\Program Files\\MATLAB\\R2025b\\toolbox\\matlab\\matlab_im\\imread.m',430,0)\">行 430<\/a>)\n'http:\/\/homepages.cae.wisc.edu\/~ece533\/images\/lena.png' を開けません。指定したインターネット URL には認証が必要な場合がありますが、これはサポートされていません。\n\nエラー: <a href=\"matlab:matlab.lang.internal.introspective.errorDocCallback('msip.download_img', 'C:\\Users\\shogo\\Workspace\\GitHub\\MsipWorkM\\code\\+msip\\download_img.m', 20)\" style=\"font-weight:bold\">msip.download_img<\/a> (<a href=\"matlab: opentoline('C:\\Users\\shogo\\Workspace\\GitHub\\MsipWorkM\\code\\+msip\\download_img.m',20,0)\">行 20<\/a>)\n            img = imread(...\n            ^^^^^^^^^^^^^^^^"}}
 %---

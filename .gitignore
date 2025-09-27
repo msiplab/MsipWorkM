@@ -1,13 +1,17 @@
-# MATLAB files
+# MATLAB
 *.asv
-*.mlx
-*.mat
+*.m~ 
+*.mex* 
+*.slxc
+*.slprj/
+*.autosave
 
-# Image files
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
 
-*.png
-*.jpg
-
-# Livescripts
-
-livescripts/
+# Data & results (巨大物は追跡しない方針)
+data/raw/
+results/
