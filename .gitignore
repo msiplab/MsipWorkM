@@ -12,6 +12,6 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Data & results (巨大物は追跡しない方針)
+# Data & results 
 data/raw/
 results/
