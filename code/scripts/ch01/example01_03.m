@@ -1,16 +1,20 @@
-%% —á1.3iƒxƒNƒgƒ‹‰»j
-% ‘º¼³Œá@u‘½ŽŸŒ³M†E‰æ‘œˆ—‚ÌŠî‘b‚Æ“WŠJv
-% 
-% “®ìŠm”FF MATLAB R2017a
-%% $2\times 3$”z—ñ‚Ì¶¬
-%%
+%[text] # ä¾‹1.3ï¼ˆãƒ™ã‚¯ãƒˆãƒ«åŒ–ï¼‰
+%[text] æ‘æ¾æ­£å¾ã€€ã€Œå¤šæ¬¡å…ƒä¿¡å·ãƒ»ç”»åƒå‡¦ç†ã®åŸºç¤Žã¨å±•é–‹ã€
+%[text] å‹•ä½œç¢ºèªï¼š MATLAB R2017a
+%[text] ## $2\\times 3$é…åˆ—ã®ç”Ÿæˆ
 V = rand(2,3)
 size(V)
-%% —ñƒxƒNƒgƒ‹‰»
 %%
+%[text] ## åˆ—ãƒ™ã‚¯ãƒˆãƒ«åŒ–
 v = V(:)
 size(v)
-%% ‹t—ñƒxƒNƒgƒ‹‰»
 %%
+%[text] ## é€†åˆ—ãƒ™ã‚¯ãƒˆãƒ«åŒ–
 U = reshape(v,2,3)
 size(U)
+
+%[appendix]{"version":"1.0"}
+%---
+%[metadata:view]
+%   data: {"layout":"onright"}
+%---

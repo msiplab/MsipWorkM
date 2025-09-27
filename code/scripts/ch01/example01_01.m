@@ -1,25 +1,23 @@
-%% 例1.1（配列表現）
-% 村松正吾　「多次元信号・画像処理の基礎と展開」
-% 
-% 動作確認： MATLAB R2017a
-%% 画像データのダウンロード
-%%
+%[text] # 例1.1（配列表現）
+%[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
+%[text] 動作確認： MATLAB R2017a
+%[text] ## 画像データのダウンロード
 isVerbose = false;
 msip.download_img(isVerbose)
-%% (a) グレースケール画像
 %%
+%[text] ## (a) グレースケール画像
 fprintf('(a) グレースケール画像\n')
 V = imread('./data/barbara.png');
 fprintf('配列次元： D = %d\n',ndims(V))
 imshow(V)
-%% (b) RGB画像
 %%
+%[text] ## (b) RGB画像
 fprintf('(b) RGB画像\n')
 V = imread('./data/lena.png');
 fprintf('配列次元： D = %d\n',ndims(V))
 imshow(V)
-%% (c) 動画像
 %%
+%[text] ## (c) 動画像
 fprintf('(c) RGB動画像\n')
 vrObj = VideoReader('shuttle.avi');
 V = zeros(vrObj.Height,vrObj.Width,3,2,'uint8');
@@ -30,8 +28,8 @@ imshow(V(:,:,:,1))
 title('第0フレーム')
 imshow(V(:,:,:,2))
 title('第1フレーム')
-%% (d) ボリュームデーデータ
 %%
+%[text] ## (d) ボリュームデーデータ
 fprintf('(d) ボリュームデータ\n')
 load mri
 V = squeeze(D);
@@ -40,3 +38,9 @@ imshow(V(:,:,1))
 title('第0スライス(xy)')
 imshow(V(:,:,2))
 title('第1スライス(xy)')
+
+%[appendix]{"version":"1.0"}
+%---
+%[metadata:view]
+%   data: {"layout":"onright"}
+%---

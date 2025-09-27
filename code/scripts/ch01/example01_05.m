@@ -1,45 +1,49 @@
-%% —á1.5iˆ³kˆ—j
-% ‘º¼³Œá@u‘½ŸŒ³M†E‰æ‘œˆ—‚ÌŠî‘b‚Æ“WŠJv
-% 
-% “®ìŠm”FF MATLAB R2017a
-%% ‰æ‘œƒf[ƒ^‚Ìƒ_ƒEƒ“ƒ[ƒh
-%%
+%[text] # ä¾‹1.5ï¼ˆåœ§ç¸®å‡¦ç†ï¼‰
+%[text] æ‘æ¾æ­£å¾ã€€ã€Œå¤šæ¬¡å…ƒä¿¡å·ãƒ»ç”»åƒå‡¦ç†ã®åŸºç¤ã¨å±•é–‹ã€
+%[text] å‹•ä½œç¢ºèªï¼š MATLAB R2017a
+%[text] ## ç”»åƒãƒ‡ãƒ¼ã‚¿ã®ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰
 isVerbose = false;
 msip.download_img(isVerbose)
-%% ‰æ‘œƒf[ƒ^‚Ì“Ç
 %%
+%[text] ## ç”»åƒãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼
 V = imread('./data/barbara.png');
-%% ˆ³k‘O‚Ìƒf[ƒ^—Ê
 %%
+%[text] ## åœ§ç¸®å‰ã®ãƒ‡ãƒ¼ã‚¿é‡
 dataInfo = whos('V');
-fprintf('ˆ³k‘O‚ÌƒoƒCƒg”F %d [Bytes]\n',dataInfo.bytes)
-fprintf('ˆ³k‘O‚Ìƒrƒbƒg”F %6.2f [bpp]\n',8*dataInfo.bytes/prod(dataInfo.size))
-%% ˆ³k‘O‚Ì‰æ‘œ•\¦
+fprintf('åœ§ç¸®å‰ã®ãƒã‚¤ãƒˆæ•°ï¼š %d [Bytes]\n',dataInfo.bytes)
+fprintf('åœ§ç¸®å‰ã®ãƒ“ãƒƒãƒˆæ•°ï¼š %6.2f [bpp]\n',8*dataInfo.bytes/prod(dataInfo.size))
 %%
+%[text] ## åœ§ç¸®å‰ã®ç”»åƒè¡¨ç¤º
 figure(1)
 imshow(V)
-title('Œ´‰æ‘œ')
-%% JPEGˆ³k
+title('åŸç”»åƒ')
 %%
-qFactor = 50; % •i¿§Œä [0,100]
+%[text] ## JPEGåœ§ç¸®
+qFactor = 50; % å“è³ªåˆ¶å¾¡ [0,100]
 imwrite(V,'./data/barbara.jpg','Quality',qFactor)
-%% ˆ³kŒã‚Ìƒf[ƒ^—Ê
 %%
+%[text] ## åœ§ç¸®å¾Œã®ãƒ‡ãƒ¼ã‚¿é‡
 fileInfo = dir('./data/barbara.jpg');
-fprintf('ˆ³kŒã‚ÌƒoƒCƒg”F %d [Bytes]\n',fileInfo.bytes)
-fprintf('ˆ³kŒã‚Ìƒrƒbƒg”F %6.2f [bpp]\n',8*fileInfo.bytes/prod(dataInfo.size))
-%% ˆ³kŒã‚Ì‰æ‘œ•\¦
+fprintf('åœ§ç¸®å¾Œã®ãƒã‚¤ãƒˆæ•°ï¼š %d [Bytes]\n',fileInfo.bytes)
+fprintf('åœ§ç¸®å¾Œã®ãƒ“ãƒƒãƒˆæ•°ï¼š %6.2f [bpp]\n',8*fileInfo.bytes/prod(dataInfo.size))
 %%
+%[text] ## åœ§ç¸®å¾Œã®ç”»åƒè¡¨ç¤º
 U = imread('./data/barbara.jpg');
 figure(2)
 imshow(U)
-title('JPEGˆ³k‰æ‘œ')
-%% ˆ³k‘OŒã‚Ì·•ª‰æ‘œ•\¦
+title('JPEGåœ§ç¸®ç”»åƒ')
 %%
+%[text] ## åœ§ç¸®å‰å¾Œã®å·®åˆ†ç”»åƒè¡¨ç¤º
 Y = imadjust(imabsdiff(U,V));
 figure(3)
 imshow(Y)
-title('·•ª‰æ‘œ')
-%% ƒs[ƒNM†‘ÎG‰¹”ä‚É‚æ‚éŒë·•]‰¿
+title('å·®åˆ†ç”»åƒ')
 %%
+%[text] ## ãƒ”ãƒ¼ã‚¯ä¿¡å·å¯¾é›‘éŸ³æ¯”ã«ã‚ˆã‚‹èª¤å·®è©•ä¾¡
 fprintf('PSNR:  %6.2f [dB]\n',psnr(V,U))
+
+%[appendix]{"version":"1.0"}
+%---
+%[metadata:view]
+%   data: {"layout":"onright"}
+%---

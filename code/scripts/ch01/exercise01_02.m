@@ -1,17 +1,21 @@
-%% —á‘è1.2i“®‰æ‘œ‚Ìƒf[ƒ^—Êj
-% ‘º¼³Œá@u‘½ŽŸŒ³M†E‰æ‘œˆ—‚ÌŠî‘b‚Æ“WŠJv
-% 
-% “®ìŠm”FF MATLAB R2017a
-%% ƒtƒŒ[ƒ€‚Ì¶¬
-%%
+%[text] # ä¾‹é¡Œ1.2ï¼ˆå‹•ç”»åƒã®ãƒ‡ãƒ¼ã‚¿é‡ï¼‰
+%[text] æ‘æ¾æ­£å¾ã€€ã€Œå¤šæ¬¡å…ƒä¿¡å·ãƒ»ç”»åƒå‡¦ç†ã®åŸºç¤Žã¨å±•é–‹ã€
+%[text] å‹•ä½œç¢ºèªï¼š MATLAB R2017a
+%[text] ## ãƒ•ãƒ¬ãƒ¼ãƒ ã®ç”Ÿæˆ
 frame = ones(4320,7680,3,'uint8');
-%% 1ƒtƒŒ[ƒ€“–‚½‚è‚Ì—v‘f”i‰æ‘f”~F¬•ª”j
 %%
+%[text] ## 1ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®è¦ç´ æ•°ï¼ˆç”»ç´ æ•°Ã—è‰²æˆåˆ†æ•°ï¼‰
 nS = numel(frame)
-%% 1ƒtƒŒ[ƒ€“–‚½‚è‚Ìƒrƒbƒg”
 %%
+%[text] ## 1ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®ãƒ“ãƒƒãƒˆæ•°
 B = 8*nS
-%% ƒrƒbƒgƒŒ[ƒg
 %%
+%[text] ## ãƒ“ãƒƒãƒˆãƒ¬ãƒ¼ãƒˆ
 deltaT = 1/60;
 R = B / deltaT
+
+%[appendix]{"version":"1.0"}
+%---
+%[metadata:view]
+%   data: {"layout":"onright"}
+%---

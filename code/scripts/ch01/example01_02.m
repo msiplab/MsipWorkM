@@ -1,20 +1,18 @@
-%% —á1.2i•W€Šî’ê‚É‚æ‚é“WŠJj
-% ‘º¼³Œá@u‘½ŽŸŒ³M†E‰æ‘œˆ—‚ÌŠî‘b‚Æ“WŠJv
-% 
-% “®ìŠm”FF MATLAB R2017a
-%% $2\times 3$ ”z—ñ‚Ì¶¬
-%%
+%[text] # ä¾‹1.2ï¼ˆæ¨™æº–åŸºåº•ã«ã‚ˆã‚‹å±•é–‹ï¼‰
+%[text] æ‘æ¾æ­£å¾ã€€ã€Œå¤šæ¬¡å…ƒä¿¡å·ãƒ»ç”»åƒå‡¦ç†ã®åŸºç¤Žã¨å±•é–‹ã€
+%[text] å‹•ä½œç¢ºèªï¼š MATLAB R2017a
+%[text] ## $2\\times 3$ é…åˆ—ã®ç”Ÿæˆ
 V = rand(2,3)
-%% Še”z—ñ—v‘f‚Ì’Šo
 %%
+%[text] ## å„é…åˆ—è¦ç´ ã®æŠ½å‡º
 v0 = V(1,1)
 v1 = V(2,1)
 v2 = V(1,2)
 v3 = V(2,2)
 v4 = V(1,3)
 v5 = V(2,3)
-%% $2\times 3$”z—ñ‚Ì•W€Šî’ê
 %%
+%[text] ## $2\\times 3$é…åˆ—ã®æ¨™æº–åŸºåº•
 B0 = [ 1 0 0 ; 
        0 0 0 ]
    
@@ -32,7 +30,13 @@ B4 = [ 0 0 1 ;
    
 B5 = [ 0 0 0 ; 
        0 0 1 ]
-%% •W€Šî’ê‚É‚æ‚é“WŠJ•\Œ»
 %%
+%[text] ## æ¨™æº–åŸºåº•ã«ã‚ˆã‚‹å±•é–‹è¡¨ç¾
 v0*B0 + v2*B2 + v4*B4  ...
     + v1*B1 + v3*B3 + v5*B5
+
+%[appendix]{"version":"1.0"}
+%---
+%[metadata:view]
+%   data: {"layout":"onright"}
+%---
