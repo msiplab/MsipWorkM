@@ -2,7 +2,6 @@
 %村松正吾　「多次元信号・画像処理の基礎と展開」
 %動作確認： MATLAB R2025b
 %準備
-isVerbose = false;
 prj = matlab.project.currentProject;
 prjroot = prj.RootFolder;
 datfolder = fullfile(prjroot,"data");
@@ -21,7 +20,7 @@ subplot(1,2,1)
 imshow(X)
 title('原画像')
 
-%% DCT
+%% ブロックDCT
 Z = zeros(8);
 Z(1,1)=1;
 Z(1,2)=1;
