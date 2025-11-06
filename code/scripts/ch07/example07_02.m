@@ -22,6 +22,9 @@ imshow(X)
 title('原画像')
 imwrite(X,fullfile(resfolder,myfilename+"org"),imgfmt)
 
+% GPU へ転送
+X = gpuArray(X);
+
 %%
 %{
 waveinfo('bior')
@@ -73,7 +76,7 @@ V = im53itrans(LL1,HL1,LH1,HH1);
 % 結果表示
 subplot(1,3,2)
 imshow(V)
-title("CDF 5/3 DWT　ゾーン符号化 (PSNR:"+psnr(X,V)+" dB)")
+title("CDF 5/3 DWT　ゾーン符号化 (PSNR:"+num2str(psnr(X,V))+" dB)")
 imwrite(V,fullfile(resfolder,myfilename+"dwtzc"),imgfmt)
 
 %% 随伴関係の確認
@@ -151,5 +154,5 @@ U = im53itrans(c_LL1,c_HL1,c_LH1,c_HH1);
 % 結果表示
 subplot(1,3,3)
 imshow(U)
-title("CDF 5/3 DWT 最小二乗法 (PSNR:"+psnr(X,U)+" dB)")
+title("CDF 5/3 DWT 最小二乗法 (PSNR:"+num2str(psnr(X,U))+" dB)")
 imwrite(U,fullfile(resfolder,myfilename+"dwtls"),imgfmt)

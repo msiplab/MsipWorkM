@@ -8,7 +8,7 @@ import msip.*
 
 % 配列の準備
 fullSize = size(subLL) + size(subHH);
-fullPicture = zeros(fullSize);
+fullPicture = zeros(fullSize,'like',subLL);
 
 % 係数並べ替え
 fullPicture(1:2:end,1:2:end,:) = subLL;
