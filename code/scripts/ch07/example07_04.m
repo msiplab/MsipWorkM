@@ -45,7 +45,7 @@ imwrite(Xdct,fullfile(resfolder,myfilename+"dctiht"),imgfmt)
 nLv = 3; % ツリー段数
 gain2d = 4; % HH フィルタのゲイン
 syndic = @(x,option) cdf53dwt3lv(x,option);
-nIters = 1000; % 反復回数
+nIters = 5000; % 反復回数
 kappa = (gain2d^nLv)^2; % スペクトルノルム||D||_S の二乗
 mu = (1-1e-3)*(1/kappa); % ステップサイズ
 
@@ -80,7 +80,7 @@ for t = 1:nIters
     % 勾配降下 z ← s - μ∇f(s)
     z = s - mu*g;
     % ハード閾値処理
-    [~,I] = maxk(z,nCoefs,'ComparisonMethod','abs');
+    [~,I] = maxk(z(:),nCoefs,'ComparisonMethod','abs');
     s = zeros(size(s),'like',s);
     s(I) = z(I);
 

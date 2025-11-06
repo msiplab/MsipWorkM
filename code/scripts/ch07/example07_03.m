@@ -28,7 +28,7 @@ X = gpuArray(X);
 K = (3/64)*numel(X);
 
 %% DCT の ||d_i||_2^2 の事前計算 
-di_sqrdnorm = 1;
+di_sqrdnorm_dct = 1;
 
 %% MP + DCT
 syndic = @(x,option) blockidct2(x,option);
@@ -39,7 +39,7 @@ him = imshow(zeros(size(X),'like',X));
 htt = title("MP+DCT");
 
 % MP法による近似
-Xdct = mp(X,syndic,K,di_sqrdnorm,him,htt);
+Xdct = mp(X,syndic,K,di_sqrdnorm_dct,him,htt);
 imwrite(Xdct,fullfile(resfolder,myfilename+"dctmp"),imgfmt)
 
 %% OMP + DCT
@@ -53,7 +53,7 @@ him = imshow(zeros(size(X),'like',X));
 htt = title("OMP+DCT");
 
 % MP法による近似
-Xdct = omp(X,syndic,K,nSGIter,muSG,di_sqrdnorm,him,htt);
+Xdct = omp(X,syndic,K,nSGIter,muSG,di_sqrdnorm_dct,him,htt);
 imwrite(Xdct,fullfile(resfolder,myfilename+"dctomp"),imgfmt)
 
 %% CDF 5/3 DWT の ||d_i||_2^2 の事前計算 
@@ -66,7 +66,7 @@ if exist(disqrdnormfile,'file')
 
     disp("Loading ||d_i||_2^2")
     S = load(disqrdnormfile);
-    di_sqrdnorm = S.di_sqrdnorm;
+    di_sqrdnorm_dwt = S.di_sqrdnorm;
 
 else
 
@@ -85,6 +85,7 @@ else
     di_sqrdnorm = cell2mat(di_sqrdnorm_);
     disp("Saving ||d_i||_2^2")
     save(disqrdnormfile,"di_sqrdnorm")
+    di_sqrdnorm_dwt = di_sqrdnorm;
 
 end
 
@@ -107,14 +108,14 @@ him = imshow(zeros(size(X),'like',X));
 htt = title("MP+DWT");
 
 % MP法による近似
-Xdwt = mp(X,syndic,K,di_sqrdnorm,him,htt);
+Xdwt = mp(X,syndic,K,di_sqrdnorm_dwt,him,htt);
 imwrite(Xdwt,fullfile(resfolder, myfilename+"dwtmp"),imgfmt)
 
 %% OMP + DWT
 syndic = @(x,option) cdf53dwt3lv(x,option);
 nLv = 3; % ツリー段数
 gain2d = 4; % HH フィルタのゲイン
-nIters = 1000; % 反復回数
+nSGIters = 500; % 反復回数
 kappa = (gain2d^nLv)^2; % スペクトルノルム||D||_S の二乗
 muSG = (1-1e-3)*(2/kappa); % ステップサイズ
 
@@ -124,7 +125,7 @@ him = imshow(zeros(size(X),'like',X));
 htt = title("OMP+DWT");
 
 % MP法による近似
-Xdwt = omp(X,syndic,K,nSGIters,muSG,di_sqrdnorm,him,htt);
+Xdwt = omp(X,syndic,K,nSGIters,muSG,di_sqrdnorm_dwt,him,htt);
 imwrite(Xdwt,fullfile(resfolder,myfilename+"dwtomp"),imgfmt)
 
 %% MP法
@@ -139,7 +140,7 @@ s = syndic(zeros(size(x),'like',x),'adj');
 while k < nCoefs
     a = syndic(r,'adj'); % 相関計算
     a = a ./ di_sqrdnorm; % 正規化
-    e = norm(r(:),2)^2 - a.^2.*di_sqrdnorm; % 誤差評価
+    e = norm(r(:),2)^2 - (a.^2).*di_sqrdnorm; % 誤差評価
     [~,imin] = min(e(:)); % 要素画像の選択
     I = union(I,imin); % 添字集合の更新
     s(imin) = s(imin) + a(imin); % 係数更新
@@ -165,14 +166,14 @@ stt = htt.String;
 % 初期化
 r = x;
 I = [];
-s0 = syndic(x,'adj');
-
+s0 = syndic(x,'adj') ./ di_sqrdnorm;
 for k = 1:nCoefs
     a = syndic(r,'adj'); % 相関計算    
     a = a ./ di_sqrdnorm; % 正規化
-    e = norm(r(:),2)^2 - a.^2.*di_sqrdnorm; % 誤差評価
+    e = norm(r(:),2)^2 - (a.^2).*di_sqrdnorm; % 誤差評価
     [~,imin] = min(e(:)); % 要素画像の選択
     I = union(I,imin); % 添字集合の更新
+
     % 勾配法による最小自乗解
     y = s0(I);
     for iter = 1:nSGIters
@@ -187,6 +188,8 @@ for k = 1:nCoefs
         % 係数更新 y ← y - μ∇f(y)
         y = y - mu*g;
     end
+
+    % 残差の更新
     r = x - xaprx;
 
     % モニタリング

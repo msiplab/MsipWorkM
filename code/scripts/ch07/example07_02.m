@@ -77,6 +77,7 @@ V = im53itrans(LL1,HL1,LH1,HH1);
 subplot(1,3,2)
 imshow(V)
 title("CDF 5/3 DWT　ゾーン符号化 (PSNR:"+num2str(psnr(X,V))+" dB)")
+drawnow
 imwrite(V,fullfile(resfolder,myfilename+"dwtzc"),imgfmt)
 
 %% 随伴関係の確認
@@ -92,7 +93,7 @@ absdiff = max(abs(a-b));
 assert(absdiff<1e-9,"随伴関係が成り立ちません: "+num2str(absdiff))
 
 %% 最小二乗法
-nIters = 2000; % 繰り返し回数
+nIters = 3000; % 繰り返し回数
 nLv = 3; % ツリー段数
 gain2d = 4; % HH フィルタのゲイン
 kappa = (gain2d^nLv)^2; % スペクトルノルム||DS||_S の二乗
@@ -103,14 +104,63 @@ mu = (1-1e-3)*(2/kappa); % ステップサイズ
 [LL2,HL2,LH2,HH2] = imadj53itrans(LL1);
 [LL3,HL3,LH3,HH3] = imadj53itrans(LL2);
 
-%[LL1,HL1,LH1,HH1] = im53trans(X);
-%[LL2,HL2,LH2,HH2] = im53trans(LL1);
-%[LL3,HL3,LH3,HH3] = im53trans(LL2);
+%{
+% CDF 5/3 DWT の ||d_i||_2^2 の事前計算 
+sz0 = size(X);
+disqrdnormfile = fullfile(datfolder, myfilename +...
+    "_disqurdnorm_" +...
+    num2str(sz0(1)) +"x"+num2str(sz0(2))+".mat");
+
+if exist(disqrdnormfile,'file')
+
+    disp("Loading ||d_i||_2^2")
+    S = load(disqrdnormfile);
+    di_sqrdnorm_dwt = S.di_sqrdnorm;
+
+else
+
+    disp("Calculating ||d_i||_2^2")
+    zerocoefs2 = cdf53dwt3lv(zeros(sz0(1),sz0(2)),'adj');
+    di_sqrdnorm_ = cell(size(zerocoefs2,1),size(zerocoefs2,2));
+
+    parfor idx = 1:numel(zerocoefs2)
+
+        delta2 = zerocoefs2;
+        delta2(idx) = 1;
+        dd = cdf53dwt3lv(cdf53dwt3lv(delta2,'syn'),'adj');
+        di_sqrdnorm_{idx} = dd(idx);
+
+    end
+    di_sqrdnorm = cell2mat(di_sqrdnorm_);
+    disp("Saving ||d_i||_2^2")
+    save(disqrdnormfile,"di_sqrdnorm")
+    di_sqrdnorm_dwt = di_sqrdnorm;
+
+end
+
+% スケーリング係数
+sz0 = size(X);
+sz1 = ceil(sz0/2);
+sz2 = ceil(sz1/2);
+sz3 = ceil(sz2/2);
+cLL1 = di_sqrdnorm(1:sz1(1),1:sz1(2));
+cHL1 = di_sqrdnorm(1:sz1(1),sz1(2)+1:end);
+cLH1 = di_sqrdnorm(sz1(1)+1:end,1:sz1(2));
+cHH1 = di_sqrdnorm(sz1(1)+1:end,sz1(2)+1:end);
+cLL2 = cLL1(1:sz2(1),1:sz2(2));
+cHL2 = cLL1(1:sz2(1),sz2(2)+1:end);
+cLH2 = cLL1(sz2(1)+1:end,1:sz2(2));
+cHH2 = cLL1(sz2(1)+1:end,sz2(2)+1:end);
+cLL3 = cLL2(1:sz3(1),1:sz3(2));
+cHL3 = cLL2(1:sz3(1),sz3(2)+1:end);
+cLH3 = cLL2(sz3(1)+1:end,1:sz3(2));
+cHH3 = cLL2(sz3(1)+1:end,sz3(2)+1:end);
+%}
 
 % 初期化（ゾーン符号化） y = Sc = STx
-y_LL3 = LL3;
-y_HL3 = HL3;
-y_LH3 = LH3;
+y_LL3 = LL3; %./cLL3;
+y_HL3 = HL3; %./cHL3;
+y_LH3 = LH3; %./cLH3;
 %
 c_HH3 = 0*HH3;
 c_HL2 = 0*HL2;
@@ -140,7 +190,21 @@ for iter = 1:nIters
     y_LL3 = y_LL3 - mu*grad_LL3;
     y_HL3 = y_HL3 - mu*grad_HL3;
     y_LH3 = y_LH3 - mu*grad_LH3;
+
+    % モニタリング
+    if iter == 1
+        subplot(1,3,3)
+        him = imshow(V);
+        stt = "CDF 5/3 DWT 最小二乗法 ";
+        htt = title(stt + "(t: " + num2str(iter) + ", PSNR:"+num2str(psnr(X,V))+" dB)");
+        drawnow
+    elseif mod(iter,100)==0 
+        him.CData = gather(V);
+        htt.String = stt + "(t: " + num2str(iter) + ", PSNR:"+num2str(psnr(X,V))+" dB)";
+        drawnow
+    end
 end
+
 % ゾーン符号化 c = y
 c_LL3 = y_LL3;
 c_HL3 = y_HL3;
@@ -149,10 +213,66 @@ c_LH3 = y_LH3;
 % 合成処理 v = DS.'c
 c_LL2 = im53itrans(c_LL3,c_HL3,c_LH3,c_HH3);
 c_LL1 = im53itrans(c_LL2,c_HL2,c_LH2,c_HH2);
-U = im53itrans(c_LL1,c_HL1,c_LH1,c_HH1);
+V = im53itrans(c_LL1,c_HL1,c_LH1,c_HH1);
 
 % 結果表示
-subplot(1,3,3)
-imshow(U)
-title("CDF 5/3 DWT 最小二乗法 (PSNR:"+num2str(psnr(X,U))+" dB)")
-imwrite(U,fullfile(resfolder,myfilename+"dwtls"),imgfmt)
+him.CData = V;
+htt.String = stt + "(t: " + num2str(nIters) + ", PSNR:"+num2str(psnr(X,V))+" dB)";
+drawnow
+imwrite(V,fullfile(resfolder,myfilename+"dwtls"),imgfmt)
+
+%{
+%% CDF 5/3 DWT
+function y = cdf53dwt3lv(x,option)
+import msip.*
+
+%
+sz0 = size(x);
+sz1 = ceil(sz0/2);
+sz2 = ceil(sz1/2);
+sz3 = ceil(sz2/2);
+
+if strcmp(option,'syn')
+    %
+    x1  = x(1:sz1(1),1:sz1(2),:);
+    HL1 = x(1:sz1(1),sz1(2)+1:end,:);
+    LH1 = x(sz1(1)+1:end,1:sz1(2),:);
+    HH1 = x(sz1(1)+1:end,sz1(2)+1:end,:);
+    %
+    x2  = x1(1:sz2(1),1:sz2(2),:);
+    HL2 = x1(1:sz2(1),sz2(2)+1:end,:);
+    LH2 = x1(sz2(1)+1:end,1:sz2(2),:);
+    HH2 = x1(sz2(1)+1:end,sz2(2)+1:end,:);
+    %
+    LL3 = x2(1:sz3(1),1:sz3(2),:);
+    HL3 = x2(1:sz3(1),sz3(2)+1:end,:);
+    LH3 = x2(sz3(1)+1:end,1:sz3(2),:);
+    HH3 = x2(sz3(1)+1:end,sz3(2)+1:end,:);
+    %
+    LL2 = im53itrans(LL3,HL3,LH3,HH3);
+    LL1 = im53itrans(LL2,HL2,LH2,HH2);
+    y = im53itrans(LL1,HL1,LH1,HH1);
+
+elseif strcmp(option,'adj') 
+
+    [LL1,HL1,LH1,HH1] = imadj53itrans(x);
+    [LL2,HL2,LH2,HH2] = imadj53itrans(LL1);
+    [LL3,HL3,LH3,HH3] = imadj53itrans(LL2);
+    Y2 = cat(1,cat(2,LL3,HL3),cat(2,LH3,HH3));
+    Y1 = cat(1,cat(2,Y2,HL2),cat(2,LH2,HH2));
+    y = cat(1,cat(2,Y1,HL1),cat(2,LH1,HH1));
+
+elseif strcmp(option, 'ana')
+
+    [LL1,HL1,LH1,HH1] = im53trans(x);
+    [LL2,HL2,LH2,HH2] = im53trans(LL1);
+    [LL3,HL3,LH3,HH3] = im53trans(LL2);
+    Y2 = cat(1,cat(2,LL3,HL3),cat(2,LH3,HH3));
+    Y1 = cat(1,cat(2,Y2,HL2),cat(2,LH2,HH2));
+    y = cat(1,cat(2,Y1,HL1),cat(2,LH1,HH1));
+
+else
+    error('不正なオプションです')
+end
+end
+%}
