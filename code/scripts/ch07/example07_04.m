@@ -45,7 +45,7 @@ imwrite(Xdct,fullfile(resfolder,myfilename+"dctiht"),imgfmt)
 nLv = 3; % ツリー段数
 gain2d = 4; % HH フィルタのゲイン
 syndic = @(x,option) cdf53dwt3lv(x,option);
-nIters = 5000; % 反復回数
+nIters = 10000; % 反復回数
 kappa = (gain2d^nLv)^2; % スペクトルノルム||D||_S の二乗
 mu = (1-1e-3)*(1/kappa); % ステップサイズ
 

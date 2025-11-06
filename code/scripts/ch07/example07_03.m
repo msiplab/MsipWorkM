@@ -115,7 +115,7 @@ imwrite(Xdwt,fullfile(resfolder, myfilename+"dwtmp"),imgfmt)
 syndic = @(x,option) cdf53dwt3lv(x,option);
 nLv = 3; % ツリー段数
 gain2d = 4; % HH フィルタのゲイン
-nSGIters = 500; % 反復回数
+nSGIters = 100; % 反復回数
 kappa = (gain2d^nLv)^2; % スペクトルノルム||D||_S の二乗
 muSG = (1-1e-3)*(2/kappa); % ステップサイズ
 
@@ -166,7 +166,8 @@ stt = htt.String;
 % 初期化
 r = x;
 I = [];
-s0 = syndic(x,'adj') ./ di_sqrdnorm;
+% 
+s0 = syndic(x,'adj');
 for k = 1:nCoefs
     a = syndic(r,'adj'); % 相関計算    
     a = a ./ di_sqrdnorm; % 正規化
@@ -175,10 +176,10 @@ for k = 1:nCoefs
     I = union(I,imin); % 添字集合の更新
 
     % 勾配法による最小自乗解
+    s = zeros(size(s0),'like',s0);
     y = s0(I);
     for iter = 1:nSGIters
         % 合成処理 v = DS.'y
-        s = zeros(size(a),'like',a);
         s(I) = y;
         xaprx = syndic(s,'syn');
         % 随伴処理 z = D.'(v-x) = D.'(DS.'y-x)
