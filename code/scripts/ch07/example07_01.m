@@ -19,6 +19,7 @@ figure(1)
 subplot(1,2,1)
 imshow(X)
 title('原画像')
+imwrite(X,fullfile(resfolder,myfilename+"org"),imgfmt)
 
 %% ブロックDCT
 Z = zeros(8);
@@ -30,3 +31,4 @@ Y = blockproc(X,[8 8],@(x) idct2(Z.*dct2(x.data)));
 subplot(1,2,2)
 imshow(Y)
 title("ブロックDCT (PSNR:"+psnr(X,Y)+" dB")
+imwrite(Y,fullfile(resfolder,myfilename+"dctzc"),imgfmt)

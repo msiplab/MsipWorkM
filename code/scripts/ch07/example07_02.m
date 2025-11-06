@@ -7,7 +7,7 @@ prj = matlab.project.currentProject;
 prjroot = prj.RootFolder;
 datfolder = fullfile(prjroot,"data");
 resfolder = fullfile(prjroot,"results");
-myfilename = "example07_01"; % mfilename
+myfilename = "example07_02"; % mfilename
 
 imgname = "msipimg02";
 imgfmt = "tiff";
@@ -20,6 +20,7 @@ figure(1)
 subplot(1,3,1)
 imshow(X)
 title('原画像')
+imwrite(X,fullfile(resfolder,myfilename+"org"),imgfmt)
 
 %%
 %{
@@ -73,6 +74,7 @@ V = im53itrans(LL1,HL1,LH1,HH1);
 subplot(1,3,2)
 imshow(V)
 title("CDF 5/3 DWT　ゾーン符号化 (PSNR:"+psnr(X,V)+" dB)")
+imwrite(V,fullfile(resfolder,myfilename+"dwtzc"),imgfmt)
 
 %% 随伴関係の確認
 % <x,v> = <x,Du> = <D'x,u> = <y,Tv>
@@ -87,16 +89,20 @@ absdiff = max(abs(a-b));
 assert(absdiff<1e-9,"随伴関係が成り立ちません: "+num2str(absdiff))
 
 %% 最小二乗法
-nIters = 1000; % 繰り返し回数
+nIters = 2000; % 繰り返し回数
 nLv = 3; % ツリー段数
 gain2d = 4; % HH フィルタのゲイン
 kappa = (gain2d^nLv)^2; % スペクトルノルム||DS||_S の二乗
-mu = 0.9*(2/kappa); % ステップサイズ
+mu = (1-1e-3)*(2/kappa); % ステップサイズ
 
-% 分析処理 c = Tx
-[LL1,HL1,LH1,HH1] = im53trans(X);
-[LL2,HL2,LH2,HH2] = im53trans(LL1);
-[LL3,HL3,LH3,HH3] = im53trans(LL2);
+% 分析処理 c = D.'x
+[LL1,HL1,LH1,HH1] = imadj53itrans(X);
+[LL2,HL2,LH2,HH2] = imadj53itrans(LL1);
+[LL3,HL3,LH3,HH3] = imadj53itrans(LL2);
+
+%[LL1,HL1,LH1,HH1] = im53trans(X);
+%[LL2,HL2,LH2,HH2] = im53trans(LL1);
+%[LL3,HL3,LH3,HH3] = im53trans(LL2);
 
 % 初期化（ゾーン符号化） y = Sc = STx
 y_LL3 = LL3;
@@ -127,7 +133,7 @@ for iter = 1:nIters
     grad_HL3 = z_HL3;
     grad_LH3 = z_LH3;
 
-    % 係数更新 y <- y - μ∇f(y)
+    % 係数更新 y ← y - μ∇f(y)
     y_LL3 = y_LL3 - mu*grad_LL3;
     y_HL3 = y_HL3 - mu*grad_HL3;
     y_LH3 = y_LH3 - mu*grad_LH3;
@@ -140,9 +146,10 @@ c_LH3 = y_LH3;
 % 合成処理 v = DS.'c
 c_LL2 = im53itrans(c_LL3,c_HL3,c_LH3,c_HH3);
 c_LL1 = im53itrans(c_LL2,c_HL2,c_LH2,c_HH2);
-V = im53itrans(c_LL1,c_HL1,c_LH1,c_HH1);
+U = im53itrans(c_LL1,c_HL1,c_LH1,c_HH1);
 
 % 結果表示
 subplot(1,3,3)
-imshow(V)
-title("CDF 5/3 DWT 最小二乗法 (PSNR:"+psnr(X,V)+" dB)")
+imshow(U)
+title("CDF 5/3 DWT 最小二乗法 (PSNR:"+psnr(X,U)+" dB)")
+imwrite(U,fullfile(resfolder,myfilename+"dwtls"),imgfmt)
