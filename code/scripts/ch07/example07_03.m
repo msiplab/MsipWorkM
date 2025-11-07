@@ -44,8 +44,8 @@ imwrite(Xdct,fullfile(resfolder,myfilename+"dctmp"),imgfmt)
 
 %% OMP + DCT
 syndic = @(x,option) blockidct2(x,option);
-nSGIter = 1; % 勾配降下法の反復回数
-muSG = 1; % 勾配降下法のステップサイズ
+nGDIter = 1; % 勾配降下法の反復回数
+muGD = 1; % 勾配降下法のステップサイズ
 
 % モニタリング準備
 subplot(2,3,3)
@@ -53,7 +53,7 @@ him = imshow(zeros(size(X),'like',X));
 htt = title("OMP+DCT");
 
 % MP法による近似
-Xdct = omp(X,syndic,K,nSGIter,muSG,di_sqrdnorm_dct,him,htt);
+Xdct = omp(X,syndic,K,nGDIter,muGD,di_sqrdnorm_dct,him,htt);
 imwrite(Xdct,fullfile(resfolder,myfilename+"dctomp"),imgfmt)
 
 %% CDF 5/3 DWT の ||d_i||_2^2 の事前計算 
@@ -115,9 +115,9 @@ imwrite(Xdwt,fullfile(resfolder, myfilename+"dwtmp"),imgfmt)
 syndic = @(x,option) cdf53dwt3lv(x,option);
 nLv = 3; % ツリー段数
 gain2d = 4; % HH フィルタのゲイン
-nSGIters = 100; % 反復回数
+nGDIters = 100; % 反復回数
 kappa = (gain2d^nLv)^2; % スペクトルノルム||D||_S の二乗
-muSG = (1-1e-3)*(2/kappa); % ステップサイズ
+muGD = (1-1e-3)*(2/kappa); % ステップサイズ
 
 % モニタリング準備
 subplot(2,3,6)
@@ -125,7 +125,7 @@ him = imshow(zeros(size(X),'like',X));
 htt = title("OMP+DWT");
 
 % MP法による近似
-Xdwt = omp(X,syndic,K,nSGIters,muSG,di_sqrdnorm_dwt,him,htt);
+Xdwt = omp(X,syndic,K,nGDIters,muGD,di_sqrdnorm_dwt,him,htt);
 imwrite(Xdwt,fullfile(resfolder,myfilename+"dwtomp"),imgfmt)
 
 %% MP法
@@ -161,13 +161,13 @@ end
 end
 
 %% OMP法
-function [xaprx,s] = omp(x,syndic,nCoefs,nSGIters,mu,di_sqrdnorm,him,htt)
+function [xaprx,s] = omp(x,syndic,nCoefs,nGDIters,muGD,di_sqrdnorm,him,htt)
 stt = htt.String;
 % 初期化
 r = x;
 I = [];
 % 
-s0 = syndic(x,'adj');
+s = syndic(zeros(size(x),'like',x),'adj');
 for k = 1:nCoefs
     a = syndic(r,'adj'); % 相関計算    
     a = a ./ di_sqrdnorm; % 正規化
@@ -176,9 +176,9 @@ for k = 1:nCoefs
     I = union(I,imin); % 添字集合の更新
 
     % 勾配法による最小自乗解
-    s = zeros(size(s0),'like',s0);
-    y = s0(I);
-    for iter = 1:nSGIters
+    s(imin) = a(imin);
+    y = s(I);
+    for iter = 1:nGDIters
         % 合成処理 v = DS.'y
         s(I) = y;
         xaprx = syndic(s,'syn');
@@ -187,7 +187,7 @@ for k = 1:nCoefs
         % 勾配 ∇f(y) = Sz = SD.'(DS.'y-x)
         g = z(I);
         % 係数更新 y ← y - μ∇f(y)
-        y = y - mu*g;
+        y = y - muGD*g;
     end
 
     % 残差の更新
