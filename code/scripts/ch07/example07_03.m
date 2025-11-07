@@ -115,7 +115,7 @@ imwrite(Xdwt,fullfile(resfolder, myfilename+"dwtmp"),imgfmt)
 syndic = @(x,option) cdf53dwt3lv(x,option);
 nLv = 3; % ツリー段数
 gain2d = 4; % HH フィルタのゲイン
-nGDIters = 100; % 反復回数
+nGDIters = 2; % 反復回数
 kappa = (gain2d^nLv)^2; % スペクトルノルム||D||_S の二乗
 muGD = (1-1e-3)*(2/kappa); % ステップサイズ
 
