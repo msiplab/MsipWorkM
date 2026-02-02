@@ -1,15 +1,17 @@
-%[text] # 例1.4（静止画像のデータ量）
+%[text] # 例1.4（ベクトル化）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
-%[text] 動作確認： MATLAB R2017a
-%[text] ## (1) 8ビット符号なし整数型（\\$\\beta=8\\$\[bits\]）のグレースケール画像の場合
-V = ones(2304,3456,'uint8');
-dataInfo = whos('V');
-disp(dataInfo)
+%[text] 動作確認： MATLAB R2025b
+%[text] ## $2\\times 3$配列の生成
+V = rand(2,3)
+size(V)
 %%
-%[text] ## (2) 倍精度実数型（\\$\\beta=8\\$\[bits\]）のRGB画像の場合
-V = ones(2304,3456,3,'double');
-dataInfo = whos('V');
-disp(dataInfo)
+%[text] ## 列ベクトル化
+v = V(:)
+size(v)
+%%
+%[text] ## 逆列ベクトル化
+U = reshape(v,2,3)
+size(U)
 
 %[appendix]{"version":"1.0"}
 %---
