@@ -1,6 +1,6 @@
 %[text] # 例1.2（標準基底による展開）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
-%[text] 動作確認： MATLAB R2017a
+%[text] 動作確認： MATLAB R2025b
 %[text] ## $2\\times 3$ 配列の生成
 V = rand(2,3)
 %%

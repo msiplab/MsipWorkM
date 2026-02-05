@@ -1,9 +1,9 @@
-function [valueC,valueS] = nshaarwtdec2(src,nlevels)
-%NSHAARWTDEC2 Decomposition by Non-subsampled Haar Wavelet
+function [valueC,valueS] = udhaarwtdec2(src,nlevels)
+%UDHAARWTDEC2 Decomposition by Undecimated Haar Wavelet
 %  
-% Requirements: MATLAB R2011b
+% Requirements: MATLAB R2025b
 %
-% Copyright (c) 2012-2015 All rights reserved., Shogo MURAMATSU
+% Copyright (c) 2012-2025 All rights reserved., Shogo MURAMATSU
 %
 % Contact address: Shogo MURAMATSU,
 %                Faculty of Engineering, Niigata University,

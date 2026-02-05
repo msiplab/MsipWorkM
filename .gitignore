@@ -13,5 +13,6 @@ Thumbs.db
 .idea/
 
 # Data & results 
+data/kodim*.png
 data/raw/
 results/
