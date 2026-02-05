@@ -89,7 +89,7 @@ imshow(Y) %[output:3827dc53]
 title('復元画像') %[output:3827dc53]
 %%
 %[text] ## 復元後の品質
-fprintf('復元後の品質(PSNR)： %6.2f [dB]\n',psnr(Y,X)) %[output:5b1d5bd1]
+fprintf('復元後の品質(PSNR)： %6.2f dB\n',psnr(Y,X)) %[output:5b1d5bd1]
 %%
 %[text] ## 結果出力
 imwrite(X,fullfile(resfolder,"fig01-04a.png"))

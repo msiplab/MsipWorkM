@@ -50,7 +50,7 @@ imshow(Y) %[output:5395cad6]
 title('差分画像') %[output:5395cad6]
 %%
 %[text] ## ピーク信号対雑音比による誤差評価
-fprintf('PSNR:  %6.2f [dB]\n',psnr(V,U)) %[output:0c054bf0]
+fprintf('PSNR:  %6.2f dB\n',psnr(V,U)) %[output:0c054bf0]
 %%
 %[text] ## 結果出力
 imwrite(V,fullfile(resfolder,"fig01-03a.png"))
