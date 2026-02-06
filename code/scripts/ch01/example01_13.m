@@ -64,13 +64,13 @@ nLevels = 5;
 nItrs   = 50;
 isFista = true;
 %
-[Cpre,S]= msip.nshaarwtdec2(adjproc(V),nLevels);
+[Cpre,S]= msip.udhaarwtdec2(adjproc(V),nLevels);
 tpre = 1;
 %
-Y = msip.nshaarwtrec2(Cpre,S);
+Y = msip.udhaarwtrec2(Cpre,S);
 R = linproc(Y)-V;
 for iItr = 1:nItrs
-    D = (1/L)*msip.nshaarwtdec2(adjproc(R),nLevels);
+    D = (1/L)*msip.udhaarwtdec2(adjproc(R),nLevels);
     C = softthresh(Cpre-D,lambda/L);
     if isFista % FISTA
         W = C;
@@ -78,7 +78,7 @@ for iItr = 1:nItrs
         C = W+(tpre-1)/t*(W-Cpre);
         tpre = t;
     end
-    Y = msip.nshaarwtrec2(C,S);
+    Y = msip.udhaarwtrec2(C,S);
     R = linproc(Y)-V;
     Cpre = C;
 end

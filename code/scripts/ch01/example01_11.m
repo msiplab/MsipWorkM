@@ -4,6 +4,7 @@
 %[text] ## 準備
 isVerbose = false;
 prj = matlab.project.currentProject;
+prjroot = prj.RootFolder;
 datfolder = fullfile(prjroot,"data");
 resfolder = fullfile(prjroot,"results");
 myfilename = "example01_11"; % mfilename

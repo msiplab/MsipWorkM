@@ -18,8 +18,8 @@ V = rgb2gray(imread(imgfile,imgfmt));
 %%
 %[text] ## 圧縮前のデータ量
 dataInfo = whos('V');
-fprintf('圧縮前のバイト数： %d [Bytes]\n',dataInfo.bytes) %[output:2c3215c9]
-fprintf('圧縮前のビット数： %6.2f [bpp]\n',8*dataInfo.bytes/prod(dataInfo.size)) %[output:7d49c13e]
+fprintf('圧縮前のバイト数： %d bytes\n',dataInfo.bytes) %[output:2c3215c9]
+fprintf('圧縮前のビット数： %6.2f bpp\n',8*dataInfo.bytes/prod(dataInfo.size)) %[output:7d49c13e]
 %%
 %[text] ## 圧縮前の画像表示
 figure(1)
@@ -34,8 +34,8 @@ imwrite(V,resimg+"."+resfmt,'Quality',qFactor)
 %%
 %[text] ## 圧縮後のデータ量
 fileInfo = dir(resimg+"."+resfmt) %[output:8b48f50c]
-fprintf('圧縮後のバイト数： %d [Bytes]\n',fileInfo.bytes) %[output:3a29c982]
-fprintf('圧縮後のビット数： %6.2f [bpp]\n',8*fileInfo.bytes/prod(dataInfo.size)) %[output:58c68b51]
+fprintf('圧縮後のバイト数： %d bytes\n',fileInfo.bytes) %[output:3a29c982]
+fprintf('圧縮後のビット数： %6.2f bpp\n',8*fileInfo.bytes/prod(dataInfo.size)) %[output:58c68b51]
 %%
 %[text] ## 圧縮後の画像表示
 U = imread(resimg,resfmt);
