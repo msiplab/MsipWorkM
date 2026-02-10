@@ -5,17 +5,26 @@
 frame = ones(4320,7680,3,'uint8');
 %%
 %[text] ## 1フレーム当たりの要素数（画素数×色成分数）
-nS = numel(frame)
+nS = numel(frame) %[output:53eb58fe]
 %%
 %[text] ## 1フレーム当たりのビット数
-B = 8*nS
+B = 8*nS %[output:7bc5b52e]
 %%
 %[text] ## ビットレート
 deltaT = 1/60;
-R = B / deltaT
+R = B / deltaT %[output:7cc613d3]
 
 %[appendix]{"version":"1.0"}
 %---
 %[metadata:view]
 %   data: {"layout":"onright"}
+%---
+%[output:53eb58fe]
+%   data: {"dataType":"textualVariable","outputData":{"name":"nS","value":"99532800"}}
+%---
+%[output:7bc5b52e]
+%   data: {"dataType":"textualVariable","outputData":{"name":"B","value":"796262400"}}
+%---
+%[output:7cc613d3]
+%   data: {"dataType":"textualVariable","outputData":{"name":"R","value":"4.7776e+10"}}
 %---

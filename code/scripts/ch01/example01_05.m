@@ -1,7 +1,7 @@
 %[text] # 例1.5（多次元配列のノルム）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2025b
-%[text] ## \\$
+%[text] ## 配列の設定
 
 x = [
     3 5 7
@@ -14,11 +14,17 @@ y = [
     ];
 
 %[text] ## 多次元配列のノルムの計算
-norm(x(:),2)
-norm(y(:),2)
+norm(x(:),2) %[output:7cac075c]
+norm(y(:),2) %[output:042d4ebe]
 
 %[appendix]{"version":"1.0"}
 %---
 %[metadata:view]
 %   data: {"layout":"onright"}
+%---
+%[output:7cac075c]
+%   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"14"}}
+%---
+%[output:042d4ebe]
+%   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"9"}}
 %---
