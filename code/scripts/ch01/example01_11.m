@@ -40,6 +40,8 @@ fprintf('PSNR:  %6.2f dB\n',psnr(X,Y)) %[output:9ec75309]
 imwrite(X,fullfile(resfolder,"fig01-02a.png"))
 imwrite(U,fullfile(resfolder,"fig01-02b.png"))
 imwrite(Y,fullfile(resfolder,"fig01-02c.png"))
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

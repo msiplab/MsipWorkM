@@ -34,6 +34,8 @@ B5 = [ 0 0 0 ;  %[output:group:7d917a2d] %[output:5c86cf38]
 %[text] ## 標準基底による展開表現
 v0*B0 + v2*B2 + v4*B4  ... %[output:group:275044cb] %[output:233c85a1]
     + v1*B1 + v3*B3 + v5*B5 %[output:group:275044cb] %[output:233c85a1]
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

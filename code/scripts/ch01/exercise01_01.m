@@ -13,6 +13,8 @@ B = 8*nS %[output:7bc5b52e]
 %[text] ## ビットレート
 deltaT = 1/60;
 R = B / deltaT %[output:7cc613d3]
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

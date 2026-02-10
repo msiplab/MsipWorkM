@@ -16,6 +16,8 @@ y = [
 %[text] ## 多次元配列のノルムの計算
 norm(x(:),2) %[output:7cac075c]
 norm(y(:),2) %[output:042d4ebe]
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

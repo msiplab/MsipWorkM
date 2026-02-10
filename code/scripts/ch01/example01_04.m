@@ -15,6 +15,8 @@ y = [
 
 %[text] ## 多次元配列の内積の計算
 dot(x(:),y(:)) %[output:1c434c31]
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

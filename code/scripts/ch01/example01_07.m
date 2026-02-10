@@ -12,6 +12,8 @@ size(v) %[output:11ebf28b]
 %[text] ## 逆列ベクトル化
 U = reshape(v,2,3) %[output:0e55eb9e]
 size(U) %[output:7fa371a1]
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

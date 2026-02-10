@@ -102,6 +102,8 @@ function y = softthresh(x,thresh)
     v = abs(x)-thresh;
     y = sign(x).*(v+abs(v))/2;
 end
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

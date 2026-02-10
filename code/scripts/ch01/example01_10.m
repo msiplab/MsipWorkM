@@ -31,6 +31,8 @@ disp("h(T(x)) = " + z1) %[output:0a56672e]
 %[text] ## 随伴写像
 z2 = (T'*H(:))'*X(:); %  z = <T'H,x>
 disp("T*(h)(x) = " + z2) %[output:6db0c64b]
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

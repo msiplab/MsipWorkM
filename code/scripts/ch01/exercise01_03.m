@@ -48,6 +48,8 @@ T = [ t0 t1 t2 t3 t4 t5 ] %[output:37d84cd9]
 v = V(:);
 u = T*v;
 reshape(u,2,3) %[output:741b3bd9]
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

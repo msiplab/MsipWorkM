@@ -18,6 +18,8 @@ norm(x(:)-y(:),2) %[output:737e792b]
 
 %[text] ## 多次元配列のコサイン類似度
 dot(x(:),y(:)) / (norm(x(:),2)*norm(y(:),2)) %[output:9d630948]
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

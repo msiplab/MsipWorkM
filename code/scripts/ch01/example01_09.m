@@ -11,6 +11,8 @@ Y = circshift(X,[0 1]) %[output:4cf3faea]
 %%
 %[text] ## 等長性の確認
 disp("||T(x)||/||x|| = " + norm(Y(:),2)/norm(X(:),2)) %[output:0e3bf12e]
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

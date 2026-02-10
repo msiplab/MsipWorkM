@@ -20,6 +20,8 @@ for iCol = 1:size(X,2)
     end
 end
 T %[output:32d9b24c]
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

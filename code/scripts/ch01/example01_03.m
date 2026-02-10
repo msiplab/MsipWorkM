@@ -27,6 +27,8 @@ fprintf(" バイト数 = %d bytes\n", B/8); %[output:44538800]
 J=zeros(N1,N2,3,'double');
 dataInfo = whos('J');
 disp(dataInfo) %[output:2eacf2d5]
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---

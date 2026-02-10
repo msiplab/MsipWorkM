@@ -38,6 +38,8 @@ imshow(V(:,:,1))
 title('第0スライス(xy)')
 imshow(V(:,:,2))
 title('第1スライス(xy)')
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
 %---
