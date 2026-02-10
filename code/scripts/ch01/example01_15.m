@@ -2,7 +2,12 @@
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2025b
 %[text] ## 準備
-close all
+prj = matlab.project.currentProject;
+prjroot = prj.RootFolder;
+datfolder = fullfile(prjroot,"data");
+resfolder = fullfile(prjroot,"results");
+myfilename = "example01_15"; % mfilename
+
 %%
 %[text] ## 標本化周期の設定
 %[text] - $\\Delta\_\\mathrm{t}$: 標本化周期 \
@@ -20,6 +25,8 @@ fplot(@(x) sinc(x/deltat),[-15 15]) %[output:9693d212]
 xlabel('Time t') %[output:9693d212]
 ylabel('sinc(t/\Delta_t)') %[output:9693d212]
 axis([-15 15 -0.5 1.5]) %[output:9693d212]
+exportgraphics(gca,fullfile(resfolder,myfilename+"_fig01_01.png"))
+
 %%
 %[text] ## 入力信号の設定
 %[text]  $u(t) = \\sum\_{k\\in\\mathbb{Z}} c\[k\]\\mathrm{sinc}\n(\\Delta\_\\mathrm{t}^{-1}t-k)$
@@ -43,6 +50,8 @@ plot(td,u) %[output:252ad55c]
 xlabel('Time t') %[output:252ad55c]
 ylabel('Signal u(t)') %[output:252ad55c]
 axis([ts te -0.5 1.5]) %[output:252ad55c]
+hold on
+
 %%
 %[text] ## Sinc関数による標本化
 %[text]  $u\[n\] = \\Delta\_\\mathrm{t}^{-1}\\int\_{-\\infty}^{\\infty}u(t)\\mathrm{sinc}(\\Delta\_\\mathrm{t}^{-1}t-n)dt$
@@ -51,11 +60,12 @@ axis([ts te -0.5 1.5]) %[output:252ad55c]
 s = (1/deltat)*trapz(td,u.*sinc(Ts/deltat-K));
 
 % Plot samples
-figure(2)
 stem(deltat*k,s,'filled') %[output:1253bdb7]
 xlabel('Index n') %[output:1253bdb7]
 ylabel('Sequence u[n]') %[output:1253bdb7]
 axis([ts te -.5 1.5]) %[output:1253bdb7]
+exportgraphics(gca,fullfile(resfolder,myfilename+"_fig01_02.png"))
+
 %%
 %[text] ## 信号再構成
 %[text]  $\\check{u}(t) = \\sum\_{k\\in\\mathbb{Z}} u\[k\]\\mathrm{sinc}\n(\\Delta\_\\mathrm{t}^{-1}t-k)$
@@ -69,6 +79,8 @@ xlabel('Time t') %[output:5c8cd3fe]
 ylabel('Signal u\^(t)') %[output:5c8cd3fe]
 axis([ts te -0.5 1.5]) %[output:5c8cd3fe]
 legend('Original','Reconstructed','Samples') %[output:5c8cd3fe]
+exportgraphics(gca,fullfile(resfolder,myfilename+"_fig01_03.png"))
+
 %%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
