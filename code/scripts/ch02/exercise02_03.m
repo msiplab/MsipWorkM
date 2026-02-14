@@ -27,7 +27,7 @@ grays = [0 0 0.75 0 0];
 lineStyles = {':','--','-','-.','-'};  % 必要なら増やす
 
 % 正方形の図と軸
-figure(1) %'Units','pixels','Position',[100 100 600 600]); % 図を正方形に %[output:9cb23a93]
+figure(1) %'Units','pixels','Position',[100 100 600 600]); %[output:9cb23a93]
 ax = axes; %[output:9cb23a93]
 hold(ax,'on'); %[output:9cb23a93]
 
@@ -45,10 +45,13 @@ ax.YTick = 0:0.2:1; %[output:9cb23a93]
 % 表示調整：範囲固定・データ単位を等しく
 axis(ax,[0 1 0 1]); %[output:9cb23a93]
 daspect(ax,[1 1 1]);    % データ単位の縦横比を1:1 %[output:9cb23a93]
-xlabel('$x$','Interpreter','latex'); %[output:9cb23a93]
-ylabel('$y = x^{\gamma}$','Interpreter','latex'); %[output:9cb23a93]
+xlabel('$x$','Interpreter','latex','FontSize',14); %[output:9cb23a93]
+ylabel('$y = x^{\gamma}$','Interpreter','latex','FontSize',14); %[output:9cb23a93]
 %title('べき乗測');
-legend(arrayfun(@(g) sprintf('\\gamma=%.2g',g),gammas,'UniformOutput',false),'Location','best'); %[output:9cb23a93]
+legend(arrayfun(@(g) sprintf('$\\gamma=%.2g$',g),gammas,'UniformOutput',false),...
+    'Interpreter','latex',...
+    'Location','northwest',...
+    'FontSize',12); %[output:9cb23a93]
 grid on; %[output:9cb23a93]
 box on; %[output:9cb23a93]
 hold(ax,'off'); %[output:9cb23a93]
