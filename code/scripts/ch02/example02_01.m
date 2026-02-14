@@ -30,8 +30,8 @@ imshow(Y) %[output:3785ec24]
 title('スケール処理画像')  %[output:3785ec24]
 %%
 %[text] ## 結果出力
-imwrite(X,fullfile(resfolder,"fig02-01a.png"))
-imwrite(Y,fullfile(resfolder,"fig02-01b.png"))
+imwrite(X,fullfile(resfolder,"fig02-02a.png"))
+imwrite(Y,fullfile(resfolder,"fig02-02b.png"))
 %%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 

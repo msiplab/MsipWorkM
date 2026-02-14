@@ -29,7 +29,7 @@ title('ネガ画像')  %[output:3785ec24]
 %%
 %[text] ## 結果出力
 %imwrite(X,fullfile(resfolder,"fig02-01a.png"))
-imwrite(Y,fullfile(resfolder,"fig02-01c.png"))
+imwrite(Y,fullfile(resfolder,"fig02-02c.png"))
 %%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
