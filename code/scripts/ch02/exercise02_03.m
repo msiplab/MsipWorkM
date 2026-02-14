@@ -39,22 +39,18 @@ for k = 1:n
         'LineStyle',lineStyles{mod(k-1,numel(lineStyles))+1}, ... %[output:9cb23a93]
         'LineWidth',1.5); %[output:9cb23a93]
     text(posx(k),posx(k).^gammas(k)-0.01,"$\gamma=$"+num2str(gammas(k)),...
-        "Interpreter",'latex')
+    "FontSize",18,...    
+    "Interpreter",'latex')
 end
 
 ax.XTick = 0:0.2:1; %[output:9cb23a93]
 ax.YTick = 0:0.2:1; %[output:9cb23a93]
-ax.FontSize = 14; %[output:9cb23a93]
+ax.FontSize = 20; %[output:9cb23a93]
 % 表示調整：範囲固定・データ単位を等しく
 axis(ax,[0 1 0 1]); %[output:9cb23a93]
 daspect(ax,[1 1 1]);    % データ単位の縦横比を1:1 %[output:9cb23a93]
-xlabel('$x$','Interpreter','latex','FontSize',14); %[output:9cb23a93]
-ylabel('$y = x^{\gamma}$','Interpreter','latex','FontSize',14); %[output:9cb23a93]
-%title('べき乗測');
-%legend(arrayfun(@(g) sprintf('$\\gamma=%.2g$',g),gammas,'UniformOutput',false),...
-    %'Interpreter','latex',...
-    %'Location','northwest',...
-    %'FontSize',12);
+xlabel('$x$','Interpreter','latex','FontSize',20); %[output:9cb23a93]
+ylabel('$y = x^{\gamma}$','Interpreter','latex','FontSize',20); %[output:9cb23a93]
 grid on; %[output:9cb23a93]
 box on; %[output:9cb23a93]
 hold(ax,'off'); %[output:9cb23a93]
