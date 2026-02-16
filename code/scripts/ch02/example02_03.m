@@ -1,4 +1,4 @@
-%[text] # 例題2.4（対比伸張）
+%[text] # 例2.3（二値化閾値処理）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2025b
 %[text] ## 準備
@@ -7,7 +7,7 @@ prj = matlab.project.currentProject;
 prjroot = prj.RootFolder;
 datfolder = fullfile(prjroot,"data");
 resfolder = fullfile(prjroot,"results");
-myfilename = "exercise02_04"; % mfilename
+myfilename = "example2_03"; % mfilename
 
 imgname = "msipimg06";
 imgfmt = "tiff";
