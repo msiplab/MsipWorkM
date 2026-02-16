@@ -1,4 +1,4 @@
-%[text] # 例2.3（二値化閾値処理）
+%[text] # 例2.4（ヒストグラム均等化）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2025b
 %[text] ## 準備
@@ -7,9 +7,9 @@ prj = matlab.project.currentProject;
 prjroot = prj.RootFolder;
 datfolder = fullfile(prjroot,"data");
 resfolder = fullfile(prjroot,"results");
-myfilename = "example2_03"; % mfilename
+myfilename = "example2_04"; % mfilename
 
-imgname = "msipimg06";
+imgname = "msipimg07";
 imgfmt = "tiff";
 %%
 %[text] ## 画像データの読込
@@ -17,89 +17,23 @@ imgfile = fullfile(datfolder,imgname);
 X = rgb2gray(imread(imgfile,imgfmt));
 
 %%
-%[text] ## 変換前の画像表示
+%[text] ## 処理前の画像表示
 figure(1) %[output:6aaed0cf]
 imshow(X)  %[output:6aaed0cf]
 title('原画像')  %[output:6aaed0cf]
 
-imwrite(X,fullfile(resfolder,myfilename+"a.png"))
+imwrite(X,fullfile(resfolder,"fig02-05a.png"))
 
 %%
-%[text] ## 線形量子化
-Q = 255; % 量子化レベル数
-Xq = round(X*Q)/Q; % 線形量子化
-
-%%
-%[text] ## 変換前の画像表示
+%[text] ## 処理前のヒストグラム表示
 figure(2) %[output:6aaed0cf]
-imshow(Xq)  %[output:6aaed0cf]
-title('量子化画像')  %[output:6aaed0cf]
+imhist(X)  %[output:6aaed0cf]
+%title('ヒストグラム')  %[output:6aaed0cf]
+ax = gca;
 
-imwrite(Xq,fullfile(resfolder,myfilename+"b.png"))
+exportgraphics(ax,fullfile(resfolder,"fig02-05b.png"),'BackgroundColor','white') %[output:47dd7605]
 
-%%
-%[text] ## 対比伸張のグラフ
-% 関数
-phi = @(x,gamma) (x<0.5).*(1-(1-2*x).^gamma)/2 + (x>=0.5).*(1+(2*x-1).^gamma)/2;
 
-% データ
-x = linspace(0,1,501);
-gammas = [1/64 1/16 1/4]; 
-n = numel(gammas);
-
-% グレースケール色と線種
-grays = [0.5 0.5 0.5]; 
-lineStyles = {':','--','-'};  % 必要なら増やす
-posx = [0.6 0.6 0.6];
-
-% 正方形の図と軸
-figure(3) %'Units','pixels','Position',[100 100 600 600]); %[output:47dd7605]
-ax = axes; %[output:47dd7605]
-hold(ax,'on'); %[output:47dd7605]
-
-for k = 1:n
-    y = phi(x,gammas(k));
-    plot(ax,x,y, ... %[output:47dd7605]
-        'Color',repmat(grays(k),1,3), ... %[output:47dd7605]
-        'LineStyle',lineStyles{mod(k-1,numel(lineStyles))+1}, ... %[output:47dd7605]
-        'LineWidth',1.5); %[output:47dd7605]
-    text(posx(k),phi(posx(k),gammas(k))-0.01,"$\gamma=$"+num2str(gammas(k)),...
-        "Interpreter",'latex')
-end
-
-ax.XTick = 0:0.2:1; %[output:47dd7605]
-ax.YTick = 0:0.2:1; %[output:47dd7605]
-ax.FontSize = 14; %[output:47dd7605]
-% 表示調整：範囲固定・データ単位を等しく
-axis(ax,[0 1 0 1]); %[output:47dd7605]
-daspect(ax,[1 1 1]);    % データ単位の縦横比を1:1 %[output:47dd7605]
-xlabel('$x$','Interpreter','latex','FontSize',14); %[output:47dd7605]
-ylabel('$y = \phi(x)$','Interpreter','latex','FontSize',14); %[output:47dd7605]
-%title('べき乗測');
-%legend(arrayfun(@(g) sprintf('$\\gamma=%.2g$',g),gammas,'UniformOutput',false),...
-    %'Interpreter','latex',...
-    %'Location','northwest',...
-    %'FontSize',12);
-grid on; %[output:47dd7605]
-box on; %[output:47dd7605]
-hold(ax,'off'); %[output:47dd7605]
-
-exportgraphics(ax,fullfile(resfolder,myfilename+"b.png"),'BackgroundColor','white') %[output:47dd7605]
-
-%%
-%[text] ## 最小最大正規化
-X = im2double(X);
-
-%%
-%[text] ## 対比伸張
-gamma = 1/64 %[control:slider:540a]{"position":[9,12]} %[output:74312b93]
-Y = phi(X,gamma); 
-figure(4) %[output:482c115e]
-imshow(Y) %[output:482c115e]
-title('処理画像')  %[output:482c115e]
-%%
-%[text] ## 結果出力
-imwrite(Y,fullfile(resfolder,myfilename+"d.png"))
 %%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
