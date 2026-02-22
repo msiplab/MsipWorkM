@@ -31,3 +31,7 @@ msip.arr2tex(u,"%d")
 figure(2)
 histogram(u(:), 0:7)
 
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
+
+

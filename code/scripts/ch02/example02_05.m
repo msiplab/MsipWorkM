@@ -69,6 +69,25 @@ title('二値化画像（大津法）')  %[output:482c115e]
 %[text] ## 結果出力
 imwrite(Xo,fullfile(resfolder,"fig02-07b.png"))
 %%
+
+%%
+%[text] ## 二値化閾値処理（ディザリング）
+
+T = [ 
+    0 128 32 160
+   192 64 224 96
+   48 176 16 144
+   240 112 208 80 ];
+
+
+Xd = blockproc(X,[4 4],@(blk) blk.data >= T);
+figure(4) %[output:482c115e]
+imshow(Xd) %[output:482c115e]
+title('二値化画像（ディザリング）')  %[output:482c115e]
+%%
+%[text] ## 結果出力
+imwrite(Xd,fullfile(resfolder,"dithering.png"))
+
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}

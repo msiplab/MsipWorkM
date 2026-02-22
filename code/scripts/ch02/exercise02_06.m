@@ -61,3 +61,6 @@ figure(2)
 imshow(imresize(v/7,8))
 figure(6)
 imshow(imresize(YY,8))
+
+%%
+%[text] © Copyright, Shogo MURAMATSU, All rights reserved.
