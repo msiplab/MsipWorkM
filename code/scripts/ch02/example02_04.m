@@ -27,19 +27,22 @@ imwrite(X,fullfile(resfolder,"fig02-05a.png"))
 %%
 %[text] ## 処理前のヒストグラム表示
 figure(2) %[output:5abc9300]
-imhist(X)  %[output:5abc9300]
-%title('ヒストグラム') 
-ylabel("$h_x$",'FontSize',12,'Interpreter','latex') %[output:5abc9300]
-h = gcf;
-axs = h.Children;
-ax = axs(1);
-xlabel(ax,"$x$",'FontSize',12,'Interpreter','latex') %[output:5abc9300]
+%imhist(X,256)  %[output:5abc9300]
+[hx,indx] = histcounts(X(:),0:256); %[output:5abc9300]
+bar(indx(1:256),hx,'FaceColor',[0.5 0.5 0.5],'EdgeColor','none') %[output:5abc9300]
+axis([0 255 0 6000]) 
+daspect([256 6000 1])
+ylabel("$h_x$",'Interpreter','latex') %[output:5abc9300]
+yticks([0 2000 4000 6000]) 
+xlabel("$x$",'Interpreter','latex') %[output:5abc9300]
+ax = gca;
+set(ax,'FontSize',20)
 
-exportgraphics(h,fullfile(resfolder,"fig02-05b.png"),'BackgroundColor','white') %[output:5abc9300]
+exportgraphics(ax,fullfile(resfolder,"fig02-05b.png"),'BackgroundColor','white') %[output:5abc9300]
 
 %%
 %[text] ## 処理前のヒストグラム均等化
-Y = histeq(X);
+Y = histeq(X,256);
 figure(3) %[output:1a9db53f]
 imshow(Y) %[output:1a9db53f]
 title('処理画像') %[output:1a9db53f]
@@ -48,15 +51,18 @@ imwrite(Y,fullfile(resfolder,"fig02-06a.png"))
 %%
 %[text] ## 処理後のヒストグラム表示
 figure(4) %[output:3bc47cbd]
-imhist(Y)  %[output:3bc47cbd]
-%title('ヒストグラム') 
-ylabel("$h_y$",'FontSize',12,'Interpreter','latex') %[output:3bc47cbd]
-h = gcf;
-axs = h.Children;
-ax = axs(1);
-xlabel(ax,"$y$",'FontSize',12,'Interpreter','latex') %[output:3bc47cbd]
+%imhist(Y,256)  %[output:3bc47cbd]
+[hy,indy] = histcounts(Y(:),0:256); %[output:3bc47cbd]
+bar(indy(1:256),hy,'FaceColor',[0.5 0.5 0.5],'EdgeColor','none') %[output:3bc47cbd]
+axis([0 255 0 6000]) 
+daspect([256 6000 1])
+ylabel("$h_y$",'Interpreter','latex') %[output:3bc47cbd]
+yticks([0 2000 4000 6000]) 
+xlabel("$y$",'Interpreter','latex') %[output:3bc47cbd]
+ax = gca;
+set(ax,'FontSize',20)
 
-exportgraphics(h,fullfile(resfolder,"fig02-06b.png"),'BackgroundColor','white') %[output:3bc47cbd]
+exportgraphics(ax,fullfile(resfolder,"fig02-06b.png"),'BackgroundColor','white') %[output:3bc47cbd]
 
 %%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
