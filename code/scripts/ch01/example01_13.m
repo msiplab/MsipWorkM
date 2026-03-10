@@ -11,6 +11,9 @@ myfilename = "example01_13"; % mfilename
 
 imgname = "msipimg08";
 imgfmt = "tiff";
+
+rng(0)
+
 %%
 %[text] ## 画像データの読込
 imgfile = fullfile(datfolder,imgname);
@@ -36,7 +39,7 @@ imshow(V) %[output:54a3937b]
 title('劣化画像') %[output:54a3937b]
 %%
 %[text] ## 劣化後の品質
-fprintf('劣化後の品質(PSNR)： %6.2f [dB]\n',psnr(V,X)) %[output:2416cd90]
+fprintf('劣化後の品質(PSNR)： %6.2f dB\n',psnr(V,X)) %[output:2416cd90]
 %%
 %[text] ## 復元前処理
 adjproc = @(x) imfilter(x,gaussfilt,'corr','circular'); %　随伴観測過程
