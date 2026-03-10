@@ -1,4 +1,4 @@
-%[text] # 例2.1（スケール処理）
+%[text] # 例3.1（矩形フィルタ）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2025b
 %[text] ## 準備
@@ -7,31 +7,39 @@ prj = matlab.project.currentProject;
 prjroot = prj.RootFolder;
 datfolder = fullfile(prjroot,"data");
 resfolder = fullfile(prjroot,"results");
-myfilename = "example02_01"; % mfilename
+myfilename = "example03_01"; % mfilename
 
-imgname = "msipimg04";
+imgname = "msipimg03";
 imgfmt = "tiff";
 %%
 %[text] ## 画像データの読込
 imgfile = fullfile(datfolder,imgname);
 X = imresize(im2double(rgb2gray(imread(imgfile,imgfmt))),[96 96]);
 %%
-%[text] ## 幾何処理前の画像表示
+%[text] ## フィルタ処理前の画像表示
 figure(1)
 imshow(X)  %[output:64078bdf]
 title('原画像')  %[output:64078bdf]
 %%
 %[text] ## スケールの設定
-a = 0.5 %[control:slider:96de]{"position":[5,8]} %[output:629f1701]
-%[text] ## スケール処理
-Y = a*X; 
+h = fspecial('average',2);
+Y = imfilter(X,h,'corr','same');
 figure(2)
 imshow(Y) %[output:3785ec24]
-title('スケール処理画像')  %[output:3785ec24]
+title('フィルタ処理画像')  %[output:3785ec24]
+
+%%
+%[text] ## 処理前後の差分画像表示
+D = imadjust(imabsdiff(X,Y));
+figure(3)
+imshow(D) %[output:5395cad6]
+title('差分画像') %[output:5395cad6]
+
 %%
 %[text] ## 結果出力
-imwrite(X,fullfile(resfolder,"fig02-02a.png"))
-imwrite(Y,fullfile(resfolder,"fig02-02b.png"))
+imwrite(X,fullfile(resfolder,"fig03-02a.png"))
+imwrite(Y,fullfile(resfolder,"fig03-02b.png"))
+imwrite(D,fullfile(resfolder,"fig03-02c.png"))
 %%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 

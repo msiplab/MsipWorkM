@@ -14,7 +14,7 @@ imgfmt = "tiff";
 %%
 %[text] ## 画像データの読込
 imgfile = fullfile(datfolder,imgname);
-V = rgb2gray(imread(imgfile,imgfmt));
+V = imresize(rgb2gray(imread(imgfile,imgfmt)),[96 96]);
 %%
 %[text] ## 圧縮前のデータ量
 dataInfo = whos('V');
@@ -27,7 +27,7 @@ imshow(V) %[output:5e5213dd]
 title('原画像') %[output:5e5213dd]
 %%
 %[text] ## JPEG圧縮
-qFactor = 30; % 品質制御 [0,100]
+qFactor = 13; % 品質制御 [0,100]
 resimg = fullfile(resfolder,myfilename+"_"+imgname);
 resfmt = "jpg";
 imwrite(V,resimg+"."+resfmt,'Quality',qFactor)

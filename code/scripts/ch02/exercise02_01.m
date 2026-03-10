@@ -14,7 +14,7 @@ imgfmt = "tiff";
 %%
 %[text] ## 画像データの読込
 imgfile = fullfile(datfolder,imgname);
-X = im2double(rgb2gray(imread(imgfile,imgfmt)));
+X = imresize(im2double(rgb2gray(imread(imgfile,imgfmt))),[96 96]);
 %%
 %[text] ## 変換前の画像表示
 figure(1)

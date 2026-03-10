@@ -14,7 +14,7 @@ imgfmt = "tiff";
 %%
 %[text] ## 画像データの読込
 imgfile = fullfile(datfolder,imgname);
-X = im2double(rgb2gray(imread(imgfile,imgfmt)));
+X = imresize(im2double(rgb2gray(imread(imgfile,imgfmt))),[96 96]);
 %%
 %[text] ## 劣化前の画像表示
 figure(1) %[output:9ad54ab8]
@@ -22,7 +22,7 @@ imshow(X) %[output:9ad54ab8]
 title('原画像') %[output:9ad54ab8]
 %%
 %[text] ## 劣化過程
-hsigma  = 4;                    % ガウスカーネル分散
+hsigma  = 2;                    % ガウスカーネル分散
 hsize   = 2*ceil(2*hsigma)+1;   % ガウスカーネルサイズ
 nvar    = (10/255)^2;            % 加法性白色ガウスノイズ分散
 gaussfilt = fspecial('gaussian',hsize,hsigma);             % ガウスカーネル
@@ -59,7 +59,7 @@ L = frameBound*lpst ;
 %fprintf('L = %g\n',L);
 %%
 %[text] ## **復元処理(FISTA)**
-lambda  = 5e-4;
+lambda  = 1e-3;
 nLevels = 5;
 nItrs   = 50;
 isFista = true;

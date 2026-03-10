@@ -14,7 +14,7 @@ imgfmt = "tiff";
 %%
 %[text] ## 画像データの読込
 imgfile = fullfile(datfolder,imgname);
-X = rgb2gray(imread(imgfile,imgfmt));
+X = imresize(rgb2gray(imread(imgfile,imgfmt)),[96 96]);
 
 %%
 %[text] ## 変換前の画像表示
@@ -70,7 +70,6 @@ title('二値化画像（大津法）')  %[output:482c115e]
 imwrite(Xo,fullfile(resfolder,"fig02-07b.png"))
 %%
 
-%%
 %[text] ## 二値化閾値処理（ディザリング）
 
 T = [ 

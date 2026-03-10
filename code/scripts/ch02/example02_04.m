@@ -14,7 +14,7 @@ imgfmt = "tiff";
 %%
 %[text] ## 画像データの読込
 imgfile = fullfile(datfolder,imgname);
-X = rgb2gray(imread(imgfile,imgfmt));
+X = imresize(rgb2gray(imread(imgfile,imgfmt)),[96 96]);
 
 %%
 %[text] ## 処理前の画像表示
@@ -30,13 +30,13 @@ figure(2) %[output:5abc9300]
 %imhist(X,256)  %[output:5abc9300]
 [hx,indx] = histcounts(X(:),0:256); %[output:5abc9300]
 bar(indx(1:256),hx,'FaceColor',[0.5 0.5 0.5],'EdgeColor','none') %[output:5abc9300]
-axis([0 255 0 6000]) 
-daspect([256 6000 1])
+axis([0 255 0 250]) 
+daspect([256 250 1])
 ylabel("$h_x$",'Interpreter','latex') %[output:5abc9300]
-yticks([0 2000 4000 6000]) 
+yticks([0 100 200 ]) 
 xlabel("$x$",'Interpreter','latex') %[output:5abc9300]
 ax = gca;
-set(ax,'FontSize',20)
+set(ax,'FontSize',16)
 
 exportgraphics(ax,fullfile(resfolder,"fig02-05b.png"),'BackgroundColor','white') %[output:5abc9300]
 
@@ -54,13 +54,13 @@ figure(4) %[output:3bc47cbd]
 %imhist(Y,256)  %[output:3bc47cbd]
 [hy,indy] = histcounts(Y(:),0:256); %[output:3bc47cbd]
 bar(indy(1:256),hy,'FaceColor',[0.5 0.5 0.5],'EdgeColor','none') %[output:3bc47cbd]
-axis([0 255 0 6000]) 
-daspect([256 6000 1])
+axis([0 255 0 250]) 
+daspect([256 250 1])
 ylabel("$h_y$",'Interpreter','latex') %[output:3bc47cbd]
-yticks([0 2000 4000 6000]) 
+yticks([0 100 200 ]) 
 xlabel("$y$",'Interpreter','latex') %[output:3bc47cbd]
 ax = gca;
-set(ax,'FontSize',20)
+set(ax,'FontSize',16)
 
 exportgraphics(ax,fullfile(resfolder,"fig02-06b.png"),'BackgroundColor','white') %[output:3bc47cbd]
 
