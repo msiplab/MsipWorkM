@@ -7,7 +7,7 @@ prj = matlab.project.currentProject;
 prjroot = prj.RootFolder;
 datfolder = fullfile(prjroot,"data");
 resfolder = fullfile(prjroot,"results");
-myfilename = "example03_06"; % mfilename
+myfilename = "example03_08"; % mfilename
 
 imgname = "msipimg04";
 imgfmt = "tiff";
@@ -23,25 +23,36 @@ title('原画像')  %[output:64078bdf]
 
 %%
 %[text] ## 垂直方向差分
-f = flipud(fspecial('prewitt'))
+f = flipud(fspecial('prewitt'));
 Xv = imfilter(X,f,'corr','same');
-figure(2)
-imshow(Xv+0.5) %[output:3785ec24]
-title('垂直方向差分画像')  %[output:3785ec24]
+f = rot90(flipud(fspecial('prewitt')));
+Xh = imfilter(X,f,'corr','same');
 
 %%
-%[text] ## 水平方向差分
-f = rot90(flipud(fspecial('prewitt')))
-Xh = imfilter(X,f,'corr','same');
+%[text] ## フィルタ処理後の画像表示
+Ymag = (Xv.^2+Xh.^2).^0.5;
+Yang = atan2(Xv,Xh);
+figure(2)
+H = mod(Yang,2*pi)/(2*pi);
+S = Ymag/max(Ymag(:));
+V = Ymag/max(Ymag(:));
+Y = hsv2rgb(cat(3,H,S,V));
+imshow(Y)  %[output:64078bdf]
+
+%%
+%[text] ## フィルタ処理後の画像表示
 figure(3)
-imshow(Xh+0.5) %[output:3785ec24]
-title('水平方向差分画像')  %[output:3785ec24]
+quiver(Xh,Xv,0,'k','LineWidth',0.1)  %[output:64078bdf]
+axis equal
+axis off
+axis ij
+ax = gca;
 
 %%
 %[text] ## 結果出力
 imwrite(X,fullfile(resfolder,myfilename+"org.png"))
-imwrite(Xv+0.5,fullfile(resfolder,"fig03-05a.png"))
-imwrite(Xh+0.5,fullfile(resfolder,"fig03-05b.png"))
+imwrite(Y,fullfile(resfolder,myfilename+"grd.png"))
+exportgraphics(ax,fullfile(resfolder,"fig03-05c.png"),'Resolution',600)
 
 %%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
