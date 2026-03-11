@@ -1,4 +1,4 @@
-%[text] # 例3.3（4近傍ラプラシアン）
+%[text] # 例3.4（4近傍アンシャープマスク）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2025b
 %[text] ## 準備
@@ -7,7 +7,7 @@ prj = matlab.project.currentProject;
 prjroot = prj.RootFolder;
 datfolder = fullfile(prjroot,"data");
 resfolder = fullfile(prjroot,"results");
-myfilename = "example03_03"; % mfilename
+myfilename = "example03_04"; % mfilename
 
 imgname = "msipimg04";
 imgfmt = "tiff";
@@ -22,16 +22,16 @@ imshow(X)  %[output:64078bdf]
 title('原画像')  %[output:64078bdf]
 %%
 %[text] ## スケールの設定
-h = fspecial('laplacian',0)
+h = fspecial('unsharp',0)
 Y = imfilter(X,h,'corr','same');
 figure(2)
-imshow(Y+0.5) %[output:3785ec24]
+imshow(Y) %[output:3785ec24]
 title('フィルタ処理画像')  %[output:3785ec24]
 
 %%
 %[text] ## 結果出力
-imwrite(X,fullfile(resfolder,"fig03-03a.png"))
-imwrite(Y+0.5,fullfile(resfolder,"fig03-03b.png"))
+imwrite(X,fullfile(resfolder,myfilename+"a.png"))
+imwrite(Y,fullfile(resfolder,"fig03-03c.png"))
 
 %%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
