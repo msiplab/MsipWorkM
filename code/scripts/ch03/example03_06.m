@@ -1,4 +1,4 @@
-%[text] # 例3.3（4近傍ラプラシアン）
+%[text] # 例3.6（Prewittフィルタ）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2025b
 %[text] ## 準備
@@ -7,7 +7,7 @@ prj = matlab.project.currentProject;
 prjroot = prj.RootFolder;
 datfolder = fullfile(prjroot,"data");
 resfolder = fullfile(prjroot,"results");
-myfilename = "example03_03"; % mfilename
+myfilename = "example03_06"; % mfilename
 
 imgname = "msipimg04";
 imgfmt = "tiff";
@@ -20,18 +20,28 @@ X = imresize(im2double(rgb2gray(imread(imgfile,imgfmt))),[96 96]);
 figure(1)
 imshow(X)  %[output:64078bdf]
 title('原画像')  %[output:64078bdf]
+
 %%
-%[text] ## スケールの設定
-f = fspecial('laplacian',0)
-Y = imfilter(X,f,'corr','same');
+%[text] ## 垂直方向差分
+f = flipud(fspecial('prewitt'))
+Yv = imfilter(X,f,'corr','same');
 figure(2)
-imshow(Y+0.5) %[output:3785ec24]
-title('フィルタ処理画像')  %[output:3785ec24]
+imshow(Yv+0.5) %[output:3785ec24]
+title('垂直方向差分画像')  %[output:3785ec24]
+
+%%
+%[text] ## 水平方向差分
+f = rot90(flipud(fspecial('prewitt')))
+Yh = imfilter(X,f,'corr','same');
+figure(3)
+imshow(Yh+0.5) %[output:3785ec24]
+title('水平方向差分画像')  %[output:3785ec24]
 
 %%
 %[text] ## 結果出力
-imwrite(X,fullfile(resfolder,"fig03-03a.png"))
-imwrite(Y+0.5,fullfile(resfolder,"fig03-03b.png"))
+imwrite(X,fullfile(resfolder,myfilename+"org.png"))
+imwrite(Yv+0.5,fullfile(resfolder,"fig03-06a.png"))
+imwrite(Yh+0.5,fullfile(resfolder,"fig03-06b.png"))
 
 %%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.

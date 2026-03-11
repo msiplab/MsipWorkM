@@ -22,32 +22,32 @@ imshow(X)  %[output:64078bdf]
 title('原画像')  %[output:64078bdf]
 %%
 %[text] ## フィルタの設定
-h = fspecial('average',2);
+f = fspecial('average',2);
 
 %%
 %[text] ## 零値拡張
-Yz = imfilter(X,h,'corr','same');
+Yz = imfilter(X,f,'corr','same');
 figure(2)
 imshow(Yz) %[output:3785ec24]
 title('零値拡張')  %[output:3785ec24]
 
 %%
 %[text] ## 周期拡張
-Yp = imfilter(X,h,'corr','circular');
+Yp = imfilter(X,f,'corr','circular');
 figure(3)
 imshow(Yp) %[output:3785ec24]
 title('周期拡張')  %[output:3785ec24]
 
 %%
 %[text] ## 複製拡張
-Yr = imfilter(X,h,'corr','replicate');
+Yr = imfilter(X,f,'corr','replicate');
 figure(4)
 imshow(Yr) %[output:3785ec24]
 title('複製拡張')  %[output:3785ec24]
 
 %%
 %[text] ## 対称拡張
-Ys = imfilter(X,h,'corr','symmetric');
+Ys = imfilter(X,f,'corr','symmetric');
 figure(5)
 imshow(Ys) %[output:3785ec24]
 title('対称拡張')  %[output:3785ec24]

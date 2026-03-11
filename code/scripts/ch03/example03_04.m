@@ -22,8 +22,8 @@ imshow(X)  %[output:64078bdf]
 title('原画像')  %[output:64078bdf]
 %%
 %[text] ## スケールの設定
-h = fspecial('unsharp',0)
-Y = imfilter(X,h,'corr','same');
+f = fspecial('unsharp',0)
+Y = imfilter(X,f,'corr','same');
 figure(2)
 imshow(Y) %[output:3785ec24]
 title('フィルタ処理画像')  %[output:3785ec24]
