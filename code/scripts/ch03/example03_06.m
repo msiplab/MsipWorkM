@@ -40,8 +40,8 @@ title('水平方向差分画像')  %[output:3785ec24]
 %%
 %[text] ## 結果出力
 imwrite(X,fullfile(resfolder,myfilename+"org.png"))
-imwrite(Yv+0.5,fullfile(resfolder,"fig03-06a.png"))
-imwrite(Yh+0.5,fullfile(resfolder,"fig03-06b.png"))
+imwrite(Yv+0.5,fullfile(resfolder,"fig03-05a.png"))
+imwrite(Yh+0.5,fullfile(resfolder,"fig03-05b.png"))
 
 %%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
