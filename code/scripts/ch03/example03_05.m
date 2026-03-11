@@ -1,4 +1,4 @@
-%[text] # 例3.1（矩形フィルタ）
+%[text] # 例3.5（境界処理）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2025b
 %[text] ## 準備
@@ -7,7 +7,7 @@ prj = matlab.project.currentProject;
 prjroot = prj.RootFolder;
 datfolder = fullfile(prjroot,"data");
 resfolder = fullfile(prjroot,"results");
-myfilename = "example03_01"; % mfilename
+myfilename = "example03_05"; % mfilename
 
 imgname = "msipimg03";
 imgfmt = "tiff";
@@ -21,17 +21,44 @@ figure(1)
 imshow(X)  %[output:64078bdf]
 title('原画像')  %[output:64078bdf]
 %%
-%[text] ## スケールの設定
+%[text] ## フィルタの設定
 h = fspecial('average',2);
-Y = imfilter(X,h,'corr','same');
+
+%%
+%[text] ## 零値拡張
+Yz = imfilter(X,h,'corr','same');
 figure(2)
-imshow(Y) %[output:3785ec24]
-title('フィルタ処理画像')  %[output:3785ec24]
+imshow(Yz) %[output:3785ec24]
+title('零値拡張')  %[output:3785ec24]
+
+%%
+%[text] ## 周期拡張
+Yp = imfilter(X,h,'corr','circular');
+figure(3)
+imshow(Yp) %[output:3785ec24]
+title('周期拡張')  %[output:3785ec24]
+
+%%
+%[text] ## 複製拡張
+Yr = imfilter(X,h,'corr','replicate');
+figure(4)
+imshow(Yr) %[output:3785ec24]
+title('複製拡張')  %[output:3785ec24]
+
+%%
+%[text] ## 対称拡張
+Ys = imfilter(X,h,'corr','symmetric');
+figure(5)
+imshow(Ys) %[output:3785ec24]
+title('対称拡張')  %[output:3785ec24]
 
 %%
 %[text] ## 結果出力
-imwrite(X,fullfile(resfolder,"fig03-02a.png"))
-imwrite(Y,fullfile(resfolder,"fig03-02b.png"))
+
+imwrite(Yz(end*(13/16):end,end*(13/16):end),fullfile(resfolder,"fig03-04a.png"))
+imwrite(Yp(end*(13/16):end,end*(13/16):end),fullfile(resfolder,"fig03-04b.png"))
+imwrite(Yr(end*(13/16):end,end*(13/16):end),fullfile(resfolder,"fig03-04c.png"))
+imwrite(Ys(end*(13/16):end,end*(13/16):end),fullfile(resfolder,"fig03-04d.png"))
 
 %%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
