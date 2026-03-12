@@ -24,10 +24,10 @@ end
 gm
 
 %%%
-sigmav = 4;
+sigmax = 4;
 
-function gv = fcn_gv(v0,v1,sigmav)
-    gv = exp(-(v1-v0).^2/(2*sigmav^2));
+function gv = fcn_gv(v0,v1,sigmax)
+    gv = exp(-(v1-v0).^2/(2*sigmax^2));
 end
 
 jRow = 0;
@@ -44,7 +44,7 @@ for nv = 0:2
             for mh = -1:1
                 iCol = iCol + 1;
                 v1 = x(jRow+mv+1,jCol+mh+1);
-                gv(iRow,iCol) = fcn_gv(v0,v1,sigmav);
+                gv(iRow,iCol) = fcn_gv(v0,v1,sigmax);
             end
         end
         g = gm.*gv;
@@ -60,4 +60,4 @@ msip.arr2tex(u,"%6.4f")
 
 %%
 
-imbilatfilt(x,'degreeOfSmoothing',sigmav^2,'spatialSigma',sigmam,'NeighborhoodSize',3,'Padding',0)
+imbilatfilt(x,'degreeOfSmoothing',sigmax^2,'spatialSigma',sigmam,'NeighborhoodSize',3,'Padding',0)
