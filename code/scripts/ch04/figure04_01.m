@@ -78,7 +78,7 @@ for iv = 0:2
 
         b = @(qv,qh) cos(nuv.*qv+nuh.*qh);
 
-        surf(Qx,Qy,b(Qx,Qy))
+        h = surf(Qx,Qy,b(Qx,Qy));
         axis off
         daspect([1 1 64])
         colormap("gray")
