@@ -20,7 +20,7 @@ for idx=1:3 %[output:group:1ea6798d]
     b = @(qv,qh) cos(nuv.*qv+nuh.*qh);
 
     figure(idx) %[output:3ac1af27] %[output:341eacd9] %[output:646501a4]
-    h = surf(Qx,Qy,b(Qx,Qy)); %[output:3ac1af27] %[output:341eacd9] %[output:646501a4]
+    h = surf(Qx,Qy,b(Qy,Qx)); %[output:3ac1af27] %[output:341eacd9] %[output:646501a4]
     %axis off
     daspect([1 1 8])
     colormap("gray")
