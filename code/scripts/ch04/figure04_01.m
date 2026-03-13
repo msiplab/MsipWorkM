@@ -20,7 +20,7 @@ h.EdgeColor = "none";
 shading interp
 daspect([8 8 1])
 ax = gca;
-ax.FontSize = 12;
+ax.FontSize = 18;
 ax.YDir = 'reverse';
 ax.XTick = 0:20:100;
 ax.YTick = 0:20:100;
@@ -29,11 +29,11 @@ ax.Color = 'none';
 fg = gcf;
 fg.Color = 'none';
 set(fg,'Renderer','opengl'); 
-xlabel("$q_\mathrm{h}$","Interpreter","latex","FontSize",16);
-ylabel("$q_\mathrm{v}$","Interpreter","latex","FontSize",16);
-zlabel("$u(\mathbf{q})$","Interpreter","latex","FontSize",16);
+xlabel("$q_\mathrm{h}$","Interpreter","latex","FontSize",20);
+ylabel("$q_\mathrm{v}$","Interpreter","latex","FontSize",20);
+zlabel("$u(\mathbf{q})$","Interpreter","latex","FontSize",20);
 
-exportgraphics(ax,fullfile(resfolder,"fig04-01a.png"),'BackgroundColor','none','ContentType','image')
+exportgraphics(fg,fullfile(resfolder,"fig04-01a.png"),'BackgroundColor','none','ContentType','image')
 
 %%
 figure(3)
@@ -48,7 +48,7 @@ h.EdgeColor = "none";
 shading interp
 daspect([1 1 12000])
 ax = gca;
-ax.FontSize = 12;
+ax.FontSize = 18;
 ax.YDir = 'reverse';
 ax.XTick = -1:1;
 ax.XTickLabel = {"-\pi/\Delta_h","0","\pi/\Delta_h"};
@@ -59,11 +59,11 @@ ax.Color = 'none';
 fg = gcf;
 fg.Color = 'none';
 set(fg,'Renderer','opengl'); 
-xlabel("$\nu_\mathrm{h}$","Interpreter","latex","FontSize",16);
-ylabel("$\nu_\mathrm{v}$","Interpreter","latex","FontSize",16);
-zlabel("$|\tilde{u}(\mathbf{\nu})|$","Interpreter","latex","FontSize",16);
+xlabel("$\nu_\mathrm{h}$","Interpreter","latex","FontSize",20);
+ylabel("$\nu_\mathrm{v}$","Interpreter","latex","FontSize",20);
+zlabel("$|\tilde{u}(\mathbf{\nu})|$","Interpreter","latex","FontSize",20);
 
-exportgraphics(ax,fullfile(resfolder,"fig04-01b.png"),'BackgroundColor','none','ContentType','image')
+exportgraphics(fg,fullfile(resfolder,"fig04-01b.png"),'BackgroundColor','none','ContentType','image')
 
 
 %%
@@ -88,9 +88,9 @@ for iv = 0:2
         ax = gca;
         ax.Color = 'none';
         fg = gcf;
-fg.Color = 'none';
-set(fg,'Renderer','opengl'); 
-        exportgraphics(ax,fullfile(resfolder,"fig04-01c"+"_"+num2str(iv)+"_"+num2str(ih)+".png"),'BackgroundColor','none','ContentType','image')
+        fg.Color = 'none';
+        set(fg,'Renderer','opengl');
+        exportgraphics(fg,fullfile(resfolder,"fig04-01c"+"_"+num2str(iv)+"_"+num2str(ih)+".png"),'BackgroundColor','none','ContentType','image')
 
     end
 end
