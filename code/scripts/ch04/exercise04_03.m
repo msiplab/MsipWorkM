@@ -57,7 +57,7 @@ text(n1(2)/2+0.05,n1(1)/2+1.4, ' $\mathbf{n}_1$','Interpreter','latex','FontSize
 
 
 pgon = polyshape([0 N(2,1) sum(N(2,:)) N(2,2)],[0 N(1,1) sum(N(1,:)) N(1,2)]);
-plot(pgon,'FaceColor',0.5*[1 1 1],'FaceAlpha',0.1)
+plot(pgon,'FaceColor',0.5*[1 1 1],'FaceAlpha',0.1,'LineStyle','--')
 
 
 plot(X(:),Y(:)+1,'x','Color','k','MarkerSize',10);
