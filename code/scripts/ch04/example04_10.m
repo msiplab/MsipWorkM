@@ -67,6 +67,7 @@ imwrite(X,fullfile(resfolder,"fig04-04a.png"))
 imwrite(Ymagimg,fullfile(resfolder,"fig04-04b.png"))
 imwrite(Yangimg,fullfile(resfolder,"fig04-04c.png"))
 imwrite(Xmag,fullfile(resfolder,"fig04-04d.png"))
+imwrite(Xangimg,fullfile(resfolder,"fig04-04e.png"))
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 
 %[appendix]{"version":"1.0"}
