@@ -96,7 +96,7 @@ for iRow=1:size(X,1)
     for iCol=1:size(X,2)
         V = imfilter(E,H,'conv');
         Y(iRow,iCol) = (X(iRow,iCol) + V(iRow,iCol))>=0.5;
-        E(iRow,iCol)= (X(iRow,iCol)+V(iRow,iCol))-Y(iRow,iCol);
+        E(iRow,iCol) = (X(iRow,iCol) + V(iRow,iCol))-Y(iRow,iCol);
     end
 end
 
