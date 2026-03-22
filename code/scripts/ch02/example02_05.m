@@ -100,7 +100,7 @@ for iRow=1:size(X,1)
     end
 end
 
-figure(5)
+figure(5) %[output:3a438887]
 imshow(imresize(Y,4)) %[output:3a438887]
 title('二値化画像（誤差拡散）')  %[output:3a438887]
 %%
