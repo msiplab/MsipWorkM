@@ -9,7 +9,7 @@ for x = -4:4
         h(x+5, y+5) = bicubic_coeff(x/2, a) * bicubic_coeff(y/2, a);
     end
 end
-h
+msip.arr2tex(h,"%.4f")
 
 
 function coeff = bicubic_coeff(x, a)
