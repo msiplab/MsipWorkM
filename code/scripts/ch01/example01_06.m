@@ -27,8 +27,8 @@ dot(x(:),y(:)) / (norm(x(:),2)*norm(y(:),2)) %[output:9d630948]
 %   data: {"layout":"onright"}
 %---
 %[output:737e792b]
-%   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"20.0749"}}
+%   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"14"}}
 %---
 %[output:9d630948]
-%   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"-0.5000"}}
+%   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"0.5000"}}
 %---

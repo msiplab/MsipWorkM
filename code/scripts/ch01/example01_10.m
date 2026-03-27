@@ -40,17 +40,17 @@ disp("T*(h)(x) = " + z2) %[output:6db0c64b]
 %   data: {"layout":"onright"}
 %---
 %[output:4b105ac9]
-%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"X","rows":2,"type":"double","value":[["0.7094","0.2760","0.6551"],["0.7547","0.6797","0.1626"]]}}
+%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"X","rows":2,"type":"double","value":[["0.7922","0.6557","0.8491"],["0.9595","0.0357","0.9340"]]}}
 %---
 %[output:435a23a3]
-%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"Y","rows":2,"type":"double","value":[["0.6551","0.7094","0.2760"],["0.1626","0.7547","0.6797"]]}}
+%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"Y","rows":2,"type":"double","value":[["0.8491","0.7922","0.6557"],["0.9340","0.9595","0.0357"]]}}
 %---
 %[output:377c392f]
 %   data: {"dataType":"matrix","outputData":{"columns":6,"name":"T","rows":6,"type":"double","value":[["0","0","0","0","1","0"],["0","0","0","0","0","1"],["1","0","0","0","0","0"],["0","1","0","0","0","0"],["0","0","1","0","0","0"],["0","0","0","1","0","0"]]}}
 %---
 %[output:0a56672e]
-%   data: {"dataType":"text","outputData":{"text":"h(T(x)) = 0.13802\n","truncated":false}}
+%   data: {"dataType":"text","outputData":{"text":"h(T(x)) = -1.0917\n","truncated":false}}
 %---
 %[output:6db0c64b]
-%   data: {"dataType":"text","outputData":{"text":"T*(h)(x) = 0.13802\n","truncated":false}}
+%   data: {"dataType":"text","outputData":{"text":"T*(h)(x) = -1.0917\n","truncated":false}}
 %---

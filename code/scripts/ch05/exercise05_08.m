@@ -9,7 +9,7 @@ R = @(theta) [cos(theta) -sin(theta); sin(theta) cos(theta)];
 
 %%
 % 原画像
-X = imresize(im2double(imread('cameraman.tif')),[96 96]);
+X = imresize(im2double(imread('cameraman.tif')),[96 96],'bilinear');
 figure(2)
 imshow(X)
 title(num2str(size(X)))

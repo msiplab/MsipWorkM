@@ -20,10 +20,10 @@ disp("||T(x)||/||x|| = " + norm(Y(:),2)/norm(X(:),2)) %[output:0e3bf12e]
 %   data: {"layout":"onright"}
 %---
 %[output:3910cf53]
-%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"X","rows":2,"type":"double","value":[["0.7655","0.1869","0.4456"],["0.7952","0.4898","0.6463"]]}}
+%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"X","rows":2,"type":"double","value":[["0.9572","0.8003","0.4218"],["0.4854","0.1419","0.9157"]]}}
 %---
 %[output:4cf3faea]
-%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"Y","rows":2,"type":"double","value":[["0.4456","0.7655","0.1869"],["0.6463","0.7952","0.4898"]]}}
+%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"Y","rows":2,"type":"double","value":[["0.4218","0.9572","0.8003"],["0.9157","0.4854","0.1419"]]}}
 %---
 %[output:0e3bf12e]
 %   data: {"dataType":"text","outputData":{"text":"||T(x)||\/||x|| = 1\n","truncated":false}}

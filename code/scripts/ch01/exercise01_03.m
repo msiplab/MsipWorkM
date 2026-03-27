@@ -57,10 +57,10 @@ reshape(u,2,3) %[output:741b3bd9]
 %   data: {"layout":"onright"}
 %---
 %[output:734697b8]
-%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"V","rows":2,"type":"double","value":[["0.2785","0.9575","0.1576"],["0.5469","0.9649","0.9706"]]}}
+%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"V","rows":2,"type":"double","value":[["0.3522","0.6894","0.1115"],["0.1981","0.2120","0.9425"]]}}
 %---
 %[output:9d92d2fb]
-%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"U","rows":2,"type":"double","value":[["0.1576","0.2785","0.9575"],["0.9706","0.5469","0.9649"]]}}
+%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"U","rows":2,"type":"double","value":[["0.1115","0.3522","0.6894"],["0.9425","0.1981","0.2120"]]}}
 %---
 %[output:226b0814]
 %   data: {"dataType":"matrix","outputData":{"columns":3,"name":"B0","rows":2,"type":"double","value":[["1","0","0"],["0","0","0"]]}}
@@ -102,5 +102,5 @@ reshape(u,2,3) %[output:741b3bd9]
 %   data: {"dataType":"matrix","outputData":{"columns":6,"name":"T","rows":6,"type":"double","value":[["0","0","0","0","1","0"],["0","0","0","0","0","1"],["1","0","0","0","0","0"],["0","1","0","0","0","0"],["0","0","1","0","0","0"],["0","0","0","1","0","0"]]}}
 %---
 %[output:741b3bd9]
-%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"ans","rows":2,"type":"double","value":[["0.1576","0.2785","0.9575"],["0.9706","0.5469","0.9649"]]}}
+%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"ans","rows":2,"type":"double","value":[["0.1115","0.3522","0.6894"],["0.9425","0.1981","0.2120"]]}}
 %---

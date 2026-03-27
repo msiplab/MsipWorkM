@@ -19,7 +19,7 @@ arr2tex(f,"%6.4f") %[output:8a132535]
 %[appendix]{"version":"1.0"}
 %---
 %[metadata:view]
-%   data: {"layout":"inline"}
+%   data: {"layout":"onright"}
 %---
 %[output:3a4f422e]
 %   data: {"dataType":"matrix","outputData":{"columns":3,"name":"f","rows":3,"type":"double","value":[["0.0625","0.1250","0.0625"],["0.1250","0.2501","0.1250"],["0.0625","0.1250","0.0625"]]}}

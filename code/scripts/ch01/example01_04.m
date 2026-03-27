@@ -24,5 +24,5 @@ dot(x(:),y(:)) %[output:1c434c31]
 %   data: {"layout":"onright"}
 %---
 %[output:1c434c31]
-%   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"-63"}}
+%   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"80"}}
 %---

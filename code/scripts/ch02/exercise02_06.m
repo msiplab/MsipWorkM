@@ -59,7 +59,7 @@ disp(arr2tex(YY,"%d"))
 
 figure(2)
 imshow(imresize(v/7,8))
-figure(6)
+figure(3)
 imshow(imresize(YY,8))
 
 %%

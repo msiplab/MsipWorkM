@@ -21,19 +21,19 @@ size(U) %[output:7fa371a1]
 %   data: {"layout":"onright"}
 %---
 %[output:9c538a63]
-%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"V","rows":2,"type":"double","value":[["0.9572","0.8003","0.4218"],["0.4854","0.1419","0.9157"]]}}
+%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"V","rows":2,"type":"double","value":[["0.2785","0.9575","0.1576"],["0.5469","0.9649","0.9706"]]}}
 %---
 %[output:9384d7db]
 %   data: {"dataType":"matrix","outputData":{"columns":2,"name":"ans","rows":1,"type":"double","value":[["2","3"]]}}
 %---
 %[output:5f0c3c65]
-%   data: {"dataType":"matrix","outputData":{"columns":1,"name":"v","rows":6,"type":"double","value":[["0.9572"],["0.4854"],["0.8003"],["0.1419"],["0.4218"],["0.9157"]]}}
+%   data: {"dataType":"matrix","outputData":{"columns":1,"name":"v","rows":6,"type":"double","value":[["0.2785"],["0.5469"],["0.9575"],["0.9649"],["0.1576"],["0.9706"]]}}
 %---
 %[output:11ebf28b]
 %   data: {"dataType":"matrix","outputData":{"columns":2,"name":"ans","rows":1,"type":"double","value":[["6","1"]]}}
 %---
 %[output:0e55eb9e]
-%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"U","rows":2,"type":"double","value":[["0.9572","0.8003","0.4218"],["0.4854","0.1419","0.9157"]]}}
+%   data: {"dataType":"matrix","outputData":{"columns":3,"name":"U","rows":2,"type":"double","value":[["0.2785","0.9575","0.1576"],["0.5469","0.9649","0.9706"]]}}
 %---
 %[output:7fa371a1]
 %   data: {"dataType":"matrix","outputData":{"columns":2,"name":"ans","rows":1,"type":"double","value":[["2","3"]]}}

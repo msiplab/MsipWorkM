@@ -1,3 +1,5 @@
+
+%%
 %[text] # 例1.3（静止画像のデータ量）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2025b
@@ -7,7 +9,7 @@ N2 = 3456 %[output:303ab174]
 N = N1 * N2 %[output:9559e675]
 
 %%
-%[text] ## (1) 8ビット符号なし整数型（\\$\\beta=8\\$\[bits\]）のグレースケール画像の場合
+%[text] ## (1) 8ビット符号なし整数型（ $\\beta=8$ bits）のグレースケール画像の場合
 beta = 8;
 B = beta*N1*N2;
 fprintf("8ビット符号なし整数型\n"); %[output:74a9c631]
@@ -18,7 +20,7 @@ dataInfo = whos('I');
 disp(dataInfo) %[output:02043ee7]
 
 %%
-%[text] ## (2) 倍精度実数型（\\$\\beta=8\\$\[bits\]）のRGB画像の場合
+%[text] ## (2) 倍精度実数型（ $\\beta=8$ bits）のRGB画像の場合
 beta = 64;
 B = 3*beta*N1*N2;
 fprintf("倍精度実数型\n"); %[output:161fe9a8]
