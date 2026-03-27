@@ -17,7 +17,7 @@ rng(0)
 %%
 %[text] ## 画像データの読込
 imgfile = fullfile(datfolder,imgname);
-X = imresize(im2double(rgb2gray(imread(imgfile,imgfmt))),[96 96]);
+X = imresize(im2double(rgb2gray(imread(imgfile,imgfmt))),[96 96],'bilinear');
 %%
 %[text] ## 劣化前の画像表示
 figure(1) %[output:9ad54ab8]

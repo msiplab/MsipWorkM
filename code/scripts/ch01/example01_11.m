@@ -14,7 +14,7 @@ imgfmt = "tiff";
 %%
 %[text] ## 画像データの読込
 imgfile = fullfile(datfolder,imgname);
-X = imresize(rgb2gray(imread(imgfile,imgfmt)),[96 96]);
+X = imresize(rgb2gray(imread(imgfile,imgfmt)),[96 96],'bilinear');
 %%
 %[text] ## 幾何処理前の画像表示
 figure(1) %[output:64078bdf]

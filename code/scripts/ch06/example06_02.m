@@ -15,7 +15,7 @@ imgfmt = "tiff";
 %%
 %[text] ## 画像データの読込
 imgfile = fullfile(datfolder,imgname);
-I = imresize(im2double(rgb2gray(imread(imgfile,imgfmt))),[96 96]);
+I = imresize(im2double(rgb2gray(imread(imgfile,imgfmt))),[96 96],'bilinear');
 %%
 %[text] ## 原画像の表示
 figure(1) %[output:66690236]
@@ -26,21 +26,23 @@ title('原画像')  %[output:66690236]
 X = reshape(I.',2,[]).';
 size(X) %[output:41047fff]
 msip.arr2tex(cov(X,1)) %[output:8c447203]
+
 %%
 %[text] ## 変換前の散布図プロット
 figure(2) %[output:81848bb8]
 scatter(X(:,1),X(:,2),'black','Marker','.'); %[output:81848bb8]
 ax = gca;
+ax.FontSize = 10;
 axis(ax,'square') %[output:81848bb8]
-axis(ax,[0 1.5 0 1.5]) %[output:81848bb8]
-ax.XTick = 0:0.2:1.5; %[output:81848bb8]
-ax.YTick = 0:0.2:1.5; %[output:81848bb8]
+axis(ax,[-0.3 1.3 -0.2 1.3]) %[output:81848bb8]
+ax.XTick = -0.2:0.2:1.3; %[output:81848bb8]
+ax.YTick = -0.2:0.2:1.3; %[output:81848bb8]
 grid on %[output:81848bb8]
-
 
 xlabel('$x_1$','Interpreter','latex') %[output:81848bb8]
 ylabel('$x_2$','Interpreter','latex') %[output:81848bb8]
 exportgraphics(ax,fullfile(resfolder,"fig06-01a.png")) %[output:81848bb8]
+
 %%
 %[text] ## 変換
 A = [1 1 ; 1 -1]/sqrt(2);
@@ -51,11 +53,12 @@ msip.arr2tex(cov(Y,1)) %[output:0cbc9ebc]
 %[text] ## 
 %%
 %[text] ## 変換後の散布図プロット
-figure(4) %[output:78a50f58]
+figure(3) %[output:78a50f58]
 s = scatter(Y(:,1),Y(:,2),'black','Marker','.'); %[output:78a50f58]
 ax = gca;
+ax.FontSize = 10;
 axis(ax,'square') %[output:78a50f58]
-axis(ax,[0 1.5 -0.75 0.75]) %[output:78a50f58]
+axis(ax,[-0.1 1.4 -0.75 0.75]) %[output:78a50f58]
 ax.XTick = 0:0.2:1.5; %[output:78a50f58]
 ax.YTick = -0.6:0.2:0.6; %[output:78a50f58]
 grid on %[output:78a50f58]

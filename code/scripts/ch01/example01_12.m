@@ -14,7 +14,7 @@ imgfmt = "tiff";
 %%
 %[text] ## 画像データの読込
 imgfile = fullfile(datfolder,imgname);
-V = imresize(rgb2gray(imread(imgfile,imgfmt)),[96 96]);
+V = imresize(rgb2gray(imread(imgfile,imgfmt)),[96 96],'bilinear');
 %%
 %[text] ## 圧縮前のデータ量
 dataInfo = whos('V');
