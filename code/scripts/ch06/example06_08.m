@@ -125,7 +125,7 @@ figWidth = 400; % 幅（ピクセル）
 figHeight = 600; % 高さ（ピクセル）
 set(hfig, 'Units', 'pixels', 'Position', [100 100 figWidth figHeight]); %[output:988417c1]
 
-exportgraphics(hfig,fullfile(resfolder,"fig06-05b.png")) %[output:988417c1]
+exportgraphics(hfig,fullfile(resfolder,"fig06-03c.png")) %[output:988417c1]
 iFig = iFig + 1;
 %%
 %[text] ## 補間核の定義
