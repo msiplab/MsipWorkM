@@ -1,3 +1,6 @@
+close all
+
+%%
 f0 = 2^(-5/2)*[1+sqrt(3) 3+sqrt(3) 3-sqrt(3) 1-sqrt(3)]
 f1 = 2^(-5/2)*[1-sqrt(3) -3+sqrt(3) 3+sqrt(3) -1-sqrt(3)]
 
@@ -50,7 +53,7 @@ figWidth = 400; % 幅（ピクセル）
 figHeight = 400; % 高さ（ピクセル）
 set(hfig, 'Units', 'pixels', 'Position', [100 100 figWidth figHeight]);
 
-exportgraphics(hfig,fullfile(resfolder,"fig06-12a.png"))
+exportgraphics(hfig,fullfile(resfolder,"fig06-13a.png"))
 
 %%
 
@@ -65,19 +68,20 @@ magF3_1 = 20*log10(abs(F3_1));
 magF2_1 = 20*log10(abs(F2_1));
 magF1_1 = 20*log10(abs(F1_1));
 
-p = plot(w,magF3_0,w,magF3_1,w,magF2_1,w,magF1_1);
+plt = plot(w,magF3_0,w,magF3_1,w,magF2_1,w,magF1_1);
 styles = {'-','--',':','-.'};
-for k = 1:numel(p)
-    p(k).Color = [0 0 0];
-    p(k).LineStyle = styles{k};
-    p(k).LineWidth = 1.5;
+for k = 1:numel(plt)
+    plt(k).Color = [0 0 0];
+    plt(k).LineStyle = styles{k};
+    plt(k).LineWidth = 1.5;
 end
 grid on
 xlabel('$\omega$','Interpreter','latex')
 ylabel('$20\log_{10}|F_{j,p}(\mathrm{e}^{\mathrm{j}\omega})|$ [dB]','Interpreter','latex')
-legend({'$F_{3,0}(z)$','$F_{3,1}(z)$','$F_{2,1}(z)$','$F_{1,1}(z)$'},'Location','northeast','Interpreter','latex')
+legend({'$F_{3,0}(z)$','$F_{3,1}(z)$','$F_{2,1}(z)$','$F_{1,1}(z)$'},...
+    'Location','southeast','Interpreter','latex')
 ax = gca;
-ax.YLim = [-30 20];
+ax.YLim = [-30 10];
 ax.XLim = [0 pi];
 ax.XTick = [0 pi/2 pi];
 ax.XTickLabel = {'0','\pi/2','\pi'};
@@ -90,4 +94,4 @@ figHeight = 400; % 高さ（ピクセル）
 set(hfig, 'Units', 'pixels', 'Position', [100 100 figWidth figHeight]);
 hold off
 
-exportgraphics(hfig,fullfile(resfolder,"fig06-12b.png"))
+exportgraphics(hfig,fullfile(resfolder,"fig06-13b.png"))
