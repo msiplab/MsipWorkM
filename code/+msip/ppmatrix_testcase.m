@@ -8,7 +8,7 @@ classdef ppmatrix_testcase < matlab.unittest.TestCase
     %
     % Requirements: MATLAB R2015b
     %
-    % Copyright (c) 2014-2020, Shogo MURAMATSU
+    % Copyright (c) 2014-2026, Shogo MURAMATSU
     %
     % All rights reserved.
     %
@@ -1008,6 +1008,6 @@ classdef ppmatrix_testcase < matlab.unittest.TestCase
             testCase.verifyEqual(coefActual,coefExpctd,'RelTol',1e-15);
             
         end
-        
+       
     end
 end

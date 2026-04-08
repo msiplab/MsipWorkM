@@ -5,26 +5,28 @@ b = 1/4
 K = 1
 
 J2 = fliplr(eye(2));
+
 %%
-pa(:,:,1) = [1 0; -a 1];
-pa(:,:,2) = [0 0; -a 0];
+pa(:,:,1) = [0 0; -a 0];
+pa(:,:,2) = [1 0; -a 1];
 
 Pa = msip.ppmatrix(pa)
 
 %%
-pb(:,:,1) = [0 -b; 0 0];
-pb(:,:,2) = [1 -b; 0 1];
+ub(:,:,1) = [1 -b; 0 1];
+ub(:,:,2) = [0 -b; 0 0];
 
-Pb = msip.ppmatrix(pb)
-
-%%
-
-R = J2*Pa*Pb 
+Ub = msip.ppmatrix(ub)
 
 %%
-dm(:,:,1) = [0;1];
-dm(:,:,2) = [1;0];
+
+R = J2*Pa*Ub 
+
+%%
+dm(:,:,1) = [1;0];
+dm(:,:,2) = [0;1];
 Dm = msip.ppmatrix(dm)
+Dm.' % Para-conjugation
 
 %%
 F = Dm.'*upsample(R,2)

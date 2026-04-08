@@ -7,7 +7,7 @@ classdef ppmatrix < handle
     %
     % Requirements: MATLAB R2015b
     %
-    % Copyright (c) 2014-2020, Shogo MURAMATSU
+    % Copyright (c) 2014-2026, Shogo MURAMATSU
     %
     % All rights reserved.
     %
@@ -181,13 +181,13 @@ classdef ppmatrix < handle
             coefTmp = conj(coefTmp);
             value = ppmatrix(coefTmp);
         end
-        
+
         function value = transpose(obj)
-            import msip.ppmatrix                                                           
+            import msip.ppmatrix
             coefTmp = double(obj);
-            coefTmp = permute(coefTmp,[2 1 3 4]);
+            coefTmp = permute(coefTmp,[2 1 3]);% 4]);
             coefTmp = flip(coefTmp,3);
-            coefTmp = flip(coefTmp,4);
+            %coefTmp = flip(coefTmp,4);
             value = ppmatrix(coefTmp);
         end
         
