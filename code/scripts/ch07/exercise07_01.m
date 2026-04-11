@@ -12,8 +12,29 @@ X = [4 4 6 4;
      6 4 2 4; 
      4 2 4 4]
 
-Y = C4 * X * C4.'
 
+Y = C4 * X * C4.'
 
 msip.arr2tex(Y)
 
+%%
+
+Yaprx = Z.*Y;
+
+msip.arr2tex(Yaprx)
+
+%%
+
+Xaprx = C4.'*Yaprx*C4;
+
+msip.arr2tex(Xaprx)
+
+%%
+
+%Xhat = round(Xaprx);
+
+%msip.arr2tex(Xhat,"%d")
+
+%%
+
+msip.arr2tex(X-Xaprx)

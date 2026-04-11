@@ -1,4 +1,5 @@
 %% 
+%% 
 % Change directory to the project folder
 openProject('msip_project.prj')
 % Add code directory and its subdirectories to path
