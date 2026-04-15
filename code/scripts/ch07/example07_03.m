@@ -109,7 +109,7 @@ htt = title("MP+DWT"); %[output:205c1343]
 
 % MP法による近似
 Xdwt = mp(X,syndic,K,di_sqrdnorm_dwt,him,htt); %[output:205c1343]
-
+imwrite(Xdwt,fullfile(resfolder,"fig07-06b.png"))
 %%
 %[text] ## OMP + DWT
 syndic = @(x,option) lgt53dwt3lv(x,option);
@@ -126,7 +126,7 @@ htt = title("OMP+DWT"); %[output:2da3b979]
 
 % MP法による近似
 Xdwt = omp(X,syndic,K,nGDIters,muGD,di_sqrdnorm_dwt,him,htt); %[output:2da3b979]
-imwrite(Xdwt,fullfile(resfolder,"fig07-06b.png"))
+imwrite(Xdwt,fullfile(resfolder,"fig07-06c.png"))
 %%
 %[text] ## MP法
 function [xaprx,s] = mp(x,syndic,nCoefs,di_sqrdnorm,him,htt)
