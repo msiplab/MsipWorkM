@@ -40,7 +40,7 @@ Y4 = Q*round(X/Q);
 figure(3) %[output:31364315]
 imshow(Y4) %[output:31364315]
 title(num2str(gamma)+" bpp PSNR: " + num2str(psnr(X,Y4)) + " dB") %[output:31364315]
-imwrite(Y6,fullfile(resfolder,"fig07-09b.png"))
+imwrite(Y4,fullfile(resfolder,"fig07-09b.png"))
 
 %[text] ## 
 %%
