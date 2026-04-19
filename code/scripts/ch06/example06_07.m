@@ -13,7 +13,7 @@ myfilename = "example06_07"; % mfilename
 %imgname = "msipimg07";
 %imgfmt = "tiff";
 %%
-%[text] ## DCT基底ベクトル
+%[text] ## DHT基底ベクトル
 J = 2;
 M = 2^J;
 H = dhtmtx(J);
