@@ -28,4 +28,6 @@ nom = mean(diag(Sy))
 den = prod(diag(Sy))^(1/M)
 
 
-nom/den
+G = nom/den
+
+10*log10(G)

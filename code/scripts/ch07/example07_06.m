@@ -10,6 +10,9 @@ myfilename = "example07_06"; % mfilename
 
 imgname = "msipimg05";
 imgfmt = "tiff";
+
+close all
+
 %%
 %[text] ## 画像データの読込
 imgfile = fullfile(datfolder,imgname);
