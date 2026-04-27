@@ -21,17 +21,17 @@ arr2tex(V')
 
 norm(X - U*S*V','fro')
 
-thd = S(3,3) 
+thd = S(2,2) 
 
-S2 = (S>thd).*S
+S1 = (S>thd).*S
 
-X2 = U*S2*V'
+X1 = U*S1*V'
 
-arr2tex(X2)
+arr2tex(X1)
 
-arr2tex(X-X2)
+arr2tex(X-X1)
 
-norm(X-X2,'fro')^2
+norm(X-X1,'fro')^2
 
 
-sum(diag(S - S2).^2)
+sum(diag(S - S1).^2)
