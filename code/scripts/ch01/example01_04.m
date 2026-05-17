@@ -21,7 +21,7 @@ dot(x(:),y(:)) %[output:1c434c31]
 %[appendix]{"version":"1.0"}
 %---
 %[metadata:view]
-%   data: {"layout":"onright"}
+%   data: {"layout":"inline"}
 %---
 %[output:1c434c31]
 %   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"80"}}
