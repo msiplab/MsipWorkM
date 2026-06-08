@@ -54,4 +54,4 @@ Yb = reshape(Yb,2,2,p,q);
 Yb = ipermute(Yb,[1 3 2 4]);
 Y = reshape(Yb,2*p,2*q);
 
-msip.arr2tex(Y,"%4.1f")
+msip.arr2tex(Y,"%4.2f")
