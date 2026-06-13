@@ -19,7 +19,6 @@ figure(1) %[output:0f254348]
 subplot(1,3,1) %[output:0f254348]
 imshow(X) %[output:0f254348]
 title('原画像') %[output:0f254348]
-%imwrite(X,fullfile(resfolder,myfilename+"org"),imgfmt)
 
 % GPUに転送
 %X = gpuArray(X);
