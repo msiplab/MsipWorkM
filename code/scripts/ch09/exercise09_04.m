@@ -27,12 +27,13 @@ mux = mean(Xb, 2)
 Xb_ = Xb - mux;
 
 %% パラメータ設定
+rng(0)
 nDims  = prod(szBlk);   % M = 4
-nAtoms = nDims;         % P = M = 4（完全辞書）
+nAtoms = nDims + 1;     % P = M+1 = 5（冗長辞書）
 nCoefs = 1;             % K = 1（スパース度）
 nIters = 10;            % k-SVD 繰り返し数
 
-%% DCT 基底画像による辞書の初期化
+%% DCT 基底画像による辞書の初期化（残りはランダム）
 basisDct = zeros(szBlk(1), szBlk(2), nDims);
 iBasis = 1;
 for iRow = 1:szBlk(1)
@@ -43,7 +44,8 @@ for iRow = 1:szBlk(1)
         iBasis = iBasis + 1;
     end
 end
-Phi = zeros(nDims, nAtoms);
+Phi = randn(nDims, nAtoms);
+Phi = Phi / norm(Phi, 'fro');
 for iAtom = 1:nDims
     Phi(:, iAtom) = reshape(basisDct(:,:,iAtom), nDims, 1);
 end
