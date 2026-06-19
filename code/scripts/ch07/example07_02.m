@@ -179,6 +179,117 @@ drawnow
 imwrite(V,fullfile(resfolder,"fig07-02b.png"))
 
 %%
+%[text] ## 3段 LGT 5/3 DWT 基底画像
+% draw_cds97basis.m (msiplab/AtipWork) と同様のアプローチ
+% サブバンド毎に factor 間隔で複数の係数にインパルスを設定し，
+% 合成処理で基底画像を生成・タイリング合成する
+szImg = [32 32];  % 基底画像生成用（小サイズで自然なサポート領域を表示）
+factor = 5;
+
+% サブバンドサイズを取得（ゼロ画像で順変換）
+[sLL1,sHL1,sLH1,sHH1] = im53trans(zeros(szImg,'like',X));
+[sLL2,sHL2,sLH2,sHH2] = im53trans(sLL1);
+[sLL3,sHL3,sLH3,sHH3] = im53trans(sLL2);
+szs3 = size(sLL3); szs2 = size(sHL2); szs1 = size(sHL1);
+szdet = {szs3, szs2, szs1};  % level3→level2→level1 の高域サブバンドサイズ
+
+mkz = @(sz) zeros(sz,'like',X);
+
+% 64枚の基底画像を格納 (8×8グリッド用)
+% LL3:1枚，各レベルLH/HL/HH×(1×1,2×2,4×4)=3+12+48=63枚
+nBImgs = 64;
+bimg = cell(nBImgs,1);
+idx = 1;
+
+% LL3 基底画像（1個）
+subH = szs3(1); subW = szs3(2);
+offR = ceil(subH/factor*(factor-1)/2);
+offC = ceil(subW/factor*(factor-1)/2);
+bLL3 = mkz(szs3); bLL3(offR+1, offC+1) = 1;
+bT2 = im53itrans(bLL3, mkz(szs3), mkz(szs3), mkz(szs3));
+bT1 = im53itrans(bT2,  mkz(szs2), mkz(szs2), mkz(szs2));
+B   = im53itrans(bT1,  mkz(szs1), mkz(szs1), mkz(szs1));
+bimg{idx} = padarray(B+.5,[1 1],1,'both');
+idx = idx + 1;
+
+% 高域サブバンドの基底画像
+% iLev=1: level3粗域(nSel=1), iLev=2: level2(nSel=2), iLev=3: level1細域(nSel=4)
+for iLev = 1:3
+    nSel = 2^(iLev-1);
+    subH = szdet{iLev}(1); subW = szdet{iLev}(2);
+    offR = ceil(subH/factor*(factor-1)/2);
+    offC = ceil(subW/factor*(factor-1)/2);
+    for iSub = 1:3  % LH, HL, HH の順（draw_cds97basis と同様）
+        for iCol = 1:nSel
+            for iRow = 1:nSel
+                r = offR+iRow; c = offC+iCol;
+                bLH3=mkz(szs3); bHL3=mkz(szs3); bHH3=mkz(szs3);
+                bLH2=mkz(szs2); bHL2=mkz(szs2); bHH2=mkz(szs2);
+                bLH1=mkz(szs1); bHL1=mkz(szs1); bHH1=mkz(szs1);
+                switch iLev
+                    case 1
+                        switch iSub
+                            case 1, bLH3(r,c)=1;
+                            case 2, bHL3(r,c)=1;
+                            case 3, bHH3(r,c)=1;
+                        end
+                    case 2
+                        switch iSub
+                            case 1, bLH2(r,c)=1;
+                            case 2, bHL2(r,c)=1;
+                            case 3, bHH2(r,c)=1;
+                        end
+                    case 3
+                        switch iSub
+                            case 1, bLH1(r,c)=1;
+                            case 2, bHL1(r,c)=1;
+                            case 3, bHH1(r,c)=1;
+                        end
+                end
+                bT2 = im53itrans(mkz(szs3), bHL3, bLH3, bHH3);
+                bT1 = im53itrans(bT2,        bHL2, bLH2, bHH2);
+                B   = im53itrans(bT1,        bHL1, bLH1, bHH1);
+                bimg{idx} = padarray(B+.5,[1 1],1,'both');
+                idx = idx + 1;
+            end
+        end
+    end
+end
+
+%% タイリング合成（draw_cds97basis.m と同じ組み立て方）
+idx = 1;
+arrayB = [];
+for iRow = 1:2
+    rowB = [];
+    for iCol = 1:2
+        rowB = [rowB; bimg{idx}]; %#ok<AGROW>
+        idx = idx + 1;
+    end
+    arrayB = [arrayB rowB]; %#ok<AGROW>
+end
+for lev = 2:3
+    arrayBB = cell(3,1);
+    for iSub = 1:3
+        arrayBB{iSub} = [];
+        for iRow = 1:2^(lev-1)
+            rowB = [];
+            for iCol = 1:2^(lev-1)
+                rowB = [rowB; bimg{idx}]; %#ok<AGROW>
+                idx = idx + 1;
+            end
+            arrayBB{iSub} = [arrayBB{iSub} rowB]; %#ok<AGROW>
+        end
+    end
+    arrayB = [arrayB arrayBB{2}; arrayBB{1} arrayBB{3}]; %#ok<AGROW>
+end
+
+figure(3)
+imshow(arrayB)
+title('Synthesis basis images of 3-stage LGT 5/3 DWT')
+drawnow
+imwrite(arrayB, fullfile(resfolder,"fig07-02c.png"))
+
+%%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.
 %[text] 
 %[text] 
