@@ -425,7 +425,7 @@ if useConvImpl
     import saivdr.dcnn.*
     % パーセバルタイトフレーム: 合成フィルタバンク W_syn を分析・合成で共用
     W_syn    = single(getatomicimages(synthesisnet, szFilters, 2^(nLevels-1)));
-    padSz    = (szFilters - decFactor) / 2;  % ゼロパディング量（= (40-8)/2 = 16）
+    padSz    = (szFilters - decFactor) / 2;  % 円周パディング/クロッピング量（= (40-8)/2 = 16）
     nChsConv = size(W_syn, 4);
     szSub    = [szCoefs(1,1), szCoefs(1,2), nChsConv];
     if canUseGPU(); W_syn = gpuArray(W_syn); end
@@ -467,7 +467,7 @@ blkdct  = { syn_blkdct,  adj_blkdct,  "Block DCT",   false, false,       false }
 blkpca  = { syn_blkpca,  adj_blkpca,  "Block PCA",   false, false,       false };
 blkrica = { syn_blkrica, adj_blkrica, "Block RICA",  true,  false,       false };
 blkksvd = { syn_blkksvd, adj_blkksvd, "Block K-SVD", true,  false,       false };
-nsolt   = { syn_nsolt,   adj_nsolt,   "NSOLT",       false, canUseGPU(), true  };
+nsolt   = { syn_nsolt,   adj_nsolt,   "NSOLT",       false, canUseGPU(), false };
 dicset  = { blkdct, blkpca, blkrica, blkksvd, nsolt };
 nDics   = length(dicset);
 %[text] #### IHT
@@ -883,28 +883,41 @@ mRows = 2^(nextpow2(sqrt(nChsTotal))-1);
 mCols = ceil(nChsTotal/mRows);
 end
 function y = synthesisnsolt_conv(x, W_syn, decFactor, padSz, szSub)
-% NSOLT合成（転置畳み込み）: パーセバルタイトフレームの合成フィルタバンク W_syn を使用
-% x: 係数ベクトル [nCoefs 1]（gpuArray single 可）
-% W_syn: [szF szF 1 P]（gpuArray single）  szSub: [H' W' P]
+% NSOLT合成（転置畳み込み + 円周折り返し）
+% x: [nCoefs 1]（gpuArray single 可）  W_syn: [szF_H szF_W 1 P]
 x = cast(x,'like',W_syn);
-x_3d = reshape(x, szSub);                % [H' W' P]
-x_dl = dlarray(x_3d, 'SSC');
-y_dl = dltranspconv(x_dl, W_syn, [], 'Stride', decFactor, 'Padding', padSz);
-y    = extractdata(y_dl);                % [H W 1] gpuArray or single
+x_3d  = reshape(x, szSub);
+x_dl  = dlarray(x_3d, 'SSC');
+bias_s = zeros(1,'like',W_syn);
+y_full_dl = dltranspconv(x_dl, W_syn, bias_s, 'Stride', decFactor, 'Cropping', 0);
+y_full = extractdata(y_full_dl);         % [H_full W_full 1]
+% 円周折り返し（NSOLT の周期境界条件を再現）
+p_H = padSz(1); p_W = padSz(2);
+N_H = (szSub(1)-1)*decFactor(1) + size(W_syn,1) - 2*p_H;
+N_W = (szSub(2)-1)*decFactor(2) + size(W_syn,2) - 2*p_W;
+y   = y_full(p_H+1:p_H+N_H, p_W+1:p_W+N_W, 1);
+y(end-p_H+1:end,:) = y(end-p_H+1:end,:) + y_full(1:p_H, p_W+1:p_W+N_W, 1);
+y(1:p_H,:)         = y(1:p_H,:)         + y_full(p_H+N_H+1:end, p_W+1:p_W+N_W, 1);
+y(:,end-p_W+1:end) = y(:,end-p_W+1:end) + y_full(p_H+1:p_H+N_H, 1:p_W, 1);
+y(:,1:p_W)         = y(:,1:p_W)         + y_full(p_H+1:p_H+N_H, p_W+N_W+1:end, 1);
+y(end-p_H+1:end,end-p_W+1:end) = y(end-p_H+1:end,end-p_W+1:end) + y_full(1:p_H, 1:p_W, 1);
+y(end-p_H+1:end,1:p_W)         = y(end-p_H+1:end,1:p_W)         + y_full(1:p_H, p_W+N_W+1:end, 1);
+y(1:p_H,end-p_W+1:end)         = y(1:p_H,end-p_W+1:end)         + y_full(p_H+N_H+1:end, 1:p_W, 1);
+y(1:p_H,1:p_W)                 = y(1:p_H,1:p_W)                 + y_full(p_H+N_H+1:end, p_W+N_W+1:end, 1);
 end
 
 function x = analysisnsolt_conv(y, W_syn, decFactor, padSz)
-% NSOLT分析（畳み込み）: パーセバルタイトフレーム性から合成フィルタバンク W_syn をそのまま使用
-% y: 入力画像 [H W] または [H W 1]（gpuArray 可）
-% W_syn: [szF szF 1 P]（gpuArray single）
-y = cast(y,'like',W_syn);               % W_syn に型を合わせる（double→single 等）
-if ismatrix(y)
-    y = reshape(y, [size(y,1), size(y,2), 1]);
-end
-y_dl = dlarray(y, 'SSC');
-x_dl = dlconv(y_dl, W_syn, [], 'Stride', decFactor, 'Padding', padSz);
-x    = extractdata(x_dl);               % [H' W' P] gpuArray or single
-x    = x(:);                            % ベクトル化
+% NSOLT分析（円周パディング + dlconv）
+% y: [H W] または [H W 1]（gpuArray 可）  W_syn: [szF_H szF_W 1 P]
+y = cast(y,'like',W_syn);
+if ismatrix(y); y = reshape(y,[size(y,1) size(y,2) 1]); end
+p_H = padSz(1); p_W = padSz(2);
+y_pad = padarray(y, [p_H p_W 0], 'circular', 'both');  % 周期延長
+y_dl  = dlarray(y_pad, 'SSC');
+bias_a = zeros(size(W_syn,4),1,'like',W_syn);
+x_dl  = dlconv(y_dl, W_syn, bias_a, 'Stride', decFactor, 'Padding', 0);
+x     = extractdata(x_dl);
+x     = x(:);
 end
 
 %[text] © Copyright, 2023-2026, Shogo MURAMATSU, All rights reserved.
