@@ -474,7 +474,7 @@ nDics   = length(dicset);
 %[text]  $\\mathbf{x}^{(t+1)}\\leftarrow \\mathcal{H}\_{BK}\\left(\\mathbf{x}^{(t)}+\\mu^{(t)}\\hat{\\mathbf{D}}^\\textsf{T}\\left(\\mathbf{y}-\\hat{\\mathbf{D}}\\mathbf{x}^{(t)}\\right)\\right)$
 %[text]  $t\\leftarrow t+1$
 %[text] -  T. Blumensath and M. E. Davies, "Normalized Iterative Hard Thresholding: Guaranteed Stability and Performance," in IEEE Journal of Selected Topics in Signal Processing, vol. 4, no. 2, pp. 298-309, April 2010, doi: 10.1109/JSTSP.2010.2042411. \
-nItersIht = 1000;
+nItersIht = 500;
 
 % 平均値を引いた画像を用意（近似後に平均値を加算）
 ymean = mean(yorg,"all");
@@ -648,6 +648,14 @@ for idx = 1:nDics %[output:group:4dbb1542]
     imshow(yaprxs{idx})
     title(dicname+" "+num2str(psnrs(end,idx))+" dB")
 end %[output:group:4dbb1542]
+
+% 原画像と近似画像を fig09-04a.png 〜 fig09-04f.png として保存
+imwrite(yorg, fullfile(resfolder, "fig09-04a.png"))
+for idx = 1:nDics
+    suffix = char('a' + idx);
+    imwrite(yaprxs{idx}, fullfile(resfolder, "fig09-04" + suffix + ".png"))
+end
+
 %%
 %[text] ## 【関数定義】
 %[text] #### NSOLT合成処理関数
