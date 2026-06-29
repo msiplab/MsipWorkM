@@ -5,7 +5,7 @@ if nargin < 1
 end
 
 % SaivDr パッケージバージョン
-SAIVDR_VER = "4.2.2.4";
+SAIVDR_VER = "4.2.2.5";
 codedir = fileparts(fileparts(mfilename('fullpath')));
 SAIVDR_DIR = fullfile(codedir, "SaivDr-"+SAIVDR_VER);
 if ~exist(SAIVDR_DIR,"dir")
