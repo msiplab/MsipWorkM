@@ -29,7 +29,7 @@ imshow(X) %[output:5ecaaadf]
 title('原画像') %[output:5ecaaadf]
 %%
 
-isForceDesign = false; % 再設計フラグ（true: 強制再設計, false: 既存ファイルがあればスキップ） %[control:checkbox:48c8]{"position":[17,22]}
+isForceDesign = true; % 再設計フラグ（true: 強制再設計, false: 既存ファイルがあればスキップ） %[control:checkbox:48c8]{"position":[17,22]}
 
 isCodegen = true; % コード生成 %[control:checkbox:53ff]{"position":[13,17]}
 msip.saivdrSetup(isCodegen) %[output:6a0ad264]
@@ -45,7 +45,7 @@ nPatches = prod(floor(szOrg./szBlk));
 % Redundancy ratio for RICA/K-SVD
 redundancyRatio = 5/4; 
 
-% Sparsity ratio 
+% Sparsity ratio
 sparsityRatio = 1/16;
 %%
 %[text] ## 
@@ -185,7 +185,7 @@ maxIters = nSubImgs/miniBatchSize * maxEpochs %[output:218a272a]
 
 % Training options
 opts = trainingOptions('adam', ...
-    'InitialLearnRate',5e-04,...
+    'InitialLearnRate',1e-03,...
     'GradientDecayFactor',0.9,...
     'SquaredGradientDecayFactor',0.999,...
     'Epsilon',1e-08,...
@@ -610,7 +610,8 @@ ylabel('PSNR [dB]', 'FontSize', fontSize) %[output:316b8c11]
 legend('Location','southeast', 'FontSize', fontSize-2) %[output:316b8c11]
 grid on %[output:316b8c11]
 set(gca, 'FontSize', fontSize) %[output:316b8c11]
-exportgraphics(gcf,fullfile(resfolder,"fig09-03b.png")) %[output:316b8c11]
+set(gcf, 'PaperUnits', 'inches', 'PaperSize', [8.26 5.16], 'PaperPosition', [0 0 8.26 5.16]) %[output:316b8c11]
+print(gcf, fullfile(resfolder,"fig09-03b.png"), '-dpng', '-r96') %[output:316b8c11]
 
 % SSIM のグラフ
 figure %[output:77ae195e]
