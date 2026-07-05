@@ -37,13 +37,12 @@ fprintf("観測画像 PSNR: %.2f dB\n", psnr_obs) %[output:56d78898]
 %[text] その勾配:
 %[text]  $\nabla\_\\mathbf{x}\\mathfrak{R}\_\\mathrm{RED}(\\mathbf{x})=\\mathbf{x}-f(\\mathbf{x})$
 %[text] ここで $f(\\cdot)$ は AWGN除去器
-tnrdFile = fullfile(datfolder,'example10_02_tnrd.mat');
+tnrdFile = fullfile(datfolder,'example10_02_tied.mat');
 if isfile(tnrdFile) %[output:group:9f0df783]
     S = load(tnrdFile);
-    tnrdNet = S.net;
     lambda_tnrd = exp(double(extractdata(S.loglambda)));
-    denoiser = @(x) tnrdDenoise(tnrdNet, lambda_tnrd, x);
-    fprintf("TNRD除去器を使用\n") %[output:47297d13]
+    denoiser = @(x) convTnrdDenoise(S.Wa, S.ba, S.bs, lambda_tnrd, x);
+    fprintf("TNRD除去器を使用 (λ=%.4f)\n", lambda_tnrd) %[output:47297d13]
 else
     % フォールバック: ガウスフィルタ（非線形除去器の代用）
     sigma_d = 1.5;
@@ -141,12 +140,13 @@ print(gcf, fullfile(resfolder,'fig10-04b.png'),'-dpng','-r96') %[output:907b0dc8
 %%
 %[text] ## 【関数定義】
 
-function x_out = tnrdDenoise(net, lambda, x)
-%TNRDDENOISE  TNRD除去器の適用
-x_s  = single(x);
-V_dl = dlarray(x_s, 'SSCB');
-g_V  = predict(net, V_dl);
-x_out = double(x_s) - lambda * double(extractdata(g_V));
+function x_out = convTnrdDenoise(Wa, ba, bs, lambda_f, x_in)
+%CONVTNRDDENOISE  TNRD除去器の適用（例題10.2の学習結果を利用）
+V_dl  = dlarray(single(x_in),'SSCB');
+Y     = dlconv(V_dl, Wa, ba, 'Padding','same');
+G     = dltranspconv(tanh(Y), Wa, bs, 'Cropping','same');
+x_out = double(x_in) - lambda_f * double(extractdata(G));
+x_out = min(max(x_out,0),1);
 end
 
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.

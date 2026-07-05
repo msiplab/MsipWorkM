@@ -93,6 +93,12 @@ imwrite(double(V), fullfile(resfolder,'fig10-03_obs.png'))
 zeta_disp = (zeta(:,:,1) - min(zeta(:))) / (max(zeta(:)) - min(zeta(:)));
 imwrite(zeta_disp, fullfile(resfolder,'fig10-03_zeta.png'))
 
+% 0回目：学習前の初期出力
+x_init = double(extractdata(predict(net, zeta_dl)));
+x_init = min(max(x_init, 0), 1);
+imwrite(x_init, fullfile(resfolder,'fig10-03_dip_000.png'))
+fprintf("0回目（学習前）: PSNR = %.2f dB\n", psnr(x_init, double(X)))
+
 % Adam状態
 lr = 1e-3; beta1 = 0.9; beta2 = 0.999; eps_a = 1e-8;
 avgG_net = []; avgSqG_net = [];
@@ -101,6 +107,7 @@ nIters = 3000;
 psnrs_dip  = zeros(nIters,1);
 monitorStep = 100;
 saveIters = [1, 2, 3];  % 1〜3回目の保存タイミング
+X_best = []; psnr_best_run = 0;
 
 for iter = 1:nIters
     [loss, gradNet] = dlfeval(@dipLoss, net, zeta_dl, V_dl);
@@ -116,8 +123,16 @@ for iter = 1:nIters
             imwrite(x_hat, fullfile(resfolder, sprintf('fig10-03_dip_%03d.png', k)))
             fprintf("  → %d回目の復元画像を保存 (反復%d)\n", k, iter)
         end
+        if psnrs_dip(iter) > psnr_best_run
+            psnr_best_run = psnrs_dip(iter);
+            X_best = x_hat;
+            iter_best_run = iter;
+        end
     end
 end
+% 最良結果を保存
+imwrite(X_best, fullfile(resfolder,'fig10-03_dip_best.png'))
+fprintf("最良 PSNR: %.2f dB (反復%d) → fig10-03_dip_best.png\n", psnr_best_run, iter_best_run)
 % 最終結果
 X_dip = double(extractdata(predict(net, zeta_dl)));
 X_dip = min(max(X_dip, 0), 1);
