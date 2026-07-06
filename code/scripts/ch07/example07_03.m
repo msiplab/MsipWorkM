@@ -1,4 +1,4 @@
-%[text] # 例7.3 （OMP法）
+%[text] # 例7.3（MP/OMP法）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2025b
 %[text] ## 準備
