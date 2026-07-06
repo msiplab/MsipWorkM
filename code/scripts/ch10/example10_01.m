@@ -152,7 +152,9 @@ title('ステージ数と PSNR の比較') %[output:45d865ea]
 set(gca,'FontSize',fontSize) %[output:45d865ea]
 grid on %[output:45d865ea]
 set(gcf,'PaperUnits','inches','PaperSize',[8.26 5.16],'PaperPosition',[0 0 8.26 5.16])
-print(gcf, fullfile(resfolder,'fig10-01.png'),'-dpng','-r96') %[output:45d865ea]
+% 注意: fig10-01.png は本文の LISTA ネットワーク構成図（手動作成）に使用済みのため，
+% 本スクリプトの検証結果は別名で保存する。
+print(gcf, fullfile(resfolder,'fig10-01_verify.png'),'-dpng','-r96') %[output:45d865ea]
 
 %%
 %[text] ## 【関数定義】

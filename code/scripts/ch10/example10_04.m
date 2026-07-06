@@ -124,7 +124,9 @@ subplot(1,4,1); imshow(X);        title('原画像','FontSize',12) %[output:346f
 subplot(1,4,2); imshow(V);        title(sprintf('観測 (%.2f dB)',psnr_obs),'FontSize',12) %[output:346f601b]
 subplot(1,4,3); imshow(X_wiener); title(sprintf('ウィナー (%.2f dB)',psnr_wiener),'FontSize',12) %[output:346f601b]
 subplot(1,4,4); imshow(x_red);    title(sprintf('RED-GD (%.2f dB)',psnrs_red(nIters)),'FontSize',12) %[output:346f601b]
-imwrite(x_red, fullfile(resfolder,'fig10-04a.png'))
+% 注意: fig10-04a.png/b.png は本文の DIP-SURE 結果（例10.6, fig:dip-sure）に
+% 使用済みのため，本スクリプトの検証結果は別名で保存する。
+imwrite(x_red, fullfile(resfolder,'fig10-04a_verify.png'))
 
 figure(2) %[output:907b0dc8]
 plot(1:nIters, psnrs_red, 'k-', 'LineWidth', 1.5) %[output:907b0dc8]
@@ -135,7 +137,7 @@ title('RED-GD: PSNRの収束') %[output:907b0dc8]
 set(gca,'FontSize',fontSize) %[output:907b0dc8]
 grid on %[output:907b0dc8]
 set(gcf,'PaperUnits','inches','PaperSize',[8.26 5.16],'PaperPosition',[0 0 8.26 5.16])
-print(gcf, fullfile(resfolder,'fig10-04b.png'),'-dpng','-r96') %[output:907b0dc8]
+print(gcf, fullfile(resfolder,'fig10-04b_verify.png'),'-dpng','-r96') %[output:907b0dc8]
 
 %%
 %[text] ## 【関数定義】
