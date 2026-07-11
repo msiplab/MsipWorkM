@@ -4,7 +4,7 @@
 %[text] ## 段数の選択（変更可能）
 %[text] 事前学習済みSBDMのノイズレベル条件付き除去器 $f(\\cdot;\\sigma)$ として，
 %[text] 例10.2の結合重みTNRDをノイズレベル条件付きに拡張したモデルを用いる。
-%[text] Tweedieの公式より除去器の残差の大きさは $\\sigma$ に比例するため，
+%[text] トゥイーディーの公式より除去器の残差の大きさは $\\sigma$ に比例するため，
 %[text] 各段の残差を $\\sigma$ でスケーリングする
 %[text]  $\\mathbf{x} \\leftarrow \\mathbf{x}-\\sigma\\lambda\_s\\,\\mathbf{W}\_{a,s}^\\top\\tanh(\\mathbf{W}\_{a,s}\\mathbf{x}+\\mathbf{b}\_{a,s})$，$s=1,\\ldots,S$
 %[text] とすれば，単一のネットワークで異なるノイズレベルに対応できる。

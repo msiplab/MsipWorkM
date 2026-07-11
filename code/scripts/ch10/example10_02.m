@@ -77,7 +77,7 @@ else
             end
             S = struct('Wa',Wa,'ba',ba,'bs',bs,'loglambda',loglambda,'dictType',dictType);
             %%
-            %[text] ### `'parseval'`：パーセバルタイト枠TNRD（Stiefel多様体，P=32>N=25）
+            %[text] ### `'parseval'`：パーセバルタイト枠TNRD（シュティーフェル多様体，P=32>N=25）
             %[text] **条件**: $\mathbf{W}_a^\top \mathbf{W}_a = \mathbf{I}_N$（過完備パーセバルタイト枠，$P > N$）
             %[text] **維持**: 各エポック後にSVD射影 $\mathbf{W}_a \leftarrow \mathbf{U}\mathbf{V}^\top$
         case 'parseval'
@@ -99,7 +99,7 @@ else
                 [ba,avgG_ba,avgSqG_ba] = adamupdate(ba,gba,avgG_ba,avgSqG_ba,epoch,lr,beta1,beta2,eps_a);
                 [bs,avgG_bs,avgSqG_bs] = adamupdate(bs,gbs,avgG_bs,avgSqG_bs,epoch,lr,beta1,beta2,eps_a);
                 [loglambda,avgG_lam,avgSqG_lam] = adamupdate(loglambda,glam,avgG_lam,avgSqG_lam,epoch,lr,beta1,beta2,eps_a);
-                if mod(epoch,10)==0  % Stiefel 射影（10エポックごと）
+                if mod(epoch,10)==0  % シュティーフェル射影（10エポックごと）
                     Wa_m = reshape(permute(single(extractdata(Wa)),[4,1,2,3]),P,N);
                     [Ue,~,Ve] = svd(Wa_m,'econ');
                     Wa = dlarray(permute(reshape(single(Ue*Ve'),P,fs,fs,1),[2,3,4,1]));

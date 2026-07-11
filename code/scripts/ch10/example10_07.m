@@ -1,4 +1,4 @@
-%[text] # 例10.7（DIP-SURE：Steinの不偏リスク推定）
+%[text] # 例10.7（DIP-SURE：スタインの不偏リスク推定）
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2026a
 %[text] ## 準備
