@@ -9,7 +9,21 @@
 %[text]  $\\mathbf{x} \\leftarrow \\mathbf{x}-\\sigma\\lambda\_s\\,\\mathbf{W}\_{a,s}^\\top\\tanh(\\mathbf{W}\_{a,s}\\mathbf{x}+\\mathbf{b}\_{a,s})$，$s=1,\\ldots,S$
 %[text] とすれば，単一のネットワークで異なるノイズレベルに対応できる。
 %[text] 段数 $S$（`nStages`）を増やすと除去性能が向上する（学習時間は増加）。
-nStages = 1;   % 1: 単段（軽量） / 3: 多段（高性能）
+%[text]
+%[text] 注意: $S=1$（単段）の場合，各段の非線形部
+%[text] $G(\\mathbf{x})=\\mathbf{W}\_a^\\top\\tanh(\\mathbf{W}\_a\\mathbf{x}+\\mathbf{b}\_a)$ は
+%[text] $\\sigma$ を入力としないため（$\\sigma$ は出力に掛かる線形スカラーとしてのみ作用），
+%[text] $\\deawgn(\\mathbf{x};\\sigma)=\\mathbf{x}-\\sigma\\lambda G(\\mathbf{x})$ における $\\sigma$ の変化は，
+%[text] 固定された補正方向 $G(\\mathbf{x})$ の強さを線形にリスケールするに過ぎず，
+%[text] RED反復の正則化パラメータ $\\lambda\_{\\mathrm{RED}}$ を変えることと数学的に等価である。
+%[text] すなわち，単段では「同一ネットワークが複数ノイズレベルに対応する」ことの
+%[text] 実質的な証拠は，後述の「除去器単体の性能確認」（$G$ そのものは変えずσに応じて
+%[text] 適切な強さで除去できること）にとどまり，RED復元実験でのσスイープは
+%[text] 実効的な正則化強度 $\\sigma\\lambda\\lambda\_{\\mathrm{RED}}$ の1次元探索と同じ意味しかもたない。
+%[text] $S>1$（多段）にすると，各段の入力が前段までの σ 依存の中間結果となるため，
+%[text] 段を経るごとにσに応じた非線形な振る舞いが積み重なり，単純な線形リスケールでは
+%[text] なくなる。
+nStages = 1;   % 1: 単段（軽量，σは線形リスケールのみ） / 3: 多段（σ依存の非線形性あり）
 %%
 %[text] ## 準備
 prj = matlab.project.currentProject;
@@ -99,6 +113,11 @@ end %[output:group:20981bab]
 deawgn = @(v, sigma) convCondTnrdDenoise(prm, v, sigma);
 %%
 %[text] ## 除去器単体の性能確認（学習未使用画像）
+%[text] 本節が「単一の学習済み除去器 $\\deawgn(\\cdot;\\sigma)$ が異なるノイズレベルに
+%[text] 対応できること」の直接的な確認である（$S=1$ でも，各σに対して除去性能が
+%[text] 単調に整合することを確かめる）。後段のRED復元実験（5設定比較）は，これとは
+%[text] 別に「観測に対する正則化強度の選び方」を確認するものであり，$S=1$ の場合は
+%[text] σのスイープが実質的にスカラー強度のスイープに帰着する点に注意する。
 Echk = imresize(im2double(rgb2gray(imread(fullfile(datfolder,'kodim09.png')))),szOrg,'bilinear');
 for sig = [2 5 10 25]/255 %[output:group:921c3e03]
     rng(2)
@@ -116,6 +135,13 @@ end %[output:group:921c3e03]
 %[text] (c) 固定 $\\sigma=25/255$（平滑化が過大），(d) 減衰スケジュール，
 %[text] (e) 除去器の入力に微小なノイズを注入する確率的な拡張
 %[text] $f(\\mathbf{x}^{(t)}+\\sigma^{(t)}\\boldsymbol{\\zeta}^{(t)};\\sigma^{(t)})$
+%[text]
+%[text] 注意（$S=1$ の場合）: 上記の「除去器単体の性能確認」節で述べたとおり，
+%[text] $\\deawgn(\\mathbf{x};\\sigma)=\\mathbf{x}-\\sigma\\lambda G(\\mathbf{x})$ の $G$ はσに依存しないため，
+%[text] 以下の(b)(c)(d)の比較は「同一ネットワークが異なるσで質的に異なる除去を行う」
+%[text] ことを示す実験ではなく，「実効的な正則化強度 $\\sigma\\lambda\\lambda\_{\\mathrm{RED}}$ を
+%[text] どう選ぶ／どう減衰させるか」を比較する実験である。固定σが小さいほど良い結果が
+%[text] 出たとしても，それは強度を弱めた効果であり，除去器の質的な適応を意味しない。
 mu     = 0.5;   % ステップサイズ
 lambda = 1.0;   % 正則化パラメータ
 nIters = 400;
@@ -203,6 +229,10 @@ set(gca,'FontSize',fontSize) %[output:1f1981d4]
 %%
 %[text] ## 【関数定義】
 %[text] 多段TNRDの順伝播: 各段で $\\mathbf{x} \\leftarrow \\mathbf{x}-\\sigma\\lambda\_s\\,\\mathbf{W}\_{a,s}^\\top\\tanh(\\mathbf{W}\_{a,s}\\mathbf{x}+\\mathbf{b}\_{a,s})$
+%[text] 各段内の非線形写像 $\\mathbf{W}\_{a,s}^\\top\\tanh(\\mathbf{W}\_{a,s}\\mathbf{x}+\\mathbf{b}\_{a,s})$ 自体はσを
+%[text] 入力としない。$S=1$ ではσは最終的な線形スカラー係数としてのみ働くが，
+%[text] $S>1$ では各段の入力 `Xh` が前段までのσ依存の更新結果になるため，
+%[text] 段を経るごとにσに応じた非線形性が累積する。
 
 function Xh = convCondTnrdForward(prm, V, sigma)
 Xh = V;
