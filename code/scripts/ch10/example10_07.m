@@ -27,15 +27,15 @@ fprintf("観測画像 PSNR: %.2f dB\n", psnr_noisy)
 %%
 %[text] ## DIP-SUREネットワークの構築
 %[text] DIP-SUREの問題設定（$\mathbf{H}=\mathbf{I}$ のノイズ除去）:
-%[text]  $\hat{\mathbf{\Theta}}=\arg\min_{\mathbf{\Theta}}\;\mathrm{MSE}(\mathbf{f}_\Theta(\mathbf{v}),\mathbf{v})+\frac{2\sigma_w^2}{N}\mathrm{div}_\mathbf{v}(\mathbf{f}_\Theta(\mathbf{v}))$
-%[text]  $\hat{\mathbf{x}}=\mathbf{f}_{\hat{\mathbf{\Theta}}}(\mathbf{v})$
+%[text]  $\hat{\boldsymbol{\Theta}}=\arg\min_{\boldsymbol{\Theta}}\;\mathrm{MSE}(\mathbf{f}_{\boldsymbol{\Theta}}(\mathbf{v}),\mathbf{v})+\frac{2\sigma_{\mathrm{w}}^2}{N}\mathrm{div}_\mathbf{v}(\mathbf{f}_{\boldsymbol{\Theta}}(\mathbf{v}))$
+%[text]  $\hat{\mathbf{x}}=\mathbf{f}_{\hat{\boldsymbol{\Theta}}}(\mathbf{v})$
 %[text] DIPとの主な違い:
-%[text] - 入力: 乱数画像 $\bm{\zeta}$ の代わりに観測画像 $\mathbf{v}$ を使用
+%[text] - 入力: 乱数画像 $\boldsymbol{\zeta}$ の代わりに観測画像 $\mathbf{v}$ を使用
 %[text] - 損失: 発散項 $\mathrm{div}_\mathbf{v}(\cdot)$ を追加（過適合抑制）
 %[text]
 %[text] ### 発散項のモンテカルロ近似
-%[text]  $\mathrm{div}_\mathbf{v}(\mathbf{f}(\mathbf{v}))\approx\bm{\zeta}^\top\frac{\mathbf{f}(\mathbf{v}+\epsilon\bm{\zeta})-\mathbf{f}(\mathbf{v})}{\epsilon}$
-%[text] ただし $\bm{\zeta}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$，$\epsilon\approx\sigma_w/100$
+%[text]  $\mathrm{div}_\mathbf{v}(\mathbf{f}(\mathbf{v}))\approx\boldsymbol{\zeta}^\top\frac{\mathbf{f}(\mathbf{v}+\epsilon\boldsymbol{\zeta})-\mathbf{f}(\mathbf{v})}{\epsilon}$
+%[text] ただし $\boldsymbol{\zeta}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$，$\epsilon\approx\sigma_{\mathrm{w}}/100$
 %[text]
 %[text] ### ネットワーク構造（DIPと同じ砂時計型）
 nCh = [16 32 64];
@@ -79,7 +79,7 @@ net = dlnetwork(lgraph,'Initialize',true);
 fprintf("DIP-SUREネットワーク: %d 個の学習パラメータ\n", sum(cellfun(@numel, net.Learnables.Value)))
 %%
 %[text] ## DIP-SUREの学習
-%[text] SURE損失: $\mathfrak{L}=\mathrm{MSE}(\mathbf{f}_\Theta(\mathbf{v}),\mathbf{v})+\frac{2\sigma_w^2}{N}\mathrm{div}_\mathbf{v}(\mathbf{f}_\Theta(\mathbf{v}))$
+%[text] SURE損失: $\mathfrak{L}=\mathrm{MSE}(\mathbf{f}_{\boldsymbol{\Theta}}(\mathbf{v}),\mathbf{v})+\frac{2\sigma_{\mathrm{w}}^2}{N}\mathrm{div}_\mathbf{v}(\mathbf{f}_{\boldsymbol{\Theta}}(\mathbf{v}))$
 
 N = numel(V);
 epsilon    = single(double(sigmaW) / 100);      % モンテカルロ近似用の小さな定数

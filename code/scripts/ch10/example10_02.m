@@ -36,7 +36,7 @@ fprintf("観測画像 PSNR: %.2f dB\n", psnr_noisy)
 %%
 %[text] ## 学習済みパラメータの読込または学習
 %[text] ### TNRD の残差除去器
-%[text]  $\mathbf{f}_{\bmTheta}(\mathbf{v}) = \mathbf{v} - \lambda\,\mathbf{g}_{\bmTheta}(\mathbf{v})$
+%[text]  $\mathbf{f}_{\bmTheta}(\mathbf{v}) = \mathbf{v} - \lambda_{\mathrm{g}}\,\mathbf{g}_{\bmTheta}(\mathbf{v})$
 %[text]  $\mathbf{g}_{\bmTheta}(\mathbf{v}) = \mathbf{D}_{\bmtheta} \phi(\mathbf{E}_{\bmtheta}\,\mathbf{v})$，  $\mathbf{E}_{\bmtheta} \overset{\text{def}}{=} \mathbf{D}_{\bmtheta}^\top$（結合重み）
 %[text]
 %[text] 辞書 $\mathbf{D}_{\bmtheta}$ の選択により，異なる拘束条件（パーセバルタイト，ユニタリ，NSOLT）を実現する。

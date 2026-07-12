@@ -27,9 +27,9 @@ fprintf("観測画像 PSNR: %.2f dB\n", psnr_noisy)
 %%
 %[text] ## DIPネットワークの構築
 %[text] DIPの問題設定 （$\mathbf{H}=\mathbf{I}$ のノイズ除去）:
-%[text]  $\hat{\mathbf{\Theta}}=\arg\min_{\mathbf{\Theta}}\frac{1}{2}\|\mathbf{v}-\mathbf{f}_{\mathbf{\Theta}}(\bm{\zeta})\|^2_2$
-%[text]  $\hat{\mathbf{x}}=\mathbf{f}_{\hat{\mathbf{\Theta}}}(\bm{\zeta})$
-%[text] ただし，$\bm{\zeta}$ は乱数画像（固定），$\mathbf{f}_\Theta(\cdot)$ は砂時計型(U-Net) CNN
+%[text]  $\hat{\boldsymbol{\Theta}}=\arg\min_{\boldsymbol{\Theta}}\frac{1}{2}\|\mathbf{v}-\mathbf{f}_{\boldsymbol{\Theta}}(\boldsymbol{\zeta})\|^2_2$
+%[text]  $\hat{\mathbf{x}}=\mathbf{f}_{\hat{\boldsymbol{\Theta}}}(\boldsymbol{\zeta})$
+%[text] ただし，$\boldsymbol{\zeta}$ は乱数画像（固定），$\mathbf{f}_{\boldsymbol{\Theta}}(\cdot)$ は砂時計型(U-Net) CNN
 %[text]
 %[text] ### ネットワーク構造（符号化器・復号器 + スキップ接続）
 nCh = [16 32 64];   % チャネル数（各スケール）
@@ -80,8 +80,8 @@ net = dlnetwork(lgraph,'Initialize',true);
 fprintf("DIPネットワーク: %d 個の学習パラメータ\n", sum(cellfun(@numel, net.Learnables.Value)))
 %%
 %[text] ## DIPの学習
-%[text] - 入力: 乱数画像 $\bm{\zeta}$（固定）
-%[text] - 損失: $\mathrm{MSE}(\mathbf{f}_\Theta(\bm{\zeta}),\mathbf{v})$
+%[text] - 入力: 乱数画像 $\boldsymbol{\zeta}$（固定）
+%[text] - 損失: $\mathrm{MSE}(\mathbf{f}_{\boldsymbol{\Theta}}(\boldsymbol{\zeta}),\mathbf{v})$
 
 % 乱数入力画像 ζ（固定）
 zeta = randn(szOrg(1), szOrg(2), 1, 'single') * 0.1;

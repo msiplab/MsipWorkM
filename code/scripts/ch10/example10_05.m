@@ -2,7 +2,7 @@
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2026a
 %[text] ## 段数の選択（変更可能）
-%[text] 事前学習済みSBDMのノイズレベル条件付き除去器 $f(\\cdot;\\sigma)$ として，
+%[text] 事前学習済みSBDMのノイズレベル条件付き除去器 $\\mathrm{deawgn}(\\cdot;\\,\\sigma)$ として，
 %[text] 例10.2の結合重みTNRDをノイズレベル条件付きに拡張したモデルを用いる。
 %[text] トゥイーディーの公式より除去器の残差の大きさは $\\sigma$ に比例するため，
 %[text] 各段の残差を $\\sigma$ でスケーリングする
@@ -13,7 +13,7 @@
 %[text] 注意: $S=1$（単段）の場合，各段の非線形部
 %[text] $G(\\mathbf{x})=\\mathbf{W}\_a^\\top\\tanh(\\mathbf{W}\_a\\mathbf{x}+\\mathbf{b}\_a)$ は
 %[text] $\\sigma$ を入力としないため（$\\sigma$ は出力に掛かる線形スカラーとしてのみ作用），
-%[text] $\\deawgn(\\mathbf{x};\\sigma)=\\mathbf{x}-\\sigma\\lambda G(\\mathbf{x})$ における $\\sigma$ の変化は，
+%[text] $\\mathrm{deawgn}(\\mathbf{x};\\,\\sigma)=\\mathbf{x}-\\sigma\\lambda G(\\mathbf{x})$ における $\\sigma$ の変化は，
 %[text] 固定された補正方向 $G(\\mathbf{x})$ の強さを線形にリスケールするに過ぎず，
 %[text] RED反復の正則化パラメータ $\\lambda\_{\\mathrm{RED}}$ を変えることと数学的に等価である。
 %[text] すなわち，単段では「同一ネットワークが複数ノイズレベルに対応する」ことの
@@ -113,7 +113,7 @@ end %[output:group:20981bab]
 deawgn = @(v, sigma) convCondTnrdDenoise(prm, v, sigma);
 %%
 %[text] ## 除去器単体の性能確認（学習未使用画像）
-%[text] 本節が「単一の学習済み除去器 $\\deawgn(\\cdot;\\sigma)$ が異なるノイズレベルに
+%[text] 本節が「単一の学習済み除去器 $\\mathrm{deawgn}(\\cdot;\\,\\sigma)$ が異なるノイズレベルに
 %[text] 対応できること」の直接的な確認である（$S=1$ でも，各σに対して除去性能が
 %[text] 単調に整合することを確かめる）。後段のRED復元実験（5設定比較）は，これとは
 %[text] 別に「観測に対する正則化強度の選び方」を確認するものであり，$S=1$ の場合は
@@ -128,16 +128,16 @@ end %[output:group:921c3e03]
 %%
 %[text] ## スコアベースRED法による画像復元
 %[text] 例10.4と同形の反復:
-%[text]  $\\mathbf{x}^{(t+1)}\\leftarrow\\mathbf{x}^{(t)}-\\mu\\left\[\\mathbf{H}^\\top(\\mathbf{H}\\mathbf{x}^{(t)}-\\mathbf{v})+\\lambda(\\mathbf{x}^{(t)}-f(\\mathbf{x}^{(t)};\\sigma^{(t)}))\right\]$
+%[text]  $\\mathbf{x}^{(t+1)}\\leftarrow\\mathbf{x}^{(t)}-\\eta\\left\[\\mathbf{H}^\\top(\\mathbf{H}\\mathbf{x}^{(t)}-\\mathbf{v})+\\lambda(\\mathbf{x}^{(t)}-\\mathrm{deawgn}(\\mathbf{x}^{(t)};\\,\\sigma^{(t)}))\right\]$
 %[text] ノイズレベル $\\sigma^{(t)}$ は事前分布の平滑化の度合いを定める調整パラメータ。
 %[text] 次の5設定を比較する。
 %[text] (a) 正則化なし（$\\lambda=0$），(b) 固定 $\\sigma=2/255$（観測ノイズに適合），
 %[text] (c) 固定 $\\sigma=25/255$（平滑化が過大），(d) 減衰スケジュール，
 %[text] (e) 除去器の入力に微小なノイズを注入する確率的な拡張
-%[text] $f(\\mathbf{x}^{(t)}+\\sigma^{(t)}\\boldsymbol{\\zeta}^{(t)};\\sigma^{(t)})$
+%[text] $\\mathrm{deawgn}(\\mathbf{x}^{(t)}+\\sigma^{(t)}\\boldsymbol{\\zeta}^{(t)};\\,\\sigma^{(t)})$
 %[text]
 %[text] 注意（$S=1$ の場合）: 上記の「除去器単体の性能確認」節で述べたとおり，
-%[text] $\\deawgn(\\mathbf{x};\\sigma)=\\mathbf{x}-\\sigma\\lambda G(\\mathbf{x})$ の $G$ はσに依存しないため，
+%[text] $\\mathrm{deawgn}(\\mathbf{x};\\,\\sigma)=\\mathbf{x}-\\sigma\\lambda G(\\mathbf{x})$ の $G$ はσに依存しないため，
 %[text] 以下の(b)(c)(d)の比較は「同一ネットワークが異なるσで質的に異なる除去を行う」
 %[text] ことを示す実験ではなく，「実効的な正則化強度 $\\sigma\\lambda\\lambda\_{\\mathrm{RED}}$ を
 %[text] どう選ぶ／どう減衰させるか」を比較する実験である。固定σが小さいほど良い結果が

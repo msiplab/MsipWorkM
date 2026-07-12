@@ -33,10 +33,10 @@ fprintf("観測画像 PSNR: %.2f dB\n", psnr_obs) %[output:56d78898]
 %%
 %[text] ## ノイズ除去器の設定
 %[text] RED法の正則化関数:
-%[text]  $\\mathfrak{R}\_\\mathrm{RED}(\\mathbf{x})=\\frac{1}{2}\\mathbf{x}^\\top(\\mathbf{x}-f(\\mathbf{x}))$
+%[text]  $\\mathfrak{R}\_\\mathrm{RED}(\\mathbf{x})=\\frac{1}{2}\\mathbf{x}^\\top(\\mathbf{x}-\\mathrm{deawgn}(\\mathbf{x}))$
 %[text] その勾配:
-%[text]  $\nabla\_\\mathbf{x}\\mathfrak{R}\_\\mathrm{RED}(\\mathbf{x})=\\mathbf{x}-f(\\mathbf{x})$
-%[text] ここで $f(\\cdot)$ は AWGN除去器
+%[text]  $\\nabla\_\\mathbf{x}\\mathfrak{R}\_\\mathrm{RED}(\\mathbf{x})=\\mathbf{x}-\\mathrm{deawgn}(\\mathbf{x})$
+%[text] ここで $\\mathrm{deawgn}(\\cdot)$ は AWGN除去器
 tnrdFile = fullfile(datfolder,'example10_02_tied.mat');
 if isfile(tnrdFile) %[output:group:9f0df783]
     S = load(tnrdFile);
@@ -52,7 +52,7 @@ end %[output:group:9f0df783]
 %%
 %[text] ## RED-GD法による画像復元
 %[text] RED-GD反復:
-%[text]  $\\mathbf{x}^{(t+1)}\\leftarrow\\mathbf{x}^{(t)}-\\mu\\left\[\\mathbf{H}^\\top(\\mathbf{H}\\mathbf{x}^{(t)}-\\mathbf{v})+\\lambda(\\mathbf{x}^{(t)}-f(\\mathbf{x}^{(t)}))\right\]$
+%[text]  $\\mathbf{x}^{(t+1)}\\leftarrow\\mathbf{x}^{(t)}-\\eta\\left\[\\mathbf{H}^\\top(\\mathbf{H}\\mathbf{x}^{(t)}-\\mathbf{v})+\\lambda(\\mathbf{x}^{(t)}-\\mathrm{deawgn}(\\mathbf{x}^{(t)}))\right\]$
 mu     = 0.5;   % ステップサイズ
 lambda = 0.1;   % 正則化パラメータ
 nIters = 200;
@@ -76,7 +76,7 @@ fprintf("RED-GD PSNR: %.2f dB (反復数: %d)\n", psnrs_red(nIters), nIters) %[o
 %%
 %[text] ## ヤコビ行列の対称性の確認
 %[text] RED法で対応する正則化関数が存在するための条件:
-%[text]  $(\\partial f / \\partial \\mathbf{x})= (\\partial f / \\partial \\mathbf{x})^\\top$ （ヤコビ行列の対称性）
+%[text]  $(\\partial \\mathrm{deawgn} / \\partial \\mathbf{x})= (\\partial \\mathrm{deawgn} / \\partial \\mathbf{x})^\\top$ （ヤコビ行列の対称性）
 %[text] 数値的に確認（小さいランダムベクトルを用いた有限差分）
 N  = numel(X);
 ep = 1e-4;

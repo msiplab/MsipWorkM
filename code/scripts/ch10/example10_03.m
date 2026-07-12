@@ -25,7 +25,7 @@ imgfile = fullfile(datfolder,imgname);
 X = imresize(im2double(rgb2gray(imread(imgfile,imgfmt))),szOrg,'bilinear');
 %%
 %[text] ## 観測モデルの設定（ガウスぼかし + AWGN）
-%[text]  $\mathbf{v} = \mathbf{H}\mathbf{x} + \mathbf{w}$，$\mathbf{H}$: $9\times 9$ ガウスぼかし（$\sigma_k=2$），$\sigma_w=5/255$
+%[text]  $\mathbf{v} = \mathbf{H}\mathbf{x} + \mathbf{w}$，$\mathbf{H}$: $9\times 9$ ガウスぼかし（$\sigma_k=2$），$\sigma_{\mathrm{w}}=5/255$
 sigmaK = 2.0;
 blurKernel = fspecial('gaussian', 9, sigmaK);
 H_op  = @(x) imfilter(x, blurKernel, 'circular');
@@ -36,9 +36,9 @@ psnr_obs = psnr(V, X);
 fprintf("観測 PSNR: %.2f dB\n", psnr_obs)
 %%
 %[text] ## ノイズ除去器の読込（例題10.2の学習結果）
-%[text] PnP法・RED法ともに，AWGN除去器 $f(\cdot)$ をプラグインとして使用する。
-%[text] **PnP-PG法**: 近接写像 $\mathrm{prox}_{\mu\mathfrak{R}}(\cdot)$ を $f(\cdot)$ で置き換え
-%[text] **RED-GD法**: 正則化関数 $\mathfrak{R}_{\mathrm{RED}}(\mathbf{x})=\frac{1}{2}\mathbf{x}^\top(\mathbf{x}-f(\mathbf{x}))$ の勾配 $\mathbf{x}-f(\mathbf{x})$ を利用
+%[text] PnP法・RED法ともに，AWGN除去器 $\mathrm{deawgn}(\cdot)$ をプラグインとして使用する。
+%[text] **PnP-PG法**: 近接写像 $\mathrm{prox}_{\eta\mathfrak{R}}(\cdot)$ を $\mathrm{deawgn}_{\eta}(\cdot)$ で置き換え
+%[text] **RED-GD法**: 正則化関数 $\mathfrak{R}_{\mathrm{RED}}(\mathbf{x})=\frac{1}{2}\mathbf{x}^\top(\mathbf{x}-\mathrm{deawgn}(\mathbf{x}))$ の勾配 $\mathbf{x}-\mathrm{deawgn}(\mathbf{x})$ を利用
 denoiserFile = fullfile(datfolder, sprintf('example10_02_%s.mat', dictType));
 if ~isfile(denoiserFile)
     error("先に例題10.2 (dictType='%s') を実行してください", dictType)
@@ -57,10 +57,10 @@ fprintf("ウィナーフィルタ PSNR: %.2f dB\n", psnr_wiener)
 %%
 %[text] ## PnP-PG法による画像復元
 %[text] **反復**:
-%[text]  $\mathbf{x}^{(t+1)} \leftarrow f\!\left(\mathbf{x}^{(t)} - \mu\mathbf{H}^\top(\mathbf{H}\mathbf{x}^{(t)}-\mathbf{v})\right)$
+%[text]  $\mathbf{x}^{(t+1)} \leftarrow \mathrm{deawgn}_{\eta}\!\left(\mathbf{x}^{(t)} - \eta\mathbf{H}^\top(\mathbf{H}\mathbf{x}^{(t)}-\mathbf{v})\right)$
 %[text]
-%[text] **収束条件（堅非拡大写像）**: $f(\cdot)$ が堅非拡大写像であれば PnP-PG は収束する。
-%[text] TNRD（結合重み）では $\lambda \le 1 / \max_p \|\phi_p'\|_\infty$ のとき成立（例題10.3本文参照）。
+%[text] **収束条件（堅非拡大写像）**: $\mathrm{deawgn}_{\eta}(\cdot)$ が堅非拡大写像であれば PnP-PG は収束する。
+%[text] TNRD（結合重み）では $\lambda_{\mathrm{g}} \le 1 / \max_p \|\phi_p'\|_\infty$ のとき成立（例題10.3本文参照）。
 mu_pnp = 0.9;
 nIters = 200;
 x_pnp = V;
@@ -75,7 +75,7 @@ fprintf("PnP-PG PSNR: %.2f dB\n", psnr_pnp)
 %%
 %[text] ## RED-GD法による画像復元
 %[text] **反復**:
-%[text]  $\mathbf{x}^{(t+1)} \leftarrow \mathbf{x}^{(t)} - \mu\!\left[\mathbf{H}^\top(\mathbf{H}\mathbf{x}^{(t)}-\mathbf{v}) + \lambda_r(\mathbf{x}^{(t)}-f(\mathbf{x}^{(t)}))\right]$
+%[text]  $\mathbf{x}^{(t+1)} \leftarrow \mathbf{x}^{(t)} - \eta\!\left[\mathbf{H}^\top(\mathbf{H}\mathbf{x}^{(t)}-\mathbf{v}) + \lambda(\mathbf{x}^{(t)}-\mathrm{deawgn}(\mathbf{x}^{(t)}))\right]$
 %[text]
 %[text] **ヤコビ行列の対称性**: RED法の正則化が意味を持つ（対応する正則化関数が存在する）ための条件。
 %[text] Tied TNRD は結合重みにより理論上ゼロ。

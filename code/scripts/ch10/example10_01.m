@@ -45,7 +45,7 @@ end %[output:group:0583fac8]
 D_ana = D_syn';          % L×M analysis dictionary (= D_θ^T)
 
 %[text] ### ISTAパラメータ
-%[text] ステップサイズ $\\tau = 1/|\\mathbf{D}|^2$ (リプシッツ定数の逆数)
+%[text] ステップサイズ $\\eta = 1/|\\mathbf{D}|^2$ (リプシッツ定数の逆数)
 step_size = 0.99 / norm(D_syn)^2;
 lambda    = sigmaW * 0.5;
 tau_ista  = lambda * step_size;
@@ -72,8 +72,8 @@ fprintf("ISTA (T=%d) PSNR: %.2f dB\n", T, psnr_ista_t(T)) %[output:56d69a26]
 %%
 %[text] ## LISTAの学習
 %[text] 学習可能なパラメータ:
-%[text] - $\\mathbf{W}\_e$: 符号化行列（初期値 $\\mu\\mathbf{D}^\\top$）
-%[text] - $\\mathbf{Q}$: フィードバック行列（初期値 $\\mathbf{I}-\\mu\\mathbf{D}^\\top\\mathbf{D}$）
+%[text] - $\\mathbf{W}\_\\mathrm{e}$: 符号化行列（初期値 $\\eta\\mathbf{D}^\\top$）
+%[text] - $\\mathbf{Q}$: フィードバック行列（初期値 $\\mathbf{I}-\\eta\\mathbf{D}^\\top\\mathbf{D}$）
 %[text] - $\\tau$: ソフト閾値パラメータ（log空間で学習） \
 We     = dlarray(single(step_size * D_ana));  % L×M
 Q_dl   = dlarray(single(Q_ista));             % L×L
