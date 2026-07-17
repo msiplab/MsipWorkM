@@ -274,7 +274,7 @@ else
     [tmpS{1:nOutputs}] = analysisnet.predict(dlx);
     dly = synthesisnet.predict(tmpS{:});
     display("MSE: " + num2str(mse(dlx,dly)))
-%[text] #### 要素画像の初期状態
+%[text] #### アトム画像の初期状態
     figure
     atomicImagesNsolt = getatomicimages(synthesisnet, szFilters, 2^(nLevels-1));
     nAtomsN = size(atomicImagesNsolt,4);
@@ -350,7 +350,7 @@ title('Analysis NSOLT') %[output:489ed33e]
 subplot(1,2,2) %[output:489ed33e]
 plot(synthesislgraph) %[output:489ed33e]
 title('Synthesis NSOLT') %[output:489ed33e]
-%[text] #### 要素画像の表示
+%[text] #### アトム画像の表示
 figure %[output:1434ad30]
 atomicImagesNsolt = getatomicimages(synthesisnet, szFilters, 2^(nLevels-1));
 nAtomsN = size(atomicImagesNsolt,4);
@@ -824,7 +824,7 @@ for iLayer = 1:nLayers
     end
 end
 end
-%[text] #### NSOLTネットワークの要素画像抽出
+%[text] #### NSOLTネットワークのアトム画像抽出
 function [atomicImages, mRows, mCols] = getatomicimages(synthesisnet, patchsize, scale)
 %GETATOMICIMAGES Compute atomic images from NSOLT synthesis network
 import saivdr.dcnn.*

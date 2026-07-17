@@ -175,7 +175,7 @@ grid on %[output:2a6594a5]
 axis equal %[output:2a6594a5]
 hold off %[output:2a6594a5]
 drawnow
-%[text] 要素画像の数 
+%[text] アトム画像の数 
 nDims = prod(szBlk);
 nAtoms = ceil(redundancyRatio*nDims);
 %[text] 辞書 $\\mathbf{\\Phi}$の初期化
@@ -188,7 +188,7 @@ for iAtom = 1:nDims
     %delta(iAtom) = 1;
     Phi_rica(:,iAtom) = reshape(basisImagesDct(:,:,iAtom),nDims,1); %reshape(idct2(delta),nDims,1);
 end
-%[text] 要素ベクトルを要素画像に変換 
+%[text] アトムベクトルをアトム画像に変換 
 atomicImagesRica = zeros(szBlk(1),szBlk(2),nAtoms,'like',X);
 for iAtom = 1:nAtoms
     atomicImagesRica(:,:,iAtom) = reshape(Phi_rica(:,iAtom),szBlk(1),szBlk(2));
@@ -214,13 +214,13 @@ xlabel('Number of iteration') %[output:22716880]
 ylabel('Cost') %[output:22716880]
 grid on %[output:22716880]
 drawnow
-%[text] 要素ベクトルを要素画像に変換
+%[text] アトムベクトルをアトム画像に変換
 Phi_rica = model.TransformWeights;
 atomicImagesRica = zeros(szBlk(1),szBlk(2),nAtoms,'like',X);
 for iAtom = 1:nAtoms
     atomicImagesRica(:,:,iAtom) = reshape(Phi_rica(:,iAtom),szBlk(1),szBlk(2));
 end
-%[text] #### 要素画像の表示（辞書）
+%[text] #### アトム画像の表示（辞書）
 figure(8) %[output:3405c0e1]
 Irica = montage(imresize(atomicImagesRica,8,'nearest')+.5,'BorderSize',[2 2],'Size',[ceil(nAtoms/8) 8], ... %[output:group:23ac36e6] %[output:05244d48] %[output:3405c0e1]
      'BackgroundColor','white','ThumbnailSize',[20 20]) %[output:group:23ac36e6] %[output:05244d48] %[output:3405c0e1]
@@ -262,7 +262,7 @@ for iAtom = 1:nDims
     %delta(iAtom) = 1;
     Phi_ksvd(:,iAtom) = reshape(basisImagesDct(:,:,iAtom),nDims,1); %reshape(idct2(delta),nDims,1);
 end
-%[text] 要素ベクトルを要素画像に変換
+%[text] アトムベクトルをアトム画像に変換
 atomicImagesKsvd = zeros(szBlk(1),szBlk(2),nAtoms,'like',X);
 for iAtom = 1:nAtoms
     atomicImagesKsvd(:,:,iAtom) = reshape(Phi_ksvd(:,iAtom),szBlk(1),szBlk(2));
@@ -281,7 +281,7 @@ drawnow
 %[text] 3. データ行 $\\hat{\\mathbf{Y}}\_{p,\\colon}$の非零値を抽出する行列 $\\mathbf{S}\_{\\mathcal{J}\_p}$を定義： $\\hat{\\mathbf{Y}}\_{p,:}^\\mathrm{R}\\mathbf{S}\_{\\mathcal{J}\_p}=\\hat{\\mathbf{Y}}\_{p,:}\n\\Leftrightarrow\n\\hat{\\mathbf{Y}}\_{p,:}^\\mathrm{R}=\\hat{\\mathbf{Y}}\_{p,:}\\mathbf{S}\_{\\mathcal{J}\_p}^\\top$
 %[text] 4. 誤差行列 $\\mathbf{E}\_p$ を行列 $\\mathbf{S}\_{\\mathcal{J}\_p}$で縮退： $\\mathbf{E}\_p^\\mathrm{R}:=\\mathbf{E}\_p\\mathbf{S}\_{\\mathcal{J}\_p}^\\top\n \\in\\mathbb{K}^{M\\times |\\mathcal{J}\_p|}$
 %[text] 5. 縮退した誤差行列$\\mathbf{E}\_k^R$を特異値分解：$\\mathbf{E}\_k^R =\\mathbf{U}\\mathbf{S}\\mathbf{V}^T\n=\\left(\\mathbf{u}\_0,\\mathbf{u}\_1,\\cdots,\\mathbf{u}\_{r-1}\\right)\\mathrm{diag}(\\sigma\_0,\\sigma\_1,\\cdots,\\sigma\_{r-1})\\left(\\mathbf{v}\_0,\\mathbf{v}\_1,\\cdots,\\mathbf{v}\_{r-1}\\right)^T$
-%[text] 6. 要素ベクトル $\\mathbf{\\phi}\_p$ を更新： $\\mathbf{\\phi}\_p\\leftarrow \\mathbf{u}\_p$
+%[text] 6. アトムベクトル $\\mathbf{\\phi}\_p$ を更新： $\\mathbf{\\phi}\_p\\leftarrow \\mathbf{u}\_p$
 %[text] 7. データ行$\\hat{\\mathbf{Y}}\_{p,\\colon}$を更新： $\\hat{\\mathbf{Y}}\_{p,\\colon}\\leftarrow \\sigma\_0\\mathbf{v}\_{0}^T$
 %[text] 8. $p\\leftarrow p+1$
 %[text] 9. $p\\leq N$ ならば 2. へ $p\>N$ ならば終了 \
@@ -324,7 +324,7 @@ xlabel('Number of iteration') %[output:01085adc]
 ylabel('Cost') %[output:01085adc]
 grid on %[output:01085adc]
 drawnow
-%[text] 要素ベクトルを要素画像に変換 
+%[text] アトムベクトルをアトム画像に変換 
 atomicImagesKsvd = zeros(szBlk(1),szBlk(2),nAtoms,'like',X);
 for iAtom = 1:nAtoms
     atomicImagesKsvd(:,:,iAtom) = reshape(Phi_ksvd(:,iAtom),szBlk(1),szBlk(2));

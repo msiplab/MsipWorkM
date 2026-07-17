@@ -141,7 +141,7 @@ while k < nCoefs
     a = syndic(r,'adj'); % 相関計算
     a = a ./ di_sqrdnorm; % 正規化
     e = norm(r(:),2)^2 - (abs(a).^2).*di_sqrdnorm; % 誤差評価
-    [~,imin] = min(e(:)); % 要素画像の選択
+    [~,imin] = min(e(:)); % アトム画像の選択
     I = union(I,imin); % 添字集合の更新
     s(imin) = s(imin) + a(imin); % 係数更新
     xaprx = syndic(s,'syn'); % 近似画像の更新
@@ -172,7 +172,7 @@ for k = 1:nCoefs
     a = syndic(r,'adj'); % 相関計算    
     a = a ./ di_sqrdnorm; % 正規化
     e = norm(r(:),2)^2 - (abs(a).^2).*di_sqrdnorm; % 誤差評価
-    [~,imin] = min(e(:)); % 要素画像の選択
+    [~,imin] = min(e(:)); % アトム画像の選択
     I = union(I,imin); % 添字集合の更新
 
     % 勾配法による最小自乗解
