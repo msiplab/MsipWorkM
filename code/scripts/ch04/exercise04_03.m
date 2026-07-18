@@ -71,4 +71,4 @@ hold off
 
 ax.Box = 'off';
 fg = gcf;
-exportgraphics(fg,fullfile(resfolder,"fig04-03.png"),'BackgroundColor','none','ContentType','image','Resolution',300)
+exportgraphics(fg,fullfile(resfolder,"fig04-03_base.png"),'BackgroundColor','none','ContentType','image','Resolution',300)
