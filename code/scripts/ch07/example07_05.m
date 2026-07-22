@@ -24,23 +24,23 @@ title('原画像') %[output:0f254348]
 % GPUに転送
 %X = gpuArray(X);
 %%
-%[text] ## 6bppへの再量子化
-alpha = 6;
-Q = 1/(2^alpha-1);
-Y6 = Q*round(X/Q);
-subplot(1,3,2) %[output:0c7576d4]
-imshow(Y6) %[output:0c7576d4]
-title(num2str(alpha)+" bpp PSNR: " + num2str(psnr(X,Y6)) + " dB") %[output:0c7576d4]
-imwrite(Y6,fullfile(resfolder,"fig07-09a.png"))
-%%
 %[text] ## 4bppへの再量子化
 gamma = 4;
 Q = 1/(2^gamma-1);
 Y4 = Q*round(X/Q);
+subplot(1,3,2) %[output:0c7576d4]
+imshow(Y4) %[output:0c7576d4]
+title(num2str(gamma)+" bpp PSNR: " + num2str(psnr(X,Y4)) + " dB") %[output:0c7576d4]
+imwrite(Y4,fullfile(resfolder,"fig07-09a.png"))
+%%
+%[text] ## 6bppへの再量子化
+alpha = 6;
+Q = 1/(2^alpha-1);
+Y6 = Q*round(X/Q);
 subplot(1,3,3) %[output:9c2e80ce]
-imshow(Y4) %[output:9c2e80ce]
-title(num2str(gamma)+" bpp PSNR: " + num2str(psnr(X,Y4)) + " dB") %[output:9c2e80ce]
-imwrite(Y4,fullfile(resfolder,"fig07-09b.png"))
+imshow(Y6) %[output:9c2e80ce]
+title(num2str(alpha)+" bpp PSNR: " + num2str(psnr(X,Y6)) + " dB") %[output:9c2e80ce]
+imwrite(Y6,fullfile(resfolder,"fig07-09b.png"))
 
 %[text] ## 
 %%
