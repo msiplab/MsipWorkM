@@ -86,20 +86,21 @@ figure(3) %[output:8a6a2b62]
 him = imshow(Z); %[output:8a6a2b62]
 htt = title("復元画像 PSNR: "+num2str(psnr(X,Z))+" dB"); %[output:8a6a2b62]
 
-C = zeros(size(coefs),'like',coefs);
+C = zeros(size(coefs),'like',coefs); % 外挿点 y
+S = C;                               % 近接勾配ステップの出力 s
 tpre = 1;
 for iter = 1:nIters %[output:group:4498897b]
     g = adjdic( adjproc( linproc( syndic(C) ) - V ) );
-    Cpre = C;
-    C = softthresh(Cpre-eta*g, lambda*eta);
+    Spre = S;
+    S = softthresh(C-eta*g, lambda*eta);
+    C = S;
     if isFista % FISTA
-        W = C;
         t = (1+sqrt(1+4*tpre^2))/2;
-        C = W+(tpre-1)/t*(W-Cpre);
+        C = S+(tpre-1)/t*(S-Spre);
         tpre = t;
     end
     if mod(iter,2)==0 || iter == nIters
-        Y = syndic(C);
+        Y = syndic(S);
         him.CData = Y; %[output:8a6a2b62]
         htt.String = "復元画像 PSNR: "+num2str(psnr(X,Y))+" dB" +"("+num2str(iter)+")";
         drawnow
