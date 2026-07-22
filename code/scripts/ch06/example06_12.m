@@ -15,22 +15,22 @@ Phi0 = zeros(2);
 Phi1 = zeros(2);
 s3 = sqrt(3);
 % Phi0
-Phi0(1,1) = 1-s3;
-Phi0(1,2) = -1-s3;
-Phi0(2,1) = 3-s3;
-Phi0(2,2) = 3+s3;
+Phi0(1,1) = 3-s3;
+Phi0(1,2) = 3+s3;
+Phi0(2,1) = 1-s3;
+Phi0(2,2) = -1-s3;
 Phi0 = 2^(-5/2)*Phi0 %[output:147c1170]
-% Phi0
-Phi1(1,1) = 3+s3;
-Phi1(1,2) = -3+s3;
-Phi1(2,1) = 1+s3;
-Phi1(2,2) = 1-s3;
+% Phi1
+Phi1(1,1) = 1+s3;
+Phi1(1,2) = 1-s3;
+Phi1(2,1) = 3+s3;
+Phi1(2,2) = -3+s3;
 Phi1 = 2^(-5/2)*Phi1 %[output:75568f0c]
 %%
 %[text] ## 直交性の確認
 Phi0*Phi0'+Phi1*Phi1' %[output:50453b66]
 Phi0*Phi1' %[output:10df463c]
-Phi1+Phi0' %[output:3736adb6]
+Phi1*Phi0' %[output:3736adb6]
 %%
 %[text] ## 多相行列の設定
 %[text] 因果性を満たすように  $k\_f=-2$ とする。
@@ -40,9 +40,10 @@ dm(1,1,2) = 1;
 dm(2,1,3) = 1;
 dm = msip.ppmatrix(dm) %[output:59ab67f0]
 
+J2 = [0 1; 1 0];
 R = zeros(2,2,2);
-R(:,:,1) = Phi1;
-R(:,:,2) = Phi0;
+R(:,:,1) = J2*Phi1;
+R(:,:,2) = J2*Phi0;
 R = msip.ppmatrix(R);
 upsample(R,2) %[output:822dd899]
 
