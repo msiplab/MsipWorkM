@@ -22,7 +22,7 @@ imshow(X)  %[output:64078bdf]
 title('原画像')  %[output:64078bdf]
 %%
 %[text] ## スケールの設定
-f = fspecial('average',2);
+f = fspecial('average',3);
 Y = imfilter(X,f,'corr','same');
 figure(2) %[output:3785ec24]
 imshow(Y) %[output:3785ec24]

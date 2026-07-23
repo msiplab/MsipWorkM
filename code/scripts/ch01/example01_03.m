@@ -20,7 +20,7 @@ dataInfo = whos('I');
 disp(dataInfo) %[output:02043ee7]
 
 %%
-%[text] ## (2) 倍精度実数型（ $\\beta=8$ bits）のRGB画像の場合
+%[text] ## (2) 倍精度実数型（ $\\beta=64$ bits）のRGB画像の場合
 beta = 64;
 B = 3*beta*N1*N2;
 fprintf("倍精度実数型\n"); %[output:161fe9a8]

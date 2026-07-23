@@ -29,7 +29,7 @@ imshow(X) %[output:5ecaaadf]
 title('原画像') %[output:5ecaaadf]
 %%
 
-isForceDesign = true; % 再設計フラグ（true: 強制再設計, false: 既存ファイルがあればスキップ） %[control:checkbox:48c8]{"position":[17,22]}
+isForceDesign = false; % 再設計フラグ（true: 強制再設計, false: 既存ファイルがあればスキップ） %[control:checkbox:48c8]{"position":[17,22]}
 
 isCodegen = true; % コード生成 %[control:checkbox:53ff]{"position":[13,17]}
 msip.saivdrSetup(isCodegen) %[output:6a0ad264]

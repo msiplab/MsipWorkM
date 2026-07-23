@@ -54,7 +54,7 @@ fprintf('PSNR:  %6.2f dB\n',psnr(V,U)) %[output:0c054bf0]
 %%
 %[text] ## 結果出力
 imwrite(V,fullfile(resfolder,"fig01-03a.png"))
-imwrite(U,fullfile(resfolder,"fig01-03b.jpg"))
+copyfile(resimg+"."+resfmt,fullfile(resfolder,"fig01-03b.jpg")) % 再圧縮せず品質13のJPEGファイルをそのまま複製
 imwrite(Y,fullfile(resfolder,"fig01-03c.png"))
 %%
 %[text] © Copyright, Shogo MURAMATSU, All rights reserved.

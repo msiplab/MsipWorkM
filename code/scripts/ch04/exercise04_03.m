@@ -3,7 +3,7 @@ prj = matlab.project.currentProject;
 prjroot = prj.RootFolder;
 datfolder = fullfile(prjroot,"data");
 resfolder = fullfile(prjroot,"results");
-myfilename = "example04_03"; % mfilename
+myfilename = "exercise04_03"; % mfilename
 
 %%
 figure(1)

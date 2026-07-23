@@ -22,7 +22,7 @@ imshow(X)  %[output:64078bdf]
 title('原画像')  %[output:64078bdf]
 %%
 %[text] ## フィルタの設定
-f = fspecial('average',2);
+f = fspecial('average',3);
 
 %%
 %[text] ## 零値拡張

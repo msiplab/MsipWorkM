@@ -40,8 +40,6 @@ sz = size(X);
 Ydct = blockproc(X,[8 8],@(x) C*x.data*C.');
 % 最適ビット割り当て
 [Qtable,alphap] = fcn_bitalloc(Ydct,[8 8],alpha) %[output:3c872318] %[output:0a57efdc]
-Qtalbe = ones(8)*2;
-Qtalbe(1,1) = 1;
 assert(all(alphap>=0,"all"),"負のビット割り当てがあります。")
 
 % 最小最大正規化

@@ -24,7 +24,7 @@ imshow(X) %[output:5dea881b]
 title('原画像') %[output:5dea881b]
 %%
 %[text] ## 劣化過程
-hsigma  = 2;                    % ガウスカーネル分散
+hsigma  = 2;                    % ガウスカーネル標準偏差
 hsize   = 2*ceil(2*hsigma)+1;   % ガウスカーネルサイズ
 nvar    = (10/255)^2;            % 加法性白色ガウスノイズ分散
 gaussfilt = fspecial('gaussian',hsize,hsigma);             % ガウスカーネル

@@ -27,8 +27,8 @@ norm(y(:),2) %[output:042d4ebe]
 %   data: {"layout":"onright"}
 %---
 %[output:7cac075c]
-%   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"14"}}
+%   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"10"}}
 %---
 %[output:042d4ebe]
-%   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"9"}}
+%   data: {"dataType":"textualVariable","outputData":{"name":"ans","value":"16"}}
 %---

@@ -68,8 +68,8 @@ imshow(X)  %[output:5cdcbd25]
 title('原画像')  %[output:5cdcbd25]
 %%
 %[text] ## べき乗測変換
-gamma = 0.25 %[control:slider:540a]{"position":[9,13]} %[output:1dd77687]
-Y = X.^(1/2); 
+gamma = 0.5 %[control:slider:540a]{"position":[9,12]} %[output:1dd77687]
+Y = X.^gamma;
 figure(3)
 imshow(Y) %[output:9c52b770]
 title('処理画像')  %[output:9c52b770]

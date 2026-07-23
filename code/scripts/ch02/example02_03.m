@@ -84,7 +84,7 @@ grid on; %[output:4bc1cc59]
 box on; %[output:4bc1cc59]
 hold(ax,'off'); %[output:4bc1cc59]
 
-exportgraphics(ax,fullfile(resfolder,myfilename+"b.png"),'BackgroundColor','white') %[output:4bc1cc59]
+exportgraphics(ax,fullfile(resfolder,myfilename+"c.png"),'BackgroundColor','white') %[output:4bc1cc59]
 
 %%
 %[text] ## 最小最大正規化

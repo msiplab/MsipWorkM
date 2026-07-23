@@ -7,7 +7,7 @@ prj = matlab.project.currentProject;
 prjroot = prj.RootFolder;
 datfolder = fullfile(prjroot,"data");
 resfolder = fullfile(prjroot,"results");
-myfilename = "example04_10"; % mfilename
+myfilename = "example04_00"; % mfilename
 
 imgname = "msipimg08";
 imgfmt = "tiff";
