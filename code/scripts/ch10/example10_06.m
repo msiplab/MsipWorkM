@@ -89,14 +89,15 @@ zeta_dl = dlarray(zeta, 'SSCB');
 V_dl    = dlarray(V, 'SSCB');
 
 % 観測画像とζを保存
-imwrite(double(V), fullfile(resfolder,'fig10-03_obs.png'))
+imwrite(double(V), fullfile(resfolder,'fig10-06_obs.png'))
 zeta_disp = (zeta(:,:,1) - min(zeta(:))) / (max(zeta(:)) - min(zeta(:)));
-imwrite(zeta_disp, fullfile(resfolder,'fig10-03_zeta.png'))
+imwrite(zeta_disp, fullfile(resfolder,'fig10-06_zeta.png'))
 
 % 0回目：学習前の初期出力
 x_init = double(extractdata(predict(net, zeta_dl)));
+% 貼込素材はミンマックス正規化して保存（学習初期は出力レンジが狭く，[0,1]クリップではほぼ黒に見えるため）
+imwrite(rescale(x_init), fullfile(resfolder,'fig10-06_dip_000.png'))
 x_init = min(max(x_init, 0), 1);
-imwrite(x_init, fullfile(resfolder,'fig10-03_dip_000.png'))
 fprintf("0回目（学習前）: PSNR = %.2f dB\n", psnr(x_init, double(X)))
 
 % Adam状態
@@ -114,13 +115,14 @@ for iter = 1:nIters
     [net, avgG_net, avgSqG_net] = adamupdate(net, gradNet, avgG_net, avgSqG_net, iter, lr, beta1, beta2, eps_a);
 
     if mod(iter, monitorStep) == 0 || ismember(iter, saveIters)
-        x_hat = double(extractdata(predict(net, zeta_dl)));
-        x_hat = min(max(x_hat, 0), 1);
+        x_hat_raw = double(extractdata(predict(net, zeta_dl)));
+        x_hat = min(max(x_hat_raw, 0), 1);
         psnrs_dip(iter) = psnr(x_hat, double(X));
         fprintf("反復 %4d: PSNR = %.2f dB\n", iter, psnrs_dip(iter))
         if ismember(iter, saveIters)
             k = find(saveIters == iter, 1);
-            imwrite(x_hat, fullfile(resfolder, sprintf('fig10-03_dip_%03d.png', k)))
+            % 貼込素材はミンマックス正規化して保存（学習初期はほぼ黒に見えるため）
+            imwrite(rescale(x_hat_raw), fullfile(resfolder, sprintf('fig10-06_dip_%03d.png', k)))
             fprintf("  → %d回目の復元画像を保存 (反復%d)\n", k, iter)
         end
         if psnrs_dip(iter) > psnr_best_run
@@ -131,8 +133,8 @@ for iter = 1:nIters
     end
 end
 % 最良結果を保存
-imwrite(X_best, fullfile(resfolder,'fig10-03_dip_best.png'))
-fprintf("最良 PSNR: %.2f dB (反復%d) → fig10-03_dip_best.png\n", psnr_best_run, iter_best_run)
+imwrite(X_best, fullfile(resfolder,'fig10-06_dip_best.png'))
+fprintf("最良 PSNR: %.2f dB (反復%d) → fig10-06_dip_best.png\n", psnr_best_run, iter_best_run)
 % 最終結果
 X_dip = double(extractdata(predict(net, zeta_dl)));
 X_dip = min(max(X_dip, 0), 1);
@@ -141,9 +143,9 @@ fprintf("DIP 最終 PSNR: %.2f dB\n", psnr_dip)
 %%
 %[text] ## 早期停止の確認
 %[text] 反復回数が多くなるとノイズへの過適合が起こる
-[psnr_best, iter_best] = max(psnrs_dip(psnrs_dip > 0));
-iter_best_full = iter_best * (psnrs_dip(1) == 0) + iter_best;  % 補正
-fprintf("最高 PSNR: %.2f dB (反復 %d)\n", psnr_best, iter_best*monitorStep)
+idxMonitored = find(psnrs_dip > 0);  % 監視対象の反復（1〜3回目と100回刻み）のみ記録されている
+[psnr_best, kBest] = max(psnrs_dip(idxMonitored));
+fprintf("最高 PSNR: %.2f dB (反復 %d)\n", psnr_best, idxMonitored(kBest))
 %%
 %[text] ## 結果の表示
 fontSize = 14;
@@ -152,7 +154,7 @@ figure(1)
 subplot(1,3,1); imshow(double(X)); title('原画像','FontSize',12)
 subplot(1,3,2); imshow(double(V)); title(sprintf('観測 (%.2f dB)',psnr_noisy),'FontSize',12)
 subplot(1,3,3); imshow(X_dip);    title(sprintf('DIP (%.2f dB)',psnr_dip),'FontSize',12)
-imwrite(X_dip, fullfile(resfolder,'fig10-03a.png'))
+imwrite(X_dip, fullfile(resfolder,'fig10-06a.png'))
 
 figure(2)
 iters_plot = monitorStep:monitorStep:nIters;
@@ -163,7 +165,7 @@ title('DIP: PSNRの推移（過適合の確認）')
 set(gca,'FontSize',fontSize)
 grid on
 set(gcf,'PaperUnits','inches','PaperSize',[8.26 5.16],'PaperPosition',[0 0 8.26 5.16])
-print(gcf, fullfile(resfolder,'fig10-03b.png'),'-dpng','-r96')
+print(gcf, fullfile(resfolder,'fig10-06b.png'),'-dpng','-r96')
 
 %%
 %[text] ## 【関数定義】

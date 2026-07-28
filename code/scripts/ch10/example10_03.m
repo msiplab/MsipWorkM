@@ -2,7 +2,7 @@
 %[text] 村松正吾　「多次元信号・画像処理の基礎と展開」
 %[text] 動作確認： MATLAB R2026a
 %[text] ## 辞書の選択（変更可能）
-%[text] 例題10.2で学習した辞書を選択する（先に例題10.2を実行すること）
+%[text] 例10.2で学習した辞書を選択する（先に例10.2を実行すること）
 dictType = 'tied';
 % dictType = 'parseval';
 % dictType = 'unitary';
@@ -35,13 +35,13 @@ V = H_op(X) + sigmaW * randn(size(X));
 psnr_obs = psnr(V, X);
 fprintf("観測 PSNR: %.2f dB\n", psnr_obs)
 %%
-%[text] ## ノイズ除去器の読込（例題10.2の学習結果）
+%[text] ## ノイズ除去器の読込（例10.2の学習結果）
 %[text] PnP法・RED法ともに，AWGN除去器 $\mathrm{deawgn}(\cdot)$ をプラグインとして使用する。
 %[text] **PnP-PG法**: 近接写像 $\mathrm{prox}_{\eta\mathfrak{R}}(\cdot)$ を $\mathrm{deawgn}_{\eta}(\cdot)$ で置き換え
 %[text] **RED-GD法**: 正則化関数 $\mathfrak{R}_{\mathrm{RED}}(\mathbf{x})=\frac{1}{2}\mathbf{x}^\top(\mathbf{x}-\mathrm{deawgn}(\mathbf{x}))$ の勾配 $\mathbf{x}-\mathrm{deawgn}(\mathbf{x})$ を利用
 denoiserFile = fullfile(datfolder, sprintf('example10_02_%s.mat', dictType));
 if ~isfile(denoiserFile)
-    error("先に例題10.2 (dictType='%s') を実行してください", dictType)
+    error("先に例10.2 (dictType='%s') を実行してください", dictType)
 end
 S = load(denoiserFile);
 lambda_f = exp(double(extractdata(S.loglambda)));
@@ -60,7 +60,7 @@ fprintf("ウィナーフィルタ PSNR: %.2f dB\n", psnr_wiener)
 %[text]  $\mathbf{x}^{(t+1)} \leftarrow \mathrm{deawgn}_{\eta}\!\left(\mathbf{x}^{(t)} - \eta\mathbf{H}^\top(\mathbf{H}\mathbf{x}^{(t)}-\mathbf{v})\right)$
 %[text]
 %[text] **収束条件（堅非拡大写像）**: $\mathrm{deawgn}_{\eta}(\cdot)$ が堅非拡大写像であれば PnP-PG は収束する。
-%[text] TNRD（結合重み）では $\lambda_{\mathrm{g}} \le 1 / \max_p \|\phi_p'\|_\infty$ のとき成立（例題10.3本文参照）。
+%[text] TNRD（結合重み）では $\lambda_{\mathrm{g}} \le 1 / \max_p \|\phi_p'\|_\infty$ のとき成立（例10.3本文参照）。
 mu_pnp = 0.9;
 nIters = 200;
 x_pnp = V;

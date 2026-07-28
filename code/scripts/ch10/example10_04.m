@@ -124,7 +124,7 @@ subplot(1,4,1); imshow(X);        title('原画像','FontSize',12) %[output:346f
 subplot(1,4,2); imshow(V);        title(sprintf('観測 (%.2f dB)',psnr_obs),'FontSize',12) %[output:346f601b]
 subplot(1,4,3); imshow(X_wiener); title(sprintf('ウィナー (%.2f dB)',psnr_wiener),'FontSize',12) %[output:346f601b]
 subplot(1,4,4); imshow(x_red);    title(sprintf('RED-GD (%.2f dB)',psnrs_red(nIters)),'FontSize',12) %[output:346f601b]
-% 注意: fig10-04a.png/b.png は本文の DIP-SURE 結果（例10.6, fig:dip-sure）に
+% 注意: fig10-04a.png/b.png は本文の図10.4（DIPとDIP-SUREの概念図，fig:dip-sure，手動作成）に
 % 使用済みのため，本スクリプトの検証結果は別名で保存する。
 imwrite(x_red, fullfile(resfolder,'fig10-04a_verify.png'))
 
@@ -143,7 +143,7 @@ print(gcf, fullfile(resfolder,'fig10-04b_verify.png'),'-dpng','-r96') %[output:9
 %[text] ## 【関数定義】
 
 function x_out = convTnrdDenoise(Wa, ba, bs, lambda_f, x_in)
-%CONVTNRDDENOISE  TNRD除去器の適用（例題10.2の学習結果を利用）
+%CONVTNRDDENOISE  TNRD除去器の適用（例10.2の学習結果を利用）
 V_dl  = dlarray(single(x_in),'SSCB');
 Y     = dlconv(V_dl, Wa, ba, 'Padding','same');
 G     = dltranspconv(tanh(Y), Wa, bs, 'Cropping','same');

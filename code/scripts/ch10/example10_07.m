@@ -125,7 +125,7 @@ psnr_sure = psnr(X_sure, double(X));
 fprintf("DIP-SURE 最終 PSNR: %.2f dB\n", psnr_sure)
 %%
 %[text] ## DIPとの比較（参照用）
-%[text] 例10.5のDIPでは学習が進むにつれてノイズへの過適合が起こるが，
+%[text] 例10.6のDIPでは学習が進むにつれてノイズへの過適合が起こるが，
 %[text] DIP-SUREでは発散項による正則化で安定した収束が期待される
 %%
 %[text] ## 結果の表示
@@ -135,7 +135,7 @@ figure(1)
 subplot(1,3,1); imshow(double(X)); title('原画像','FontSize',12)
 subplot(1,3,2); imshow(double(V)); title(sprintf('観測 (%.2f dB)',psnr_noisy),'FontSize',12)
 subplot(1,3,3); imshow(X_sure);    title(sprintf('DIP-SURE (%.2f dB)',psnr_sure),'FontSize',12)
-imwrite(X_sure, fullfile(resfolder,'fig10-06a.png'))
+imwrite(X_sure, fullfile(resfolder,'fig10-07a.png'))
 
 figure(2)
 iters_plot = monitorStep:monitorStep:nIters;
@@ -146,7 +146,7 @@ title('DIP-SURE: PSNRの推移（安定した収束）')
 set(gca,'FontSize',fontSize)
 grid on
 set(gcf,'PaperUnits','inches','PaperSize',[8.26 5.16],'PaperPosition',[0 0 8.26 5.16])
-print(gcf, fullfile(resfolder,'fig10-06b.png'),'-dpng','-r96')
+print(gcf, fullfile(resfolder,'fig10-07b.png'),'-dpng','-r96')
 
 %%
 %[text] ## 【関数定義】
