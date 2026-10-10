@@ -1,19 +1,29 @@
 function [valueC,valueS] = udhaarwtdec2(src,nlevels)
 %UDHAARWTDEC2 Decomposition by Undecimated Haar Wavelet
-%  
+%
+%   [C,S] = MSIP.UDHAARWTDEC2(X,NLEVELS) applies the NLEVELS-level undecimated
+%   (redundant) 2-D Haar DWT with circular extension.  The subbands are
+%   stacked in C (approximation first) and their sizes in S.
+%
+%   Separable filters as in Example "Haar DWT" (Sec. 6.4.1), delayed and
+%   scaled for the undecimated transform:
+%     synthesis  F0(z) = (1+z^-1)/2,  F1(z) = (1-z^-1)/2,
+%     analysis   H0(z) = (1+z^-1)/2,  H1(z) = (-1+z^-1)/2  (adjoint pair).
+%   Together with MSIP.UDHAARWTREC2 this is a Parseval tight frame.
+%
 % Requirements: MATLAB R2025b
 %
-% Copyright (c) 2012-2025 All rights reserved., Shogo MURAMATSU
+% Copyright (c) 2012-2026 All rights reserved., Shogo MURAMATSU
 %
 % Contact address: Shogo MURAMATSU,
 %                Faculty of Engineering, Niigata University,
 %                8050 2-no-cho Ikarashi, Nishi-ku,
 %                Niigata, 950-2181, JAPAN
 %
-h00 = [1  1;  1  1]/4;
-h10 = [1  1; -1 -1]/4;
-h01 = [1 -1;  1 -1]/4;
-h11 = [1 -1; -1  1]/4;
+h00 = [ 1  1;  1  1]/4;
+h10 = [-1 -1;  1  1]/4;   % vertical highpass  x horizontal lowpass
+h01 = [-1  1; -1  1]/4;   % vertical lowpass   x horizontal highpass
+h11 = [ 1 -1; -1  1]/4;   % vertical highpass  x horizontal highpass
 nred = 1+3*nlevels;
 nDim = size(src);
 valueS = repmat(nDim,[nlevels+2 1]);

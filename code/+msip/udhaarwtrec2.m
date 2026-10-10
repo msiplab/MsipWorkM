@@ -1,19 +1,25 @@
 function rec = udhaarwtrec2(valueC,valueS)
 %UDHAARWTREC2 Reconstruction by Undecimated Haar Wavelet
-%  
+%
+%   X = MSIP.UDHAARWTREC2(C,S) is the synthesis (adjoint) of MSIP.UDHAARWTDEC2.
+%
+%   Separable filters as in Example "Haar DWT" (Sec. 6.4.1), delayed and
+%   scaled for the undecimated transform:
+%     synthesis  F0(z) = (1+z^-1)/2,  F1(z) = (1-z^-1)/2.
+%
 % Requirements: MATLAB R2025b
 %
-% Copyright (c) 2012-2025 All rights reserved, Shogo MURAMATSU
+% Copyright (c) 2012-2026 All rights reserved, Shogo MURAMATSU
 %
 % Contact address: Shogo MURAMATSU,
 %                Faculty of Engineering, Niigata University,
 %                8050 2-no-cho Ikarashi, Nishi-ku,
 %                Niigata, 950-2181, JAPAN
 %
-h00 = [1  1;  1  1]/4;
-h10 = [1  1; -1 -1]/4;
-h01 = [1 -1;  1 -1]/4;
-h11 = [1 -1; -1  1]/4;
+h00 = [ 1  1;  1  1]/4;
+h10 = [-1 -1;  1  1]/4;   % same kernels as MSIP.UDHAARWTDEC2 (used by correlation)
+h01 = [-1  1; -1  1]/4;
+h11 = [ 1 -1; -1  1]/4;
 nsubdim = valueS(1,:);
 nlevels = size(valueS,1)-2;
 numc = prod(nsubdim);
